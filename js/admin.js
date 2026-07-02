@@ -26,19 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- State Management ---
-    let products = [];
-    const savedProducts = localStorage.getItem('marwa_products');
+    // Products will be populated dynamically from js/data/products.js via Firebase onSnapshot
+    // We just declare the global `products` variable here to be populated
+    window.products = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
     
-    if (savedProducts) {
-        products = JSON.parse(savedProducts);
-    } else {
-        // Fallback for an empty dashboard if they opened it without ever visiting the main site.
-        products = [];
-    }
-
-    const saveProducts = () => {
-        localStorage.setItem('marwa_products', JSON.stringify(products));
-    };
+    // We don't need a local save function because saveProductToDb and deleteProductFromDb are used.
 
     // --- DOM Elements ---
     const tbody = document.getElementById('products-tbody');
@@ -142,14 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Render Table ---
-    const renderTable = () => {
+    window.renderTable = () => {
         tbody.innerHTML = '';
-        if(products.length === 0) {
+        if(!window.products || window.products.length === 0) {
             tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 40px;">No products found. Add a new product to get started.</td></tr>`;
             return;
         }
 
-        products.forEach(product => {
+        window.products.forEach(product => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><img src="${(product.images && product.images.length > 0) ? product.images[0] : (product.localImage || product.image)}" alt="${product.title}"></td>
@@ -183,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (id) {
             modalTitle.textContent = "Edit Product";
-            const product = products.find(p => p.id === id);
+            const product = window.products.find(p => p.id === id);
             
             document.getElementById('product-id').value = product.id;
             document.getElementById('product-title').value = product.title;
@@ -270,30 +262,43 @@ document.addEventListener('DOMContentLoaded', () => {
             specs: specsObj
         };
 
-        const existingIndex = products.findIndex(p => p.id === newProduct.id);
+        const existingIndex = window.products.findIndex(p => p.id === newProduct.id);
         
         if (existingIndex > -1) {
             // Edit Mode
-            products[existingIndex] = newProduct;
+            window.products[existingIndex] = newProduct;
         } else {
             // Add Mode
-            products.push(newProduct);
+            window.products.push(newProduct);
         }
 
-        saveProducts();
-        renderTable();
+        if (typeof saveProductToDb === 'function') {
+            saveProductToDb(newProduct);
+        } else {
+            // Fallback for local storage
+            localStorage.setItem('marwa_products', JSON.stringify(window.products));
+        }
+        
+        // window.renderTable() is triggered automatically by Firebase onSnapshot in products.js
+        if (typeof window.renderTable === 'function') window.renderTable();
         closeModal();
     });
 
     // --- Delete Logic ---
     const deleteProduct = (id) => {
         if(confirm("Are you sure you want to delete this product? This will immediately remove it from your website.")) {
-            products = products.filter(p => p.id !== id);
-            saveProducts();
-            renderTable();
+            if (typeof deleteProductFromDb === 'function') {
+                deleteProductFromDb(id);
+            } else {
+                window.products = window.products.filter(p => p.id !== id);
+                localStorage.setItem('marwa_products', JSON.stringify(window.products));
+            }
+            // renderTable() is triggered automatically by Firebase onSnapshot
         }
     };
 
     // Initial render
-    renderTable();
+    if (typeof window.renderTable === 'function') {
+        window.renderTable();
+    }
 });

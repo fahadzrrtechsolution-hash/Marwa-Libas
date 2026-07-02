@@ -141,11 +141,60 @@ const DEFAULT_PRODUCTS = [
     }
 ];
 
-let PRODUCTS = [];
-const savedProducts = localStorage.getItem('marwa_products');
-if (savedProducts) {
-    PRODUCTS = JSON.parse(savedProducts);
+let PRODUCTS = DEFAULT_PRODUCTS; // Start with default products
+
+// Create an event to notify when products are loaded
+const productsLoadedEvent = new Event('productsLoaded');
+
+// Read from Firebase Firestore
+if (typeof db !== 'undefined') {
+    db.collection('marwa_products').onSnapshot((snapshot) => {
+        let loadedProducts = [];
+        snapshot.forEach(doc => {
+            loadedProducts.push(doc.data());
+        });
+
+        if (loadedProducts.length > 0) {
+            PRODUCTS = loadedProducts;
+        } else {
+            PRODUCTS = DEFAULT_PRODUCTS;
+            // Automatically seed Firebase with default products on first run
+            DEFAULT_PRODUCTS.forEach(p => db.collection('marwa_products').doc(p.id).set(p));
+        }
+        
+        // Dispatch event so the app knows products are ready
+        window.dispatchEvent(productsLoadedEvent);
+        
+        // If we are in the admin panel, trigger renderTable if it exists
+        if (typeof window.renderTable === 'function') {
+            window.products = PRODUCTS; // update admin.js local variable
+            window.renderTable();
+        } else if (typeof handleRoute === 'function') {
+            // Re-render the current route on the main site
+            handleRoute();
+        }
+    }, (error) => {
+        console.error("Error fetching products from Firebase:", error);
+    });
 } else {
-    PRODUCTS = DEFAULT_PRODUCTS;
-    localStorage.setItem('marwa_products', JSON.stringify(PRODUCTS));
+    // Fallback if Firebase fails to load
+    const savedProducts = localStorage.getItem('marwa_products');
+    if (savedProducts) {
+        PRODUCTS = JSON.parse(savedProducts);
+    }
+    window.dispatchEvent(productsLoadedEvent);
+}
+
+// Helper to save product to Firebase
+function saveProductToDb(product) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_products').doc(product.id).set(product);
+    }
+}
+
+// Helper to delete product from Firebase
+function deleteProductFromDb(id) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_products').doc(id).delete();
+    }
 }
