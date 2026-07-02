@@ -36,6 +36,10 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     Products
                 </a></li>
+                <li><a href="#" data-view="banners">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    Banners
+                </a></li>
                 <li><a href="#" data-view="dashboard">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     Dashboard
@@ -49,30 +53,73 @@
 
         <!-- Main Content -->
         <main class="admin-main">
-            <header class="admin-header">
-                <h1>Product Management</h1>
-                <button class="btn btn-primary" id="add-product-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    Add Product
-                </button>
-            </header>
+            <!-- Products View -->
+            <div id="view-products" class="admin-view active">
+                <header class="admin-header">
+                    <h1>Product Management</h1>
+                    <button class="btn btn-primary" id="add-product-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Add Product
+                    </button>
+                </header>
 
-            <div class="admin-content">
-                <div class="card table-card">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th>Title</th>
-                                <th>Price</th>
-                                <th>Collection</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="products-tbody">
-                            <!-- Products injected here -->
-                        </tbody>
-                    </table>
+                <div class="admin-content">
+                    <div class="card table-card">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                    <th>Collection</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-tbody">
+                                <!-- Products injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banners View -->
+            <div id="view-banners" class="admin-view" style="display: none;">
+                <header class="admin-header">
+                    <h1>Banner Management</h1>
+                    <button class="btn btn-primary" id="add-banner-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Add Banner
+                    </button>
+                </header>
+
+                <div class="admin-content">
+                    <div class="card table-card">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Subtitle</th>
+                                    <th>Button Link</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="banners-tbody">
+                                <!-- Banners injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dashboard View Placeholder -->
+            <div id="view-dashboard" class="admin-view" style="display: none;">
+                <header class="admin-header">
+                    <h1>Dashboard Overview</h1>
+                </header>
+                <div class="admin-content">
+                    <p style="padding: 20px;">Coming Soon.</p>
                 </div>
             </div>
         </main>
@@ -147,6 +194,70 @@
                 <div class="modal-footer" style="margin-top: 20px; text-align: right;">
                     <button type="button" class="btn btn-outline" id="cancel-modal-btn">Cancel</button>
                     <button type="submit" class="btn btn-primary" id="save-product-btn">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Banner Form Modal -->
+    <div class="modal-overlay" id="banner-modal-overlay"></div>
+    <div class="modal" id="banner-modal">
+        <div class="modal-header">
+            <h2 id="banner-modal-title">Add Banner</h2>
+            <button class="close-btn" id="close-banner-modal-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="banner-form">
+                <input type="hidden" id="banner-id">
+                
+                <div class="form-group">
+                    <label>Banner Image</label>
+                    <div id="banner-image-upload-container">
+                        <!-- Same image upload row logic as products -->
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="banner-title">Title (e.g. SALE)</label>
+                        <input type="text" id="banner-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="banner-subtitle">Subtitle (e.g. Mid-Summer)</label>
+                        <input type="text" id="banner-subtitle" class="form-control" required>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="banner-discount">Highlight Text (e.g. UP TO 50% OFF)</label>
+                        <input type="text" id="banner-discount" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="banner-theme">Text Color Theme</label>
+                        <select id="banner-theme" class="form-control">
+                            <option value="light">Light (White text for dark images)</option>
+                            <option value="dark">Dark (Dark text for light images)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="banner-btn-text">Button Text (e.g. SHOP NOW)</label>
+                        <input type="text" id="banner-btn-text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="banner-btn-link">Button Link (e.g. #collection/sale)</label>
+                        <input type="text" id="banner-btn-link" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="margin-top: 20px; text-align: right;">
+                    <button type="button" class="btn btn-outline" id="cancel-banner-modal-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-banner-btn">Save Banner</button>
                 </div>
             </form>
         </div>

@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- State Management ---
-    // Products will be populated dynamically from js/data/products.js via Firebase onSnapshot
-    // We just declare the global `products` variable here to be populated
+    // Products and Banners will be populated dynamically from js/data/products.js via Firebase onSnapshot
     window.products = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
+    window.banners = typeof BANNERS !== 'undefined' ? BANNERS : [];
     
     // We don't need a local save function because saveProductToDb and deleteProductFromDb are used.
 
@@ -41,6 +41,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelBtn = document.getElementById('cancel-modal-btn');
     const form = document.getElementById('product-form');
     const modalTitle = document.getElementById('modal-title');
+
+    // --- Banner DOM Elements ---
+    const bannerTbody = document.getElementById('banners-tbody');
+    const addBannerBtn = document.getElementById('add-banner-btn');
+    const bannerModal = document.getElementById('banner-modal');
+    const bannerOverlay = document.getElementById('banner-modal-overlay');
+    const closeBannerBtn = document.getElementById('close-banner-modal-btn');
+    const cancelBannerBtn = document.getElementById('cancel-banner-modal-btn');
+    const bannerForm = document.getElementById('banner-form');
+    const bannerModalTitle = document.getElementById('banner-modal-title');
+    const bannerImageContainer = document.getElementById('banner-image-upload-container');
+
+    // --- Navigation Logic ---
+    const navLinks = document.querySelectorAll('.sidebar-nav a[data-view]');
+    const views = document.querySelectorAll('.admin-view');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            const targetView = link.getAttribute('data-view');
+            views.forEach(view => {
+                if (view.id === 'view-' + targetView) {
+                    view.style.display = 'block';
+                    view.classList.add('active'); // CSS fade-in
+                } else {
+                    view.style.display = 'none';
+                    view.classList.remove('active');
+                }
+            });
+        });
+    });
 
     // --- Image Compression & Upload Logic ---
     const compressImage = (file, callback) => {
@@ -71,7 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageContainer = document.getElementById('image-upload-container');
     const addImageRowBtn = document.getElementById('add-image-row-btn');
 
-    const addImageRow = (initialValue = '') => {
+    if (addImageRowBtn) {
+        addImageRowBtn.addEventListener('click', () => addImageRow(imageContainer));
+    }
+
+    // Helper for adding image rows to specific containers
+    const addImageRow = (container, initialValue = '') => {
         const row = document.createElement('div');
         row.className = 'image-upload-row';
         const isBase64 = initialValue && initialValue.startsWith('data:');
@@ -126,12 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
             row.remove();
         });
 
-        imageContainer.appendChild(row);
+        container.appendChild(row);
     };
-
-    if (addImageRowBtn) {
-        addImageRowBtn.addEventListener('click', () => addImageRow());
-    }
 
     // --- Render Table ---
     window.renderTable = () => {
@@ -169,6 +204,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- Render Banners Table ---
+    window.renderBannersTable = () => {
+        bannerTbody.innerHTML = '';
+        if(!window.banners || window.banners.length === 0) {
+            bannerTbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 40px;">No banners found. Add a new banner to get started.</td></tr>`;
+            return;
+        }
+
+        window.banners.forEach(banner => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><img src="${banner.image}" alt="${banner.title}"></td>
+                <td><strong>${banner.title}</strong></td>
+                <td>${banner.subtitle}</td>
+                <td>${banner.btnLink}</td>
+                <td>
+                    <button class="action-btn edit-banner-btn" data-id="${banner.id}" title="Edit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </button>
+                    <button class="action-btn delete delete-banner-btn" data-id="${banner.id}" title="Delete">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                </td>
+            `;
+            bannerTbody.appendChild(tr);
+        });
+
+        // Attach actions
+        document.querySelectorAll('.edit-banner-btn').forEach(btn => {
+            btn.addEventListener('click', () => openBannerModal(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-banner-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteBanner(btn.getAttribute('data-id')));
+        });
+    };
+
     // --- Modal Logic ---
     const openModal = (id = null) => {
         form.reset();
@@ -193,9 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (imagesToLoad.length > 0) {
-                imagesToLoad.forEach(img => addImageRow(img));
+                imagesToLoad.forEach(img => addImageRow(imageContainer, img));
             } else {
-                addImageRow();
+                addImageRow(imageContainer);
             }
 
             document.getElementById('product-desc').value = product.description;
@@ -212,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modalTitle.textContent = "Add Product";
             document.getElementById('product-id').value = '';
             imageContainer.innerHTML = '';
-            addImageRow();
+            addImageRow(imageContainer);
         }
 
         modal.classList.add('active');
@@ -228,6 +299,45 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', closeModal);
     cancelBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', closeModal);
+
+    // --- Banner Modal Logic ---
+    const openBannerModal = (id = null) => {
+        bannerForm.reset();
+        
+        if (id) {
+            bannerModalTitle.textContent = "Edit Banner";
+            const banner = window.banners.find(b => b.id === id);
+            
+            document.getElementById('banner-id').value = banner.id;
+            document.getElementById('banner-title').value = banner.title;
+            document.getElementById('banner-subtitle').value = banner.subtitle;
+            document.getElementById('banner-discount').value = banner.discount || '';
+            document.getElementById('banner-theme').value = banner.theme || 'light';
+            document.getElementById('banner-btn-text').value = banner.btnText;
+            document.getElementById('banner-btn-link').value = banner.btnLink;
+            
+            bannerImageContainer.innerHTML = '';
+            addImageRow(bannerImageContainer, banner.image);
+        } else {
+            bannerModalTitle.textContent = "Add Banner";
+            document.getElementById('banner-id').value = '';
+            bannerImageContainer.innerHTML = '';
+            addImageRow(bannerImageContainer);
+        }
+
+        bannerModal.classList.add('active');
+        bannerOverlay.classList.add('active');
+    };
+
+    const closeBannerModal = () => {
+        bannerModal.classList.remove('active');
+        bannerOverlay.classList.remove('active');
+    };
+
+    addBannerBtn.addEventListener('click', () => openBannerModal());
+    closeBannerBtn.addEventListener('click', closeBannerModal);
+    cancelBannerBtn.addEventListener('click', closeBannerModal);
+    bannerOverlay.addEventListener('click', closeBannerModal);
 
     // --- Form Submission ---
     form.addEventListener('submit', (e) => {
@@ -284,6 +394,53 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
+    // --- Banner Form Submission ---
+    bannerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const imageInputs = bannerImageContainer.querySelectorAll('.base64-input');
+        const imagesArray = Array.from(imageInputs).map(inp => inp.value).filter(val => val !== '');
+        const mainImage = imagesArray.length > 0 ? imagesArray[0] : '';
+
+        if (!mainImage) {
+            alert('Please provide at least one image for the banner.');
+            return;
+        }
+
+        let bannerId = document.getElementById('banner-id').value;
+        if (!bannerId) {
+            bannerId = 'banner-' + Date.now();
+        }
+
+        const newBanner = {
+            id: bannerId,
+            image: mainImage,
+            title: document.getElementById('banner-title').value,
+            subtitle: document.getElementById('banner-subtitle').value,
+            discount: document.getElementById('banner-discount').value,
+            theme: document.getElementById('banner-theme').value,
+            btnText: document.getElementById('banner-btn-text').value,
+            btnLink: document.getElementById('banner-btn-link').value
+        };
+
+        const existingIndex = window.banners.findIndex(b => b.id === newBanner.id);
+        
+        if (existingIndex > -1) {
+            window.banners[existingIndex] = newBanner;
+        } else {
+            window.banners.push(newBanner);
+        }
+
+        if (typeof saveBannerToDb === 'function') {
+            saveBannerToDb(newBanner);
+        } else {
+            localStorage.setItem('marwa_banners', JSON.stringify(window.banners));
+        }
+        
+        if (typeof window.renderBannersTable === 'function') window.renderBannersTable();
+        closeBannerModal();
+    });
+
     // --- Delete Logic ---
     const deleteProduct = (id) => {
         if(confirm("Are you sure you want to delete this product? This will immediately remove it from your website.")) {
@@ -293,12 +450,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.products = window.products.filter(p => p.id !== id);
                 localStorage.setItem('marwa_products', JSON.stringify(window.products));
             }
-            // renderTable() is triggered automatically by Firebase onSnapshot
+        }
+    };
+
+    const deleteBanner = (id) => {
+        if(confirm("Are you sure you want to delete this banner?")) {
+            if (typeof deleteBannerFromDb === 'function') {
+                deleteBannerFromDb(id);
+            } else {
+                window.banners = window.banners.filter(b => b.id !== id);
+                localStorage.setItem('marwa_banners', JSON.stringify(window.banners));
+            }
         }
     };
 
     // Initial render
     if (typeof window.renderTable === 'function') {
         window.renderTable();
+    }
+    if (typeof window.renderBannersTable === 'function') {
+        window.renderBannersTable();
     }
 });

@@ -12,43 +12,27 @@ function renderHomepage() {
     appContent.innerHTML = `
         <div class="hero-container fade-in">
             <section class="hero-section" id="hero-slider">
-                <div class="hero-slide active">
-                    <img src="assets/hero_banner.png" alt="Mid-Summer Sale" class="hero-bg-img">
-                    <div class="hero-content">
-                        <div class="hero-subtitle">Mid-Summer</div>
-                        <h1 class="hero-title">SALE</h1>
-                        <div class="hero-discount">UP TO 50% OFF</div>
-                        <div class="hero-actions">
-                            <a href="#collection/sale" class="btn">SHOP NOW</a>
+                ${BANNERS.map((banner, index) => {
+                    const themeStyle = banner.theme === 'dark' ? 'color: var(--color-bg-primary);' : '';
+                    const themeStyleBorder = banner.theme === 'dark' ? 'border-color: var(--color-bg-primary); color: var(--color-bg-primary);' : '';
+                    const btnClass = banner.theme === 'dark' ? 'btn btn-outline' : 'btn';
+                    
+                    return `
+                    <div class="hero-slide ${index === 0 ? 'active' : ''}">
+                        <img src="${banner.image}" alt="${banner.title}" class="hero-bg-img">
+                        <div class="hero-content">
+                            <div class="hero-subtitle" style="${themeStyle}">${banner.subtitle}</div>
+                            <h1 class="hero-title" style="${themeStyle}">${banner.title}</h1>
+                            ${banner.discount ? `<div class="hero-discount" style="${themeStyle}">${banner.discount}</div>` : ''}
+                            <div class="hero-actions">
+                                <a href="${banner.btnLink}" class="${btnClass}" style="${themeStyleBorder}">${banner.btnText}</a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="hero-slide">
-                    <img src="assets/hero_banner_2.png" alt="New Arrivals" class="hero-bg-img">
-                    <div class="hero-content">
-                        <div class="hero-subtitle" style="color: var(--color-bg-primary);">Luxury Edition</div>
-                        <h1 class="hero-title" style="color: var(--color-bg-primary);">NEW<br>ARRIVALS</h1>
-                        <div class="hero-actions">
-                            <a href="#collection/new-arrivals" class="btn btn-outline" style="border-color: var(--color-bg-primary); color: var(--color-bg-primary);">EXPLORE</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-slide">
-                    <img src="assets/hero_banner_3.png" alt="Festive Collection" class="hero-bg-img">
-                    <div class="hero-content">
-                        <div class="hero-subtitle">Premium Wear</div>
-                        <h1 class="hero-title">FESTIVE</h1>
-                        <div class="hero-discount">Starting at Rs. 4,500</div>
-                        <div class="hero-actions">
-                            <a href="#collection/festive" class="btn">SHOP COLLECTION</a>
-                        </div>
-                    </div>
-                </div>
+                    </div>`;
+                }).join('')}
                 
                 <div class="hero-pagination" id="hero-pagination">
-                    <span class="dot active" data-index="0"></span>
-                    <span class="dot" data-index="1"></span>
-                    <span class="dot" data-index="2"></span>
+                    ${BANNERS.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}" data-index="${index}"></span>`).join('')}
                 </div>
             </section>
         </div>

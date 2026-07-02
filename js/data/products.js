@@ -141,10 +141,45 @@ const DEFAULT_PRODUCTS = [
     }
 ];
 
-let PRODUCTS = DEFAULT_PRODUCTS; // Start with default products
+const DEFAULT_BANNERS = [
+    {
+        id: "banner-mid-summer",
+        image: "assets/hero_banner.png",
+        subtitle: "Mid-Summer",
+        title: "SALE",
+        discount: "UP TO 50% OFF",
+        btnText: "SHOP NOW",
+        btnLink: "#collection/sale",
+        theme: "light" // means dark text on light bg (or vice-versa, depending on how CSS handles it. The original CSS uses white for standard, dark for some). Let's use 'dark' for dark text.
+    },
+    {
+        id: "banner-new-arrivals",
+        image: "assets/hero_banner_2.png",
+        subtitle: "Luxury Edition",
+        title: "NEW<br>ARRIVALS",
+        discount: "",
+        btnText: "EXPLORE",
+        btnLink: "#collection/new-arrivals",
+        theme: "dark" // Original used style="color: var(--color-bg-primary);" which is usually a dark color or light color? Let's keep it simple.
+    },
+    {
+        id: "banner-festive",
+        image: "assets/hero_banner_3.png",
+        subtitle: "Premium Wear",
+        title: "FESTIVE",
+        discount: "Starting at Rs. 4,500",
+        btnText: "SHOP COLLECTION",
+        btnLink: "#collection/festive",
+        theme: "light"
+    }
+];
 
-// Create an event to notify when products are loaded
+let PRODUCTS = DEFAULT_PRODUCTS; // Start with default products
+let BANNERS = DEFAULT_BANNERS;
+
+// Create events to notify when data is loaded
 const productsLoadedEvent = new Event('productsLoaded');
+const bannersLoadedEvent = new Event('bannersLoaded');
 
 // Read from Firebase Firestore
 if (typeof db !== 'undefined') {
@@ -176,13 +211,42 @@ if (typeof db !== 'undefined') {
     }, (error) => {
         console.error("Error fetching products from Firebase:", error);
     });
+
+    // Banners Listener
+    db.collection('marwa_banners').onSnapshot((snapshot) => {
+        let loadedBanners = [];
+        snapshot.forEach(doc => {
+            loadedBanners.push(doc.data());
+        });
+
+        if (loadedBanners.length > 0) {
+            BANNERS = loadedBanners;
+        } else {
+            BANNERS = DEFAULT_BANNERS;
+            DEFAULT_BANNERS.forEach(b => db.collection('marwa_banners').doc(b.id).set(b));
+        }
+        
+        window.dispatchEvent(bannersLoadedEvent);
+        
+        if (typeof window.renderBannersTable === 'function') {
+            window.banners = BANNERS;
+            window.renderBannersTable();
+        } else if (typeof handleRoute === 'function') {
+            handleRoute();
+        }
+    });
 } else {
     // Fallback if Firebase fails to load
     const savedProducts = localStorage.getItem('marwa_products');
     if (savedProducts) {
         PRODUCTS = JSON.parse(savedProducts);
     }
+    const savedBanners = localStorage.getItem('marwa_banners');
+    if (savedBanners) {
+        BANNERS = JSON.parse(savedBanners);
+    }
     window.dispatchEvent(productsLoadedEvent);
+    window.dispatchEvent(bannersLoadedEvent);
 }
 
 // Helper to save product to Firebase
@@ -196,5 +260,19 @@ function saveProductToDb(product) {
 function deleteProductFromDb(id) {
     if (typeof db !== 'undefined') {
         return db.collection('marwa_products').doc(id).delete();
+    }
+}
+
+// Helper to save banner to Firebase
+function saveBannerToDb(banner) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_banners').doc(banner.id).set(banner);
+    }
+}
+
+// Helper to delete banner from Firebase
+function deleteBannerFromDb(id) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_banners').doc(id).delete();
     }
 }
