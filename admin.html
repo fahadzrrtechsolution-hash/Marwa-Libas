@@ -12,8 +12,19 @@
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body class="admin-body">
+    
+    <!-- Login Screen -->
+    <div id="admin-login-screen" style="position: fixed; inset: 0; background: var(--background); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%;">
+            <h2 style="margin-bottom: 20px;">Admin Login</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 14px;">Please enter the password to access the admin panel.</p>
+            <input type="password" id="admin-password-input" class="form-control" placeholder="Password" style="margin-bottom: 15px;">
+            <button id="admin-login-btn" class="btn btn-primary" style="width: 100%;">Login</button>
+            <p id="admin-login-error" style="color: red; font-size: 13px; margin-top: 10px; display: none;">Incorrect password!</p>
+        </div>
+    </div>
 
-    <div class="admin-layout">
+    <div class="admin-layout" id="admin-main-layout" style="display: none;">
         <!-- Sidebar -->
         <aside class="admin-sidebar">
             <div class="sidebar-brand">

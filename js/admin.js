@@ -1,5 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- Authentication ---
+    const loginScreen = document.getElementById('admin-login-screen');
+    const mainLayout = document.getElementById('admin-main-layout');
+    const passInput = document.getElementById('admin-password-input');
+    const loginBtn = document.getElementById('admin-login-btn');
+    const loginError = document.getElementById('admin-login-error');
+
+    // Default password
+    const ADMIN_PASSWORD = 'marwalibas123';
+
+    if(loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            if (passInput.value === ADMIN_PASSWORD) {
+                loginScreen.style.display = 'none';
+                mainLayout.style.display = 'flex';
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+        
+        passInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+    }
+
     // --- State Management ---
     let products = [];
     const savedProducts = localStorage.getItem('marwa_products');
