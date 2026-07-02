@@ -1,0 +1,112 @@
+/* ==========================================
+   FOOTER
+   ========================================== */
+.site-footer {
+    background-color: var(--color-brand);
+    color: #ffffff;
+    padding: var(--spacing-xl) 0 0;
+    margin-top: var(--spacing-xxl);
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg) var(--spacing-xl);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+    gap: var(--spacing-xl);
+}
+
+@media (max-width: 991px) {
+    .footer-container { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 576px) {
+    .footer-container { grid-template-columns: 1fr; }
+}
+
+.footer-col h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-accent);
+}
+
+.footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.footer-col ul a {
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.footer-col ul a:hover {
+    color: var(--color-accent);
+}
+
+.footer-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.footer-info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+}
+
+.social-links {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.social-links a {
+    color: #ffffff;
+    transition: color var(--transition-fast);
+}
+
+.social-links a:hover {
+    color: var(--color-accent);
+}
+
+.footer-newsletter p {
+    font-size: 14px;
+    color: #cccccc;
+    margin-bottom: var(--spacing-md);
+}
+
+.newsletter-form {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #333333;
+    background-color: #222222;
+    color: #ffffff;
+    outline: none;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.newsletter-form input:focus {
+    border-color: var(--color-accent);
+}
+
+.footer-bottom {
+    border-top: 1px solid #222222;
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+    font-size: 13px;
+    color: #888888;
+}

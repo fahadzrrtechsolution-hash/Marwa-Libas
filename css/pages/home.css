@@ -1,0 +1,48 @@
+/* ==========================================
+   COLLECTION SECTION
+   ========================================== */
+.collection-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.collection-title {
+    font-size: 32px;
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.collection-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* ==========================================
+   CURATED SECTION (HOMEPAGE BANNER)
+   ========================================== */
+.curated-section {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.curated-banner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.curated-banner h2 {
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-md);
+}
+
+.curated-banner p {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}

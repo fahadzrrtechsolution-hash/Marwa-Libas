@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marwa Libas | Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <h2>MARWA LIBAS</h2>
+                <span class="badge">ADMIN</span>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active" data-view="products">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    Products
+                </a></li>
+                <li><a href="#" data-view="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Dashboard
+                </a></li>
+                <li><a href="index.html">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    View Website
+                </a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Product Management</h1>
+                <button class="btn btn-primary" id="add-product-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Add Product
+                </button>
+            </header>
+
+            <div class="admin-content">
+                <div class="card table-card">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Collection</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody">
+                            <!-- Products injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Form Modal -->
+    <div class="modal-overlay" id="product-modal-overlay"></div>
+    <div class="modal" id="product-modal">
+        <div class="modal-header">
+            <h2 id="modal-title">Add Product</h2>
+            <button class="close-btn" id="close-modal-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                
+                <div class="form-group">
+                    <label for="product-title">Title</label>
+                    <input type="text" id="product-title" class="form-control" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="product-price">Sale Price (Rs.)</label>
+                        <input type="number" id="product-price" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-original-price">Original Price (Rs.)</label>
+                        <input type="number" id="product-original-price" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-collection">Collection</label>
+                    <select id="product-collection" class="form-control" required>
+                        <option value="new-arrivals">New Arrivals</option>
+                        <option value="eid-ul-adha">Eid ul-Adha</option>
+                        <option value="best-sellers">Best Sellers</option>
+                        <option value="luxury-lawn">Luxury Lawn</option>
+                        <option value="summer">Summer Collection</option>
+                        <option value="under-2290">Under 2290</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="product-badge">Badge (Optional)</label>
+                        <input type="text" id="product-badge" class="form-control" placeholder="e.g. Sale, New">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Images (First image is the main image)</label>
+                    <div id="image-upload-container">
+                        <!-- Dynamic rows will be added here via JS -->
+                    </div>
+                    <button type="button" class="btn btn-outline" id="add-image-row-btn" style="margin-top: 10px; font-size: 13px; padding: 6px 12px;">+ Add another picture</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-desc">Description</label>
+                    <textarea id="product-desc" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Specifications (Format: Key:Value, one per line)</label>
+                    <textarea id="product-specs" class="form-control" rows="4" placeholder="Fabric: Cotton Lawn&#10;Color: Pink" required></textarea>
+                </div>
+
+                <div class="modal-footer" style="margin-top: 20px; text-align: right;">
+                    <button type="button" class="btn btn-outline" id="cancel-modal-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-product-btn">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Logic -->
+    <script src="js/admin.js"></script>
+</body>
+</html>

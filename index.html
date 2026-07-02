@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marwa Libas | Premium Pakistani Women Designer Wear</title>
+    <meta name="description" content="Shop premium Women's Designer Suits, Eid Collections, and Summer Lawn dresses at Marwa Libas. Pre-orders deliver in 4-7 working days.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Modular Style Sheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/drawers.css">
+    <link rel="stylesheet" href="css/components/hero.css">
+    <link rel="stylesheet" href="css/components/productCard.css">
+    <link rel="stylesheet" href="css/components/footer.css">
+    <link rel="stylesheet" href="css/pages/home.css">
+    <link rel="stylesheet" href="css/pages/collection.css">
+    <link rel="stylesheet" href="css/pages/productDetails.css">
+</head>
+<body>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <span>Pre-Order articles will be deliver in 4-7 working days</span>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header" id="main-header">
+        <div class="header-container">
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+
+            <!-- Left Actions -->
+            <div class="header-left">
+                <button class="icon-btn" id="search-trigger" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <a href="#account" class="icon-btn header-desktop-only" aria-label="Account">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </a>
+            </div>
+
+            <!-- Logo -->
+            <div class="header-brand">
+                <a href="#home" class="logo-link">
+                    <span class="logo-text">MARWA LIBAS</span>
+                </a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="header-right">
+                <a href="#wishlist" class="icon-btn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
+                <button class="icon-btn" id="cart-trigger" aria-label="Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span class="badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="navigation-menu" id="navigation-menu">
+            <ul class="nav-links">
+                <li><a href="#collection/new-arrivals" class="nav-link active" data-path="new-arrivals">New Arrivals</a></li>
+                <li><a href="#collection/eid-ul-adha" class="nav-link" data-path="eid-ul-adha">Eid ul-Adha SS’26</a></li>
+                <li><a href="#collection/best-sellers" class="nav-link" data-path="best-sellers">Best Selling</a></li>
+                <li><a href="#collection/luxury-lawn" class="nav-link" data-path="luxury-lawn">Luxury Lawn SS'26</a></li>
+                <li><a href="#collection/summer" class="nav-link" data-path="summer">Summer Collection</a></li>
+                <li><a href="#collection/under-2290" class="nav-link" data-path="under-2290">Dresses Under Rs. 2290</a></li>
+                <li><a href="#contact" class="nav-link" data-path="contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Slide-Out Mobile Navigation Drawer -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header">
+            <h3>Menu</h3>
+            <button class="close-btn" id="close-mobile-menu" aria-label="Close Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#collection/new-arrivals" class="mobile-nav-link">New Arrivals</a></li>
+            <li><a href="#collection/eid-ul-adha" class="mobile-nav-link">Eid ul-Adha SS’26</a></li>
+            <li><a href="#collection/best-sellers" class="mobile-nav-link">Best Selling</a></li>
+            <li><a href="#collection/luxury-lawn" class="mobile-nav-link">Luxury Lawn SS'26</a></li>
+            <li><a href="#collection/summer" class="mobile-nav-link">Summer Collection</a></li>
+            <li><a href="#collection/under-2290" class="mobile-nav-link">Dresses Under Rs. 2290</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <!-- Premium Slide-Out Search Drawer -->
+    <div class="drawer-overlay" id="search-drawer-overlay"></div>
+    <div class="search-drawer" id="search-drawer">
+        <div class="drawer-header">
+            <h3>Discover</h3>
+            <button class="close-btn" id="close-search" aria-label="Close Search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="search-drawer-content">
+            <div class="search-category-wrapper">
+                <select id="search-category" class="search-category-select">
+                    <option value="all">All Categories</option>
+                    <option value="2pc lawn suit">2pc lawn suit</option>
+                    <option value="2pcs suit">2pcs suit</option>
+                    <option value="3pc lawn suit">3pc lawn suit</option>
+                    <option value="3pcs">3pcs</option>
+                </select>
+                <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+
+            <div class="premium-search-input-wrapper">
+                <input type="text" id="search-input" placeholder="What are you looking for?" autocomplete="off">
+                <button class="search-btn" id="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+            
+            <div id="search-suggestions" class="search-suggestions">
+                <p class="suggestions-title">Trending Now</p>
+                <div class="trending-tags">
+                    <span class="trending-tag" onclick="document.getElementById('search-input').value='Luxury Lawn'; document.getElementById('search-input').dispatchEvent(new Event('input'))">Luxury Lawn</span>
+                    <span class="trending-tag" onclick="document.getElementById('search-input').value='Sale'; document.getElementById('search-input').dispatchEvent(new Event('input'))">Sale</span>
+                    <span class="trending-tag" onclick="document.getElementById('search-input').value='2pc'; document.getElementById('search-input').dispatchEvent(new Event('input'))">2pc Suits</span>
+                </div>
+            </div>
+
+            <div class="search-results" id="search-results">
+                <!-- Search results rendered dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-Out Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3>Shopping Cart (<span id="cart-drawer-count">0</span>)</h3>
+            <button class="close-btn" id="close-cart" aria-label="Close Cart">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        
+        <div class="cart-drawer-content" id="cart-drawer-items">
+            <!-- Cart items render dynamically -->
+            <div class="empty-cart-message">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <p>Your shopping cart is empty</p>
+                <a href="#collection/new-arrivals" class="btn btn-primary close-cart-drawer-btn">Start Shopping</a>
+            </div>
+        </div>
+
+        <div class="cart-drawer-footer" id="cart-drawer-footer" style="display: none;">
+            <div class="cart-summary-row">
+                <span>Subtotal:</span>
+                <span id="cart-drawer-subtotal">Rs. 0.00</span>
+            </div>
+            <p class="cart-note">Shipping & taxes calculated at checkout</p>
+            <a href="#checkout" class="btn btn-primary btn-block" id="cart-checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <!-- Main Viewport for Dynamic Content -->
+    <main id="app-content" class="fade-in">
+        <!-- Renders dynamic page content from app.js -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col footer-contact">
+                <h3>Contact Us</h3>
+                <ul class="footer-info-list">
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>shop# 57 kacha jail road chunghi ammar sindhu lahore, Pakistan</span>
+                    </li>
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <a href="mailto:marwalibas@outlook.com">marwalibas@outlook.com</a>
+                    </li>
+                    <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <a href="tel:+923047753773">+92 304 7753773</a>
+                    </li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Customer Care</h3>
+                <ul>
+                    <li><a href="#account">My Account</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#faqs">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#collection/sale">Sale</a></li>
+                    <li><a href="#collection/new-arrivals">New Arrivals</a></li>
+                    <li><a href="#collection/under-2290">Dresses under Rs: 2290</a></li>
+                    <li><a href="#collection/luxury-lawn">Luxury Lawn SS'26</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive 10% off your first order and stay updated on new arrivals.</p>
+                <form id="newsletter-form" class="newsletter-form">
+                    <input type="email" placeholder="Your Email Address" required>
+                    <button type="submit" class="btn btn-dark">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Marwa Libas. All rights reserved. Powered by Antigravity AI.</p>
+        </div>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="js/data/products.js"></script>
+    <script src="js/data/store.js"></script>
+    <script src="js/components/header.js"></script>
+    <script src="js/components/cartDrawer.js"></script>
+    <script src="js/components/productCard.js"></script>
+    <script src="js/pages/home.js"></script>
+    <script src="js/pages/collection.js"></script>
+    <script src="js/pages/productDetails.js"></script>
+    <script src="js/pages/contact.js"></script>
+    <script src="js/pages/checkout.js"></script>
+    <script src="js/pages/wishlist.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

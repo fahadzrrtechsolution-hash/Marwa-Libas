@@ -1,0 +1,302 @@
+/* ==========================================
+   PRODUCT DETAIL PAGE
+   ========================================== */
+.product-detail-container {
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-accent);
+}
+
+.product-detail-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+@media (max-width: 991px) {
+    .product-detail-layout { grid-template-columns: 1fr; }
+}
+
+/* Gallery styling */
+.product-gallery {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.gallery-thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.thumb-item {
+    width: 70px;
+    height: 90px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-fast);
+}
+
+.thumb-item.active, .thumb-item:hover {
+    border-color: var(--color-text-primary);
+}
+
+.gallery-main {
+    flex: 1;
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    aspect-ratio: 3/4;
+}
+
+.gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Details Column */
+.product-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.urgency-widget {
+    background-color: #fdf7f7;
+    border: 1px solid #f2dede;
+    color: var(--color-sale);
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.urgency-widget svg {
+    animation: shake 2s infinite;
+}
+
+.product-detail-title {
+    font-size: 30px;
+}
+
+.product-detail-price {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.preorder-banner {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    padding: 10px;
+    border-left: 3px solid var(--color-accent);
+}
+
+/* Selector buttons */
+.selector-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.size-selector-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.size-btn {
+    border: 1px solid var(--color-border);
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+}
+
+.size-btn:hover, .size-btn.active {
+    border-color: var(--color-text-primary);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+}
+
+/* Quantity Row */
+.qty-selector-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.detail-qty-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.detail-qty-btn {
+    padding: 10px 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.detail-qty-val {
+    padding: 10px;
+    min-width: 32px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Action buttons */
+.checkout-actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* Add to Cart Shaking Effect */
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-3px, 0); }
+    20%, 40%, 60%, 80% { transform: translate(3px, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+.t4s-ani-shake {
+    animation: shake 5s infinite;
+}
+
+/* Tabs/Accordions */
+.product-specs-accordion {
+    margin-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: var(--spacing-md) 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-primary);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-smooth);
+    font-size: 14px;
+    color: var(--color-text-secondary);
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 500px;
+    padding-bottom: var(--spacing-md);
+}
+
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.specs-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--color-bg-secondary);
+}
+
+.specs-table td:first-child {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    width: 150px;
+}
+
+/* Sticky Add to Cart Bar */
+.sticky-atc-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-bg-primary);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    padding: 12px var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    transform: translateY(100%);
+    transition: transform var(--transition-smooth);
+}
+
+.sticky-atc-bar.visible {
+    transform: translateY(0);
+}
+
+.sticky-atc-product {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.sticky-atc-product img {
+    width: 50px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+}
+
+.sticky-atc-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sticky-atc-price {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.sticky-atc-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .sticky-atc-bar {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+    .sticky-atc-product {
+        display: none;
+    }
+}
