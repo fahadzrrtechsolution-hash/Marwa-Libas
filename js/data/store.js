@@ -29,26 +29,33 @@ function updateBadges() {
 }
 
 function addToCart(productId, size, quantity) {
-    const product = PRODUCTS.find(p => p.id === productId);
-    if (!product) return;
+    const product = PRODUCTS.find(p => String(p.id) === String(productId));
+    if (!product) {
+        console.error("Product not found for ID:", productId);
+        return;
+    }
 
-    const existingIndex = state.cart.findIndex(item => item.id === productId && item.size === size);
+    const existingIndex = state.cart.findIndex(item => String(item.id) === String(productId) && item.size === size);
     
     if (existingIndex > -1) {
         state.cart[existingIndex].quantity += quantity;
     } else {
+        const imageToUse = product.localImage || product.image || (product.images && product.images[0]) || '';
         state.cart.push({
             id: product.id,
             title: product.title,
             price: product.price,
-            image: product.localImage,
-            size: size,
-            quantity: quantity
+            image: imageToUse,
+            size: size || 'M',
+            quantity: quantity || 1
         });
     }
 
     saveState();
-    renderCartDrawer();
+    if (typeof renderCartDrawer === 'function') {
+        renderCartDrawer();
+    }
+    
     const drawer = document.getElementById('cart-drawer');
     const overlay = document.getElementById('cart-drawer-overlay');
     if (drawer && overlay) {
@@ -57,6 +64,8 @@ function addToCart(productId, size, quantity) {
         const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
         document.body.style.paddingRight = `${scrollbarWidth}px`;
         document.body.style.overflow = 'hidden';
+    } else {
+        console.error("Cart drawer elements not found");
     }
 }
 
@@ -84,5 +93,14 @@ function toggleWishlist(productId) {
         state.wishlist.push(productId);
     }
     saveState();
-    handleRoute();
+    
+    if (window.location.hash === '#wishlist') {
+        renderWishlistPage();
+    } else {
+        document.querySelectorAll(`.wishlist-toggle-btn[data-product-id="${productId}"] svg`).forEach(svg => {
+            const isWishlisted = state.wishlist.includes(productId);
+            svg.setAttribute('fill', isWishlisted ? 'var(--color-sale)' : 'none');
+            svg.setAttribute('stroke', isWishlisted ? 'var(--color-sale)' : 'currentColor');
+        });
+    }
 }

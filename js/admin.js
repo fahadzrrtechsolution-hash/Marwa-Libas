@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Products and Banners will be populated dynamically from js/data/products.js via Firebase onSnapshot
     window.products = typeof PRODUCTS !== 'undefined' ? PRODUCTS : [];
     window.banners = typeof BANNERS !== 'undefined' ? BANNERS : [];
+    window.collections = typeof COLLECTIONS !== 'undefined' ? COLLECTIONS : [];
     
     // We don't need a local save function because saveProductToDb and deleteProductFromDb are used.
 
@@ -52,6 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const bannerForm = document.getElementById('banner-form');
     const bannerModalTitle = document.getElementById('banner-modal-title');
     const bannerImageContainer = document.getElementById('banner-image-upload-container');
+
+    // --- Collections DOM Elements ---
+    const collectionTbody = document.getElementById('collections-tbody');
+    const addCollectionBtn = document.getElementById('add-collection-btn');
+    const collectionModal = document.getElementById('collection-modal');
+    const collectionOverlay = document.getElementById('collection-modal-overlay');
+    const closeCollectionBtn = document.getElementById('close-collection-modal-btn');
+    const cancelCollectionBtn = document.getElementById('cancel-collection-modal-btn');
+    const collectionForm = document.getElementById('collection-form');
+    const collectionModalTitle = document.getElementById('collection-modal-title');
+    const collectionImageContainer = document.getElementById('collection-image-upload-container');
 
     // --- Navigation Logic ---
     const navLinks = document.querySelectorAll('.sidebar-nav a[data-view]');
@@ -240,9 +252,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- Render Collections Table ---
+    window.renderCollectionsTable = () => {
+        collectionTbody.innerHTML = '';
+        if(!window.collections || window.collections.length === 0) {
+            collectionTbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding: 40px;">No collections found. Add a new collection to get started.</td></tr>`;
+            return;
+        }
+
+        window.collections.forEach(col => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><img src="${col.image}" alt="${col.title}"></td>
+                <td><strong>${col.title}</strong></td>
+                <td>${col.link}</td>
+                <td>
+                    <button class="action-btn edit-collection-btn" data-id="${col.id}" title="Edit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </button>
+                    <button class="action-btn delete delete-collection-btn" data-id="${col.id}" title="Delete">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                </td>
+            `;
+            collectionTbody.appendChild(tr);
+        });
+
+        // Attach actions
+        document.querySelectorAll('.edit-collection-btn').forEach(btn => {
+            btn.addEventListener('click', () => openCollectionModal(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-collection-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteCollection(btn.getAttribute('data-id')));
+        });
+    };
+
     // --- Modal Logic ---
+    const isExternalCheckbox = document.getElementById('product-is-external');
+    const externalFieldsContainer = document.getElementById('external-fields-container');
+
+    if(isExternalCheckbox) {
+        isExternalCheckbox.addEventListener('change', (e) => {
+            externalFieldsContainer.style.display = e.target.checked ? 'block' : 'none';
+            document.getElementById('product-external-brand').required = e.target.checked;
+            document.getElementById('product-external-url').required = e.target.checked;
+        });
+    }
+
     const openModal = (id = null) => {
         form.reset();
+        if(isExternalCheckbox) {
+            isExternalCheckbox.checked = false;
+            externalFieldsContainer.style.display = 'none';
+        }
         
         if (id) {
             modalTitle.textContent = "Edit Product";
@@ -254,6 +316,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('product-original-price').value = product.originalPrice;
             document.getElementById('product-collection').value = product.collection;
             document.getElementById('product-badge').value = product.badge || '';
+
+            if(product.isExternal) {
+                isExternalCheckbox.checked = true;
+                externalFieldsContainer.style.display = 'block';
+                document.getElementById('product-external-brand').value = product.externalBrand || '';
+                document.getElementById('product-external-url').value = product.externalUrl || '';
+            }
             
             imageContainer.innerHTML = '';
             let imagesToLoad = [];
@@ -339,6 +408,41 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelBannerBtn.addEventListener('click', closeBannerModal);
     bannerOverlay.addEventListener('click', closeBannerModal);
 
+    // --- Collection Modal Logic ---
+    const openCollectionModal = (id = null) => {
+        collectionForm.reset();
+        
+        if (id) {
+            collectionModalTitle.textContent = "Edit Collection";
+            const col = window.collections.find(c => c.id === id);
+            
+            document.getElementById('collection-id').value = col.id;
+            document.getElementById('collection-title').value = col.title;
+            document.getElementById('collection-link').value = col.link;
+            
+            collectionImageContainer.innerHTML = '';
+            addImageRow(collectionImageContainer, col.image);
+        } else {
+            collectionModalTitle.textContent = "Add Collection";
+            document.getElementById('collection-id').value = '';
+            collectionImageContainer.innerHTML = '';
+            addImageRow(collectionImageContainer);
+        }
+
+        collectionModal.classList.add('active');
+        collectionOverlay.classList.add('active');
+    };
+
+    const closeCollectionModal = () => {
+        collectionModal.classList.remove('active');
+        collectionOverlay.classList.remove('active');
+    };
+
+    if(addCollectionBtn) addCollectionBtn.addEventListener('click', () => openCollectionModal());
+    if(closeCollectionBtn) closeCollectionBtn.addEventListener('click', closeCollectionModal);
+    if(cancelCollectionBtn) cancelCollectionBtn.addEventListener('click', closeCollectionModal);
+    if(collectionOverlay) collectionOverlay.addEventListener('click', closeCollectionModal);
+
     // --- Form Submission ---
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -365,6 +469,9 @@ document.addEventListener('DOMContentLoaded', () => {
             originalPrice: parseInt(document.getElementById('product-original-price').value),
             collection: document.getElementById('product-collection').value,
             badge: document.getElementById('product-badge').value,
+            isExternal: isExternalCheckbox ? isExternalCheckbox.checked : false,
+            externalBrand: document.getElementById('product-external-brand') ? document.getElementById('product-external-brand').value : '',
+            externalUrl: document.getElementById('product-external-url') ? document.getElementById('product-external-url').value : '',
             image: mainImage,
             localImage: mainImage,
             images: imagesArray,
@@ -441,6 +548,51 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBannerModal();
     });
 
+    // --- Collection Form Submission ---
+    if(collectionForm) {
+        collectionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const imageInputs = collectionImageContainer.querySelectorAll('.base64-input');
+            const imagesArray = Array.from(imageInputs).map(inp => inp.value).filter(val => val !== '');
+            const mainImage = imagesArray.length > 0 ? imagesArray[0] : '';
+
+            if (!mainImage) {
+                alert('Please provide an image for the collection.');
+                return;
+            }
+
+            let colId = document.getElementById('collection-id').value;
+            if (!colId) {
+                colId = 'col-' + Date.now();
+            }
+
+            const newCollection = {
+                id: colId,
+                image: mainImage,
+                title: document.getElementById('collection-title').value,
+                link: document.getElementById('collection-link').value
+            };
+
+            const existingIndex = window.collections.findIndex(c => c.id === newCollection.id);
+            
+            if (existingIndex > -1) {
+                window.collections[existingIndex] = newCollection;
+            } else {
+                window.collections.push(newCollection);
+            }
+
+            if (typeof saveCollectionToDb === 'function') {
+                saveCollectionToDb(newCollection);
+            } else {
+                localStorage.setItem('marwa_collections', JSON.stringify(window.collections));
+            }
+            
+            if (typeof window.renderCollectionsTable === 'function') window.renderCollectionsTable();
+            closeCollectionModal();
+        });
+    }
+
     // --- Delete Logic ---
     const deleteProduct = (id) => {
         if(confirm("Are you sure you want to delete this product? This will immediately remove it from your website.")) {
@@ -464,11 +616,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const deleteCollection = (id) => {
+        if(confirm("Are you sure you want to delete this collection?")) {
+            if (typeof deleteCollectionFromDb === 'function') {
+                deleteCollectionFromDb(id);
+            } else {
+                window.collections = window.collections.filter(c => c.id !== id);
+                localStorage.setItem('marwa_collections', JSON.stringify(window.collections));
+            }
+        }
+    };
+
     // Initial render
     if (typeof window.renderTable === 'function') {
         window.renderTable();
     }
     if (typeof window.renderBannersTable === 'function') {
         window.renderBannersTable();
+    }
+    if (typeof window.renderCollectionsTable === 'function') {
+        window.renderCollectionsTable();
     }
 });

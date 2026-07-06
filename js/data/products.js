@@ -174,12 +174,21 @@ const DEFAULT_BANNERS = [
     }
 ];
 
+const DEFAULT_COLLECTIONS = [
+    { id: "col-best-sellers", title: "Best Seller", image: "assets/parizad_dress.png", link: "#collection/best-sellers" },
+    { id: "col-eid-ul-adha", title: "Eid ul-Adha SS’26", image: "assets/maheen.jpg", link: "#collection/eid-ul-adha" },
+    { id: "col-new-arrivals", title: "New Arrivals", image: "assets/maya_dress.png", link: "#collection/new-arrivals" },
+    { id: "col-summer", title: "Summer Collection", image: "assets/skyfall_dress.png", link: "#collection/summer" }
+];
+
 let PRODUCTS = DEFAULT_PRODUCTS; // Start with default products
 let BANNERS = DEFAULT_BANNERS;
+let COLLECTIONS = DEFAULT_COLLECTIONS;
 
 // Create events to notify when data is loaded
 const productsLoadedEvent = new Event('productsLoaded');
 const bannersLoadedEvent = new Event('bannersLoaded');
+const collectionsLoadedEvent = new Event('collectionsLoaded');
 
 // Read from Firebase Firestore
 if (typeof db !== 'undefined') {
@@ -235,6 +244,31 @@ if (typeof db !== 'undefined') {
             handleRoute();
         }
     });
+
+    // Collections Listener
+    db.collection('marwa_collections').onSnapshot((snapshot) => {
+        let loadedCollections = [];
+        snapshot.forEach(doc => {
+            loadedCollections.push(doc.data());
+        });
+
+        if (loadedCollections.length > 0) {
+            COLLECTIONS = loadedCollections;
+        } else {
+            COLLECTIONS = DEFAULT_COLLECTIONS;
+            DEFAULT_COLLECTIONS.forEach(c => db.collection('marwa_collections').doc(c.id).set(c));
+        }
+        
+        window.dispatchEvent(collectionsLoadedEvent);
+        
+        if (typeof window.renderCollectionsTable === 'function') {
+            window.collections = COLLECTIONS;
+            window.renderCollectionsTable();
+        } else if (typeof handleRoute === 'function') {
+            handleRoute();
+        }
+    });
+
 } else {
     // Fallback if Firebase fails to load
     const savedProducts = localStorage.getItem('marwa_products');
@@ -245,8 +279,13 @@ if (typeof db !== 'undefined') {
     if (savedBanners) {
         BANNERS = JSON.parse(savedBanners);
     }
+    const savedCollections = localStorage.getItem('marwa_collections');
+    if (savedCollections) {
+        COLLECTIONS = JSON.parse(savedCollections);
+    }
     window.dispatchEvent(productsLoadedEvent);
     window.dispatchEvent(bannersLoadedEvent);
+    window.dispatchEvent(collectionsLoadedEvent);
 }
 
 // Helper to save product to Firebase
@@ -274,5 +313,19 @@ function saveBannerToDb(banner) {
 function deleteBannerFromDb(id) {
     if (typeof db !== 'undefined') {
         return db.collection('marwa_banners').doc(id).delete();
+    }
+}
+
+// Helper to save collection to Firebase
+function saveCollectionToDb(collection) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_collections').doc(collection.id).set(collection);
+    }
+}
+
+// Helper to delete collection from Firebase
+function deleteCollectionFromDb(id) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_collections').doc(id).delete();
     }
 }

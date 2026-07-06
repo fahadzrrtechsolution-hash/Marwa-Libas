@@ -15,7 +15,7 @@ function renderCheckoutPage() {
     }
 
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = 250; // Standard shipping in Pakistan
+    const shipping = 149; // Updated to match user's screenshot
     const total = subtotal + shipping;
 
     let itemsHtml = '';
@@ -33,78 +33,353 @@ function renderCheckoutPage() {
     });
 
     appContent.innerHTML = `
-        <div class="container">
-            <h1 class="collection-title text-center" style="margin-top: var(--spacing-lg);">Checkout Details</h1>
-            <div class="checkout-layout">
+        <style>
+            .shopify-checkout {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                color: #333333;
+                text-align: left;
+            }
+            .shopify-checkout h2 {
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 15px;
+                margin-top: 35px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-transform: none;
+                letter-spacing: normal;
+                font-family: inherit;
+            }
+            .shopify-checkout h2 a {
+                font-size: 14px;
+                color: #0068C9;
+                text-decoration: none;
+                font-weight: 400;
+            }
+            .shopify-checkout h2 a:hover {
+                text-decoration: underline;
+            }
+            .shopify-checkout .help-text {
+                font-size: 13px;
+                color: #737373;
+                margin-top: -10px;
+                margin-bottom: 15px;
+                font-weight: 400;
+            }
+            .shopify-checkout .field-row {
+                display: flex;
+                gap: 14px;
+                margin-bottom: 14px;
+            }
+            .shopify-checkout .field-full {
+                margin-bottom: 14px;
+            }
+            .shopify-checkout .input-wrapper {
+                position: relative;
+                width: 100%;
+                background: #fff;
+            }
+            .shopify-checkout .input-wrapper select,
+            .shopify-checkout .input-wrapper input {
+                width: 100%;
+                border: 1px solid #d9d9d9;
+                border-radius: 5px;
+                padding: 13px;
+                font-size: 14px;
+                transition: all 0.2s ease;
+                box-sizing: border-box;
+                font-family: inherit;
+                background-color: transparent;
+            }
+            .shopify-checkout .input-wrapper input::placeholder {
+                color: #737373;
+            }
+            .shopify-checkout .input-wrapper input:focus,
+            .shopify-checkout .input-wrapper select:focus {
+                outline: none;
+                border-color: #0068C9;
+                box-shadow: 0 0 0 2px #0068c933;
+            }
+            .shopify-checkout .input-wrapper .floating-label {
+                position: absolute;
+                left: 13px;
+                top: 5px;
+                font-size: 12px;
+                color: #737373;
+                pointer-events: none;
+            }
+            .shopify-checkout .input-wrapper.has-floating select {
+                padding-top: 22px;
+                padding-bottom: 4px;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+            .shopify-checkout .input-wrapper .select-arrow {
+                position: absolute;
+                right: 13px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                color: #737373;
+            }
+            .shopify-checkout .input-wrapper .help-icon {
+                position: absolute;
+                right: 13px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #737373;
+                cursor: pointer;
+            }
+            .shopify-checkout .checkbox-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-top: 10px;
+                margin-bottom: 15px;
+            }
+            .shopify-checkout .checkbox-wrapper input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                cursor: pointer;
+                accent-color: #0068C9;
+            }
+            .shopify-checkout .checkbox-wrapper label {
+                font-size: 14px;
+                color: #333;
+                cursor: pointer;
+            }
+            .shopify-checkout .content-box {
+                border: 1px solid #d9d9d9;
+                border-radius: 5px;
+                background: #fff;
+                margin-bottom: 20px;
+            }
+            .shopify-checkout .content-box-row {
+                padding: 16px;
+                display: flex;
+                align-items: center;
+                border: 1px solid transparent;
+                cursor: pointer;
+                position: relative;
+            }
+            .shopify-checkout .content-box-row:not(:last-child) {
+                border-bottom-color: #d9d9d9;
+            }
+            .shopify-checkout .content-box-row.active {
+                background-color: #f2f7fe;
+                border-color: #0068C9;
+                border-radius: 5px;
+                box-shadow: 0 0 0 1px #0068C9;
+                z-index: 2;
+            }
+            .shopify-checkout .content-box-row.active + .content-box-row {
+                border-top-color: transparent;
+            }
+            .shopify-checkout .content-box-row input[type="radio"] {
+                width: 18px;
+                height: 18px;
+                margin-right: 12px;
+                cursor: pointer;
+                accent-color: #0068C9;
+            }
+            .shopify-checkout .content-box-row .label-text {
+                font-size: 14px;
+                color: #333;
+                flex: 1;
+            }
+            .shopify-checkout .content-box-row .price-text {
+                font-size: 14px;
+                font-weight: 500;
+                color: #333;
+            }
+            .shopify-checkout .btn-submit {
+                background-color: #0068C9;
+                color: white;
+                width: 100%;
+                padding: 18px;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 20px;
+                transition: background-color 0.2s ease;
+                font-family: inherit;
+            }
+            .shopify-checkout .btn-submit:hover {
+                background-color: #0056a6;
+            }
+            @media(max-width: 767px) {
+                .checkout-layout {
+                    grid-template-columns: 1fr !important;
+                }
+                .shopify-checkout .field-row {
+                    flex-direction: column;
+                }
+            }
+        </style>
+        <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 40px 20px;">
+            <div class="checkout-layout" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px;">
                 <!-- Shipping Form -->
-                <div>
-                    <h3 style="margin-bottom: var(--spacing-md); text-transform: uppercase;">1. Delivery Address</h3>
+                <div class="shopify-checkout">
                     <form id="checkout-form">
-                        <div class="form-group">
-                            <label for="chk-email">Email Address *</label>
-                            <input type="email" id="chk-email" class="form-control" required placeholder="For receiving receipt">
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                            <div class="form-group">
-                                <label for="chk-fname">First Name *</label>
-                                <input type="text" id="chk-fname" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="chk-lname">Last Name *</label>
-                                <input type="text" id="chk-lname" class="form-control" required>
+                        
+                        <h2 style="margin-top: 0;">Contact <a href="#login">Sign in</a></h2>
+                        <div class="field-full">
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-email" placeholder="Email or mobile phone number" required>
+                                <svg class="help-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="chk-address">Shipping Address *</label>
-                            <input type="text" id="chk-address" class="form-control" placeholder="House/Apartment number, Street, Area" required>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="chk-news" checked>
+                            <label for="chk-news">Email me with news and offers</label>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                            <div class="form-group">
-                                <label for="chk-city">City *</label>
-                                <input type="text" id="chk-city" class="form-control" required placeholder="e.g. Lahore, Karachi, Islamabad">
+
+                        <h2>Delivery</h2>
+                        <div class="field-full">
+                            <div class="input-wrapper has-floating">
+                                <span class="floating-label">Country/Region</span>
+                                <select id="chk-country">
+                                    <option value="Pakistan">Pakistan</option>
+                                    <option value="UAE">United Arab Emirates</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="USA">United States</option>
+                                </select>
+                                <svg class="select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
-                            <div class="form-group">
-                                <label for="chk-phone">Phone Number *</label>
-                                <input type="tel" id="chk-phone" class="form-control" placeholder="e.g. 03001234567" required>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-fname" placeholder="First name" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-lname" placeholder="Last name" required>
                             </div>
                         </div>
 
-                        <h3 style="margin: var(--spacing-lg) 0 var(--spacing-md); text-transform: uppercase;">2. Payment Method</h3>
-                        <div class="form-group" style="border: 1px solid var(--color-border); padding: var(--spacing-md); border-radius: var(--border-radius); display: flex; align-items: center; gap: var(--spacing-md);">
-                            <input type="radio" id="pay-cod" name="payment" checked>
-                            <label for="pay-cod" style="margin: 0; cursor: pointer; text-transform: none; font-size: 15px; font-weight: 500;">Cash on Delivery (COD)</label>
+                        <div class="field-full">
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-address" placeholder="Address" required>
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: var(--spacing-lg);">Complete Order</button>
+                        <div class="field-full">
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-apt" placeholder="Apartment, suite, etc. (optional)">
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-city" placeholder="City" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="text" id="chk-postal" placeholder="Postal code (optional)">
+                            </div>
+                        </div>
+
+                        <div class="field-full">
+                            <div class="input-wrapper">
+                                <input type="tel" id="chk-phone" placeholder="Phone" required>
+                                <svg class="help-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="chk-save-info">
+                            <label for="chk-save-info">Save this information for next time</label>
+                        </div>
+
+                        <h2>Shipping method</h2>
+                        <div class="content-box">
+                            <div class="content-box-row active" style="cursor: default;">
+                                <span class="label-text" style="font-size: 13px;">SHIPPING COST</span>
+                                <span class="price-text">Rs 149.00</span>
+                            </div>
+                        </div>
+
+                        <h2>Payment</h2>
+                        <p class="help-text">All transactions are secure and encrypted.</p>
+                        <div class="content-box">
+                            <label class="content-box-row active">
+                                <input type="radio" name="payment" value="cod" checked>
+                                <span class="label-text">Cash on Delivery (COD)</span>
+                            </label>
+                            <label class="content-box-row">
+                                <input type="radio" name="payment" value="bank">
+                                <span class="label-text">Bank Deposit</span>
+                            </label>
+                            <div id="bank-details-box" style="display: none; padding: 20px 16px; background-color: #f4f4f4; font-size: 14px; color: #333; line-height: 1.5; border-top: 1px solid #d9d9d9; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                faysal bank<br>
+                                Account id : 3316499000005372<br>
+                                Account title: Zohaib Zahid
+                            </div>
+                        </div>
+
+                        <h2>Billing address</h2>
+                        <div class="content-box">
+                            <label class="content-box-row active">
+                                <input type="radio" name="billing" value="same" checked>
+                                <span class="label-text">Same as shipping address</span>
+                            </label>
+                            <label class="content-box-row">
+                                <input type="radio" name="billing" value="different">
+                                <span class="label-text">Use a different billing address</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Complete order</button>
                     </form>
                 </div>
 
                 <!-- Order Summary -->
-                <div>
-                    <div class="checkout-summary-box">
-                        <h3 style="margin-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm); text-transform: uppercase;">Order Summary</h3>
-                        
-                        <div style="max-height: 250px; overflow-y: auto; margin-bottom: var(--spacing-md);">
+                <div style="background: #fafafa; position: relative;">
+                    <div style="background: #fafafa; border-left: 1px solid var(--color-border); padding: 0 0 0 40px; position: sticky; top: 100px; height: 100%;">
+                        <div style="max-height: calc(100vh - 200px); overflow-y: auto; margin-bottom: var(--spacing-md); padding-right: 10px;">
                             ${itemsHtml}
                         </div>
 
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span>Subtotal</span>
-                            <span>Rs. ${subtotal.toLocaleString()}</span>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;">
+                            <span style="color: var(--color-text-secondary);">Subtotal</span>
+                            <span style="font-weight: 500;">Rs. ${subtotal.toLocaleString()}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm);">
-                            <span>Shipping</span>
-                            <span>Rs. ${shipping}</span>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-md); font-size: 14px;">
+                            <span style="color: var(--color-text-secondary);">Shipping</span>
+                            <span style="font-weight: 500;">Rs. ${shipping.toLocaleString()}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 18px;">
-                            <span>Total (PKR)</span>
-                            <span style="color: var(--color-accent-dark);">Rs. ${total.toLocaleString()}</span>
+                        <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 18px; align-items: center;">
+                            <span>Total</span>
+                            <span style="font-size: 24px;">Rs. ${total.toLocaleString()}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     `;
+
+    // Add event listeners for radio buttons to update active styling
+    const radioInputs = document.querySelectorAll('.shopify-checkout input[type="radio"]');
+    radioInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const box = this.closest('.content-box');
+            if (!box) return;
+            const rows = box.querySelectorAll('.content-box-row');
+            rows.forEach(r => r.classList.remove('active'));
+            this.closest('.content-box-row').classList.add('active');
+            
+            if (this.name === 'payment') {
+                const bankDetails = document.getElementById('bank-details-box');
+                if (bankDetails) {
+                    bankDetails.style.display = this.value === 'bank' ? 'block' : 'none';
+                }
+            }
+        });
+    });
 
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -116,12 +391,12 @@ function renderCheckoutPage() {
                 <h1 style="font-size: 36px; margin-bottom: var(--spacing-md);">Thank You!</h1>
                 <h3 style="margin-bottom: var(--spacing-sm);">Your order has been placed successfully.</h3>
                 <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-lg);">Your Order ID is #SK-${Math.floor(100000 + Math.random() * 900000)}. We have sent a confirmation email to <strong>${document.getElementById('chk-email').value}</strong>. Our support team will contact you shortly to confirm your dispatch.</p>
-                <a href="#home" class="btn btn-primary">Continue Shopping</a>
+                <a href="#home" class="btn btn-primary" style="background-color: #0068C9; border-color: #0068C9;">Continue Shopping</a>
             </div>
         `;
 
         // Clear cart
-        state.cart.length = 0; // Better way to clear array without reassigning
+        state.cart.length = 0;
         saveState();
         renderCartDrawer();
     });

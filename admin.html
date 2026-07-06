@@ -40,6 +40,10 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     Banners
                 </a></li>
+                <li><a href="#" data-view="collections">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Collections
+                </a></li>
                 <li><a href="#" data-view="dashboard">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     Dashboard
@@ -85,31 +89,50 @@
 
             <!-- Banners View -->
             <div id="view-banners" class="admin-view" style="display: none;">
-                <header class="admin-header">
-                    <h1>Banner Management</h1>
-                    <button class="btn btn-primary" id="add-banner-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Add Banner
-                    </button>
-                </header>
+                <div class="admin-header">
+                    <h1 class="admin-title">Manage Banners</h1>
+                    <button class="btn btn-primary" id="add-banner-btn">Add Banner</button>
+                </div>
+                
+                <div class="admin-card table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th width="100">Image</th>
+                                <th>Title</th>
+                                <th>Subtitle</th>
+                                <th>Link</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="banners-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                <div class="admin-content">
-                    <div class="card table-card">
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Subtitle</th>
-                                    <th>Button Link</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="banners-tbody">
-                                <!-- Banners injected here -->
-                            </tbody>
-                        </table>
-                    </div>
+            <!-- Collections View -->
+            <div id="view-collections" class="admin-view" style="display: none;">
+                <div class="admin-header">
+                    <h1 class="admin-title">Manage Collections</h1>
+                    <button class="btn btn-primary" id="add-collection-btn">Add Collection</button>
+                </div>
+                
+                <div class="admin-card table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th width="100">Image</th>
+                                <th>Title</th>
+                                <th>Link</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="collections-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -170,6 +193,25 @@
                     <div class="form-group">
                         <label for="product-badge">Badge (Optional)</label>
                         <input type="text" id="product-badge" class="form-control" placeholder="e.g. Sale, New">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid var(--color-border);">
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; margin-bottom: 0;">
+                        <input type="checkbox" id="product-is-external" style="width: 18px; height: 18px;">
+                        This is an External / Affiliate Product
+                    </label>
+                    
+                    <div id="external-fields-container" style="display: none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px;">
+                        <div class="form-group">
+                            <label for="product-external-brand">Original Brand Name</label>
+                            <input type="text" id="product-external-brand" class="form-control" placeholder="e.g. Khaadi, Sana Safinaz">
+                        </div>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="product-external-url">External Purchase Link (URL)</label>
+                            <input type="url" id="product-external-url" class="form-control" placeholder="https://...">
+                        </div>
+                        <small style="color: #666; display: block; margin-top: 8px;">If checked, the "Add to Cart" button will be replaced by a link to this external URL.</small>
                     </div>
                 </div>
 
@@ -268,6 +310,47 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="js/data/firebase.js"></script>
     <script src="js/data/products.js"></script>
+    <!-- Collections Modal -->
+    <div class="modal-overlay" id="collection-modal-overlay"></div>
+    <div class="modal" id="collection-modal">
+        <div class="modal-header">
+            <h2 id="collection-modal-title">Add Collection</h2>
+            <button class="close-btn" id="close-collection-modal-btn">✕</button>
+        </div>
+        <form id="collection-form">
+            <div class="modal-body">
+                <input type="hidden" id="collection-id">
+                
+                <div class="form-group">
+                    <label>Collection Image</label>
+                    <div id="collection-image-upload-container">
+                        <!-- Dynamic single image row injected here -->
+                    </div>
+                    <small style="color: #666; display: block; margin-top: 5px;">Recommended aspect ratio: 2:3 or 3:4</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Collection Title</label>
+                        <input type="text" id="collection-title" class="form-control" placeholder="e.g. Best Sellers" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Collection Link / Path</label>
+                        <input type="text" id="collection-link" class="form-control" placeholder="e.g. #collection/best-sellers" required>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="cancel-collection-modal-btn">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Collection</button>
+            </div>
+        </form>
+    </div>
+
     <script src="js/admin.js"></script>
 </body>
 </html>

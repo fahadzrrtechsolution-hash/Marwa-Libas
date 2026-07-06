@@ -31,6 +31,9 @@ function handleRoute() {
     }
 
     // Route parser
+    const navMenu = document.getElementById('navigation-menu');
+    if (navMenu) navMenu.style.display = '';
+
     if (hash === '#home' || hash === '#') {
         renderHomepage();
     } else if (hash.startsWith('#collection/')) {
@@ -41,7 +44,10 @@ function handleRoute() {
         renderProductPage(productId);
     } else if (hash === '#contact') {
         renderContactPage();
+    } else if (hash === '#cart') {
+        renderCartPage();
     } else if (hash === '#checkout') {
+        if (navMenu) navMenu.style.display = 'none';
         renderCheckoutPage();
     } else if (hash === '#wishlist') {
         renderWishlistPage();

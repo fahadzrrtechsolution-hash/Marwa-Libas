@@ -81,23 +81,32 @@ function renderProductPage(productId) {
                         </div>
                     </div>
 
-                    <!-- Quantity Selector -->
-                    <div>
-                        <span class="selector-label">Quantity:</span>
-                        <div class="qty-selector-row">
-                            <div class="detail-qty-box">
-                                <button class="detail-qty-btn" id="detail-qty-minus">-</button>
-                                <span class="detail-qty-val" id="detail-qty-value">1</span>
-                                <button class="detail-qty-btn" id="detail-qty-plus">+</button>
+                    ${product.isExternal ? `
+                        <div class="checkout-actions-group" style="margin-top: 30px;">
+                            <a href="${product.externalUrl}" target="_blank" class="btn btn-primary btn-block t4s-ani-shake" style="display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;">
+                                View on ${product.externalBrand || 'Store'}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
+                        </div>
+                    ` : `
+                        <!-- Quantity Selector -->
+                        <div>
+                            <span class="selector-label">Quantity:</span>
+                            <div class="qty-selector-row">
+                                <div class="detail-qty-box">
+                                    <button class="detail-qty-btn" id="detail-qty-minus">-</button>
+                                    <span class="detail-qty-val" id="detail-qty-value">1</span>
+                                    <button class="detail-qty-btn" id="detail-qty-plus">+</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Action buttons -->
-                    <div class="checkout-actions-group">
-                        <button class="btn btn-primary btn-block t4s-ani-shake" id="detail-add-to-cart">Add to Cart</button>
-                        <button class="btn btn-dark btn-block" id="detail-buy-now">Buy It Now</button>
-                    </div>
+                        <!-- Action buttons -->
+                        <div class="checkout-actions-group">
+                            <button class="btn btn-primary btn-block t4s-ani-shake" id="detail-add-to-cart">Add to Cart</button>
+                            <button class="btn btn-dark btn-block" id="detail-buy-now">Buy It Now</button>
+                        </div>
+                    `}
 
                     <!-- Accordions -->
                     <div class="product-specs-accordion">
@@ -136,6 +145,7 @@ function renderProductPage(productId) {
         </div>
 
         <!-- Sticky ATC bar -->
+        ${!product.isExternal ? `
         <div class="sticky-atc-bar" id="sticky-atc-bar">
             <div class="sticky-atc-product">
                 <img src="${product.localImage}" alt="${product.title}">
@@ -148,6 +158,7 @@ function renderProductPage(productId) {
                 <button class="btn btn-primary" id="sticky-add-to-cart-btn">Add To Cart</button>
             </div>
         </div>
+        ` : ''}
     `;
 
     setupProductPageListeners(product);
@@ -179,34 +190,43 @@ function setupProductPageListeners(product) {
     let qty = 1;
     const qtyVal = document.getElementById('detail-qty-value');
     
-    document.getElementById('detail-qty-minus').addEventListener('click', () => {
-        if (qty > 1) {
-            qty--;
-            qtyVal.textContent = qty;
-        }
-    });
+    if(qtyVal) {
+        document.getElementById('detail-qty-minus').addEventListener('click', () => {
+            if (qty > 1) {
+                qty--;
+                qtyVal.textContent = qty;
+            }
+        });
 
-    document.getElementById('detail-qty-plus').addEventListener('click', () => {
-        qty++;
-        qtyVal.textContent = qty;
-    });
+        document.getElementById('detail-qty-plus').addEventListener('click', () => {
+            qty++;
+            qtyVal.textContent = qty;
+        });
+    }
 
     // Add To Cart Action
     const handleAddToCartAction = () => {
-        const selectedSize = document.querySelector('#detail-size-selector .size-btn.active').getAttribute('data-size');
+        const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
+        const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
         addToCart(product.id, selectedSize, qty);
     };
 
-    document.getElementById('detail-add-to-cart').addEventListener('click', handleAddToCartAction);
+    const detailAtcBtn = document.getElementById('detail-add-to-cart');
+    if(detailAtcBtn) detailAtcBtn.addEventListener('click', handleAddToCartAction);
+    
     const stickyAtcBtn = document.getElementById('sticky-add-to-cart-btn');
     if (stickyAtcBtn) stickyAtcBtn.addEventListener('click', handleAddToCartAction);
 
     // Buy Now
-    document.getElementById('detail-buy-now').addEventListener('click', () => {
-        const selectedSize = document.querySelector('#detail-size-selector .size-btn.active').getAttribute('data-size');
-        addToCart(product.id, selectedSize, qty);
-        window.location.hash = "#checkout";
-    });
+    const buyNowBtn = document.getElementById('detail-buy-now');
+    if(buyNowBtn) {
+        buyNowBtn.addEventListener('click', () => {
+            const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
+            const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
+            addToCart(product.id, selectedSize, qty);
+            window.location.hash = "#checkout";
+        });
+    }
 
     // Accordions
     document.querySelectorAll('.accordion-header').forEach(header => {

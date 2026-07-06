@@ -37,9 +37,43 @@ function renderHomepage() {
             </section>
         </div>
 
+        <div class="container text-center" style="margin-top: 50px; margin-bottom: 50px;">
+            <h2 style="font-family: inherit; font-size: 26px; margin-bottom: 40px; font-weight: 600; letter-spacing: 1px;">SHOP BY COLLECTION</h2>
+            <div class="collections-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 900px; margin: 0 auto;">
+                ${typeof COLLECTIONS !== 'undefined' ? COLLECTIONS.map(col => `
+                <a href="${col.link}" class="collection-card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 100%; max-width: 180px; overflow: hidden; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); aspect-ratio: 1/1; border: 3px solid #fff;">
+                        <img src="${col.image}" alt="${col.title}" class="col-img" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    </div>
+                    <h4 style="font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px;">${col.title}</h4>
+                </a>
+                `).join('') : ''}
+            </div>
+            <style>
+                .collection-card:hover .col-img {
+                    transform: scale(1.15);
+                }
+                .collection-card h4 {
+                    transition: color 0.3s ease;
+                }
+                .collection-card:hover h4 {
+                    color: var(--color-accent, #999);
+                }
+                @media(max-width: 767px) {
+                    .collections-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                        gap: 20px !important;
+                        padding: 0 10px;
+                    }
+                }
+            </style>
+        </div>
+
         <div class="container collection-section" style="margin-top: var(--spacing-xl);">
-            <h1 class="collection-title text-center">New Arrivals</h1>
-            <p class="collection-subtitle text-center">Pre-Order articles will be delivered in 4-7 working days. Shop our latest Eid and Summer lawn ensembles.</p>
+            <div class="collection-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1 class="collection-title" style="margin-bottom: 0; text-align: left;">All Products</h1>
+                <a href="#collection/all" class="btn btn-outline">View All</a>
+            </div>
             <div class="product-grid">
                 ${productsHtml}
             </div>
