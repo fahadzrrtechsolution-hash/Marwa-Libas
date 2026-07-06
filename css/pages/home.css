@@ -2,7 +2,8 @@
    COLLECTION SECTION
    ========================================== */
 .collection-section {
-    padding: var(--spacing-xl) 0;
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
 }
 
 .collection-title {
