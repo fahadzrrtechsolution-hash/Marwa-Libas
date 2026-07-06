@@ -315,9 +315,9 @@ function renderCheckoutPage() {
                                 <span class="label-text">Bank Deposit</span>
                             </label>
                             <div id="bank-details-box" style="display: none; padding: 20px 16px; background-color: #f4f4f4; font-size: 14px; color: #333; line-height: 1.5; border-top: 1px solid #d9d9d9; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                faysal bank<br>
-                                Account id : 3316499000005372<br>
-                                Account title: Zohaib Zahid
+                                Bank Name: Faysal Bank<br>
+                                IBAN Number: PK33FAYS3395475000001668<br>
+                                Account Title: IBTSAAM AHMAR
                             </div>
                         </div>
 
