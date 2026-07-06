@@ -20,6 +20,13 @@ function renderProductCard(product) {
         badgesHtml += `<span class="badge-restock">RE-STOCK</span>`;
     }
 
+    const stock = product.stock !== undefined ? product.stock : 10;
+    const isOutOfStock = stock <= 0;
+    
+    if (isOutOfStock) {
+        badgesHtml = `<span class="badge-discount" style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; position: absolute; top: 12px; left: 12px; z-index: 10;">SOLD OUT</span>`;
+    }
+
     return `
         <div class="product-card" data-id="${product.id}">
             <div class="product-card-media">
@@ -33,7 +40,9 @@ function renderProductCard(product) {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="${wishlistIconColor}" stroke="${wishlistStroke}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 </button>
                 <div class="quick-buy-overlay">
-                    ${product.isExternal ? `
+                    ${isOutOfStock ? `
+                        <button class="quick-size-btn out-of-stock-btn" style="width: 100%; cursor: not-allowed; background: #e5e7eb; color: #9ca3af;" disabled>Out of Stock</button>
+                    ` : product.isExternal ? `
                         <button class="quick-size-btn" style="width: 100%;" onclick="window.location.hash='#product/${product.id}'">View Details</button>
                     ` : `
                         <button class="quick-size-btn" data-size="S">S</button>

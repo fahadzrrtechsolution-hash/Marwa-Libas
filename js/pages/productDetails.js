@@ -57,7 +57,7 @@ function renderProductPage(productId) {
                 <div class="product-info-col">
                     <div class="urgency-widget">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <span>Hurry! Only 4 items left in stock.</span>
+                        <span>${product.stock === 0 ? 'Item is sold out.' : product.stock > 0 && product.stock <= 5 ? `Hurry! Only ${product.stock} items left in stock.` : 'In Stock'}</span>
                     </div>
 
                     <h1 class="product-detail-title">${product.title}</h1>
@@ -87,6 +87,10 @@ function renderProductPage(productId) {
                                 View on ${product.externalBrand || 'Store'}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                             </a>
+                        </div>
+                    ` : (product.stock === 0) ? `
+                        <div class="checkout-actions-group" style="margin-top: 30px;">
+                            <button class="btn btn-block" style="background: #e5e7eb; color: #9ca3af; cursor: not-allowed;" disabled>Out of Stock</button>
                         </div>
                     ` : `
                         <!-- Quantity Selector -->
@@ -145,7 +149,7 @@ function renderProductPage(productId) {
         </div>
 
         <!-- Sticky ATC bar -->
-        ${!product.isExternal ? `
+        ${!product.isExternal && product.stock !== 0 ? `
         <div class="sticky-atc-bar" id="sticky-atc-bar">
             <div class="sticky-atc-product">
                 <img src="${product.localImage}" alt="${product.title}">

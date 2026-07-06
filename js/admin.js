@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><img src="${(product.images && product.images.length > 0) ? product.images[0] : (product.localImage || product.image)}" alt="${product.title}"></td>
                 <td><strong>${product.title}</strong></td>
                 <td>Rs. ${product.price.toLocaleString()}</td>
+                <td>${product.stock !== undefined ? product.stock : 10}</td>
                 <td style="text-transform: capitalize;">${product.collection.replace('-', ' ')}</td>
                 <td>
                     <button class="action-btn edit-btn" data-id="${product.id}" title="Edit">
@@ -316,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('product-original-price').value = product.originalPrice;
             document.getElementById('product-collection').value = product.collection;
             document.getElementById('product-badge').value = product.badge || '';
+            document.getElementById('product-stock').value = product.stock !== undefined ? product.stock : 10;
 
             if(product.isExternal) {
                 isExternalCheckbox.checked = true;
@@ -351,6 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             modalTitle.textContent = "Add Product";
             document.getElementById('product-id').value = '';
+            document.getElementById('product-stock').value = '10';
             imageContainer.innerHTML = '';
             addImageRow(imageContainer);
         }
@@ -469,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
             originalPrice: parseInt(document.getElementById('product-original-price').value),
             collection: document.getElementById('product-collection').value,
             badge: document.getElementById('product-badge').value,
+            stock: parseInt(document.getElementById('product-stock').value),
             isExternal: isExternalCheckbox ? isExternalCheckbox.checked : false,
             externalBrand: document.getElementById('product-external-brand') ? document.getElementById('product-external-brand').value : '',
             externalUrl: document.getElementById('product-external-url') ? document.getElementById('product-external-url').value : '',

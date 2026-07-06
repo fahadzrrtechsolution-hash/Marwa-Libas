@@ -433,8 +433,28 @@ function renderCheckoutPage() {
             };
 
             // 1. Save to Firebase Database
-            if (window.db) {
-                await window.db.collection('marwa_orders').doc(orderId).set(orderData);
+            let fireDb = typeof db !== 'undefined' ? db : window.db;
+            if (fireDb) {
+                await fireDb.collection('marwa_orders').doc(orderId).set(orderData);
+                
+                // 1.5 Deduct Stock
+                for (let item of orderItems) {
+                    try {
+                        const productRef = fireDb.collection('marwa_products').doc(item.id);
+                        const docSnapshot = await productRef.get();
+                        if (docSnapshot.exists) {
+                            const pData = docSnapshot.data();
+                            if (!pData.isExternal) {
+                                let currentStock = pData.stock !== undefined ? pData.stock : 10;
+                                let newStock = currentStock - item.quantity;
+                                if (newStock < 0) newStock = 0;
+                                await productRef.update({ stock: newStock });
+                            }
+                        }
+                    } catch(e) {
+                        console.error('Error updating stock for item', item.id, e);
+                    }
+                }
             }
 
             // 2. Send Email Notification via FormSubmit
