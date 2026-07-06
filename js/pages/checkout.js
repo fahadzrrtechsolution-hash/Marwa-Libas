@@ -381,23 +381,103 @@ function renderCheckoutPage() {
         });
     });
 
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    document.getElementById('checkout-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Show success screen
-        appContent.innerHTML = `
-            <div class="container text-center" style="padding: 100px 0; max-width: 600px;">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" style="margin-bottom: var(--spacing-md);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
-                <h1 style="font-size: 36px; margin-bottom: var(--spacing-md);">Thank You!</h1>
-                <h3 style="margin-bottom: var(--spacing-sm);">Your order has been placed successfully.</h3>
-                <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-lg);">Your Order ID is #SK-${Math.floor(100000 + Math.random() * 900000)}. We have sent a confirmation email to <strong>${document.getElementById('chk-email').value}</strong>. Our support team will contact you shortly to confirm your dispatch.</p>
-                <a href="#home" class="btn btn-primary" style="background-color: #0068C9; border-color: #0068C9;">Continue Shopping</a>
-            </div>
-        `;
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Processing Order...';
+        submitBtn.disabled = true;
 
-        // Clear cart
-        state.cart.length = 0;
-        saveState();
-        renderCartDrawer();
+        try {
+            const orderId = 'ML-' + Math.floor(100000 + Math.random() * 900000);
+            const email = document.getElementById('chk-email').value;
+            const firstName = document.getElementById('chk-fname').value;
+            const lastName = document.getElementById('chk-lname').value;
+            const address = document.getElementById('chk-address').value;
+            const apartment = document.getElementById('chk-apartment') ? document.getElementById('chk-apartment').value : '';
+            const city = document.getElementById('chk-city').value;
+            const phone = document.getElementById('chk-phone').value;
+            
+            // Collect order items
+            const orderItems = state.cart.map(item => ({
+                id: item.id,
+                title: item.title,
+                size: item.size,
+                price: item.price,
+                quantity: item.quantity,
+                image: item.images ? item.images[0] : ''
+            }));
+
+            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = 250;
+            const total = subtotal + shipping;
+
+            const orderData = {
+                orderId,
+                customer: {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    address,
+                    apartment,
+                    city
+                },
+                items: orderItems,
+                subtotal,
+                shipping,
+                total,
+                status: 'Pending',
+                date: new Date().toISOString()
+            };
+
+            // 1. Save to Firebase Database
+            if (window.db) {
+                await window.db.collection('marwa_orders').doc(orderId).set(orderData);
+            }
+
+            // 2. Send Email Notification via FormSubmit
+            const itemsList = orderItems.map(i => `${i.quantity}x ${i.title} (${i.size}) - Rs. ${i.price}`).join('\n');
+            await fetch("https://formsubmit.co/ajax/marwalibas1@gmail.com", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: `New Order Received! ${orderId} - Rs. ${total}`,
+                    Name: `${firstName} ${lastName}`,
+                    Phone: phone,
+                    Email: email,
+                    City: city,
+                    Address: `${address} ${apartment}`,
+                    Total_Amount: `Rs. ${total}`,
+                    Items: itemsList
+                })
+            }).catch(err => console.error('FormSubmit Error:', err)); // Silently catch email errors so user still sees success
+
+            // 3. Show success screen
+            appContent.innerHTML = `
+                <div class="container text-center" style="padding: 100px 0; max-width: 600px;">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" style="margin-bottom: var(--spacing-md);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
+                    <h1 style="font-size: 36px; margin-bottom: var(--spacing-md);">Thank You!</h1>
+                    <h3 style="margin-bottom: var(--spacing-sm);">Your order has been placed successfully.</h3>
+                    <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-lg);">Your Order ID is <strong>#${orderId}</strong>. We have sent a confirmation email to <strong>${email}</strong>. Our support team will contact you shortly to confirm your dispatch.</p>
+                    <a href="#home" class="btn btn-primary" style="background-color: #0068C9; border-color: #0068C9;">Continue Shopping</a>
+                </div>
+            `;
+
+            // Clear cart
+            state.cart.length = 0;
+            saveState();
+            renderCartDrawer();
+
+        } catch (error) {
+            console.error('Checkout error:', error);
+            alert("There was an error processing your order. Please try again.");
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }

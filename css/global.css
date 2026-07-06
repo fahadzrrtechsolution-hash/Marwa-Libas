@@ -157,3 +157,71 @@ h1, h2, h3, h4, h5, h6 {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Floating WhatsApp Button - Cartoonish */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 65px;
+    height: 65px;
+    background: linear-gradient(135deg, #4fce5d 0%, #128c7e 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Soft glow only, removed hard 3D shadow */
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    border: 3px solid #ffffff;
+    z-index: 1000;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    animation: floatWiggle 3s infinite ease-in-out;
+}
+
+.floating-whatsapp:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
+    animation-play-state: paused;
+}
+
+.floating-whatsapp:active {
+    transform: translateY(2px);
+    box-shadow: 0 5px 10px rgba(37, 211, 102, 0.3);
+    transition: all 0.1s;
+}
+
+.floating-whatsapp svg {
+    width: 36px;
+    height: 36px;
+    /* Internal 3D pop on the icon itself */
+    filter: drop-shadow(2px 3px 0px rgba(0,0,0,0.15));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-whatsapp:hover svg {
+    transform: scale(1.25);
+}
+
+@keyframes floatWiggle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-8px) rotate(-6deg); }
+    50% { transform: translateY(0) rotate(0deg); }
+    75% { transform: translateY(-5px) rotate(6deg); }
+}
+
+@media(max-width: 768px) {
+    .floating-whatsapp {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+    }
+    .floating-whatsapp svg {
+        width: 30px;
+        height: 30px;
+    }
+}
+

@@ -627,6 +627,148 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- Orders Logic ---
+    const ordersTbody = document.getElementById('orders-tbody');
+    const orderModal = document.getElementById('order-modal');
+    const orderModalOverlay = document.getElementById('order-modal-overlay');
+    const closeOrderModalBtn = document.getElementById('close-order-modal-btn');
+    const orderDetailsContent = document.getElementById('order-details-content');
+    const orderStatusSelect = document.getElementById('order-status-select');
+    const updateOrderStatusBtn = document.getElementById('update-order-status-btn');
+    
+    let currentOrders = [];
+    let currentOpenOrderId = null;
+
+    if (typeof db !== 'undefined') {
+        db.collection('marwa_orders').orderBy('date', 'desc').onSnapshot(snapshot => {
+            currentOrders = [];
+            snapshot.forEach(doc => {
+                currentOrders.push(doc.data());
+            });
+            renderOrdersTable();
+        });
+    }
+
+    const renderOrdersTable = () => {
+        if (!ordersTbody) return;
+        ordersTbody.innerHTML = '';
+        if (currentOrders.length === 0) {
+            ordersTbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No orders found.</td></tr>';
+            return;
+        }
+
+        currentOrders.forEach(order => {
+            const tr = document.createElement('tr');
+            const dateStr = new Date(order.date).toLocaleDateString() + ' ' + new Date(order.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            let statusColor = '#f59e0b'; // Pending
+            if (order.status === 'Dispatched') statusColor = '#3b82f6';
+            if (order.status === 'Delivered') statusColor = '#10b981';
+            if (order.status === 'Cancelled') statusColor = '#ef4444';
+
+            tr.innerHTML = `
+                <td><strong>${order.orderId}</strong></td>
+                <td>${dateStr}</td>
+                <td>${order.customer.firstName} ${order.customer.lastName}</td>
+                <td>Rs. ${order.total.toLocaleString()}</td>
+                <td><span style="background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">${order.status}</span></td>
+                <td>
+                    <button class="btn btn-primary btn-sm view-order-btn" data-id="${order.orderId}">View Details</button>
+                </td>
+            `;
+            ordersTbody.appendChild(tr);
+        });
+
+        document.querySelectorAll('.view-order-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const orderId = e.target.getAttribute('data-id');
+                openOrderModal(orderId);
+            });
+        });
+    };
+
+    const openOrderModal = (orderId) => {
+        const order = currentOrders.find(o => o.orderId === orderId);
+        if (!order) return;
+        
+        currentOpenOrderId = orderId;
+        
+        const dateStr = new Date(order.date).toLocaleDateString() + ' ' + new Date(order.date).toLocaleTimeString();
+        
+        let itemsHtml = order.items.map(item => `
+            <div style="display: flex; gap: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                <img src="${item.image}" style="width: 60px; height: 80px; object-fit: cover; border-radius: 6px;">
+                <div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 15px;">${item.title}</h4>
+                    <p style="margin: 0; color: #666; font-size: 13px;">Size: ${item.size} | Qty: ${item.quantity}</p>
+                    <p style="margin: 5px 0 0 0; font-weight: 600;">Rs. ${(item.price * item.quantity).toLocaleString()}</p>
+                </div>
+            </div>
+        `).join('');
+
+        orderDetailsContent.innerHTML = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #eee; padding-bottom: 5px;">Customer Info</h3>
+                    <p><strong>Name:</strong> ${order.customer.firstName} ${order.customer.lastName}</p>
+                    <p><strong>Email:</strong> ${order.customer.email}</p>
+                    <p><strong>Phone:</strong> ${order.customer.phone}</p>
+                    <p><strong>Address:</strong><br>${order.customer.address}<br>${order.customer.apartment ? order.customer.apartment + '<br>' : ''}${order.customer.city}</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #eee; padding-bottom: 5px;">Order Summary</h3>
+                    <p><strong>Order ID:</strong> ${order.orderId}</p>
+                    <p><strong>Date:</strong> ${dateStr}</p>
+                    <p><strong>Subtotal:</strong> Rs. ${order.subtotal.toLocaleString()}</p>
+                    <p><strong>Shipping:</strong> Rs. ${order.shipping.toLocaleString()}</p>
+                    <p style="font-size: 18px;"><strong>Total:</strong> Rs. ${order.total.toLocaleString()}</p>
+                </div>
+            </div>
+            
+            <h3 style="margin: 20px 0 15px 0; font-size: 16px; border-bottom: 2px solid #eee; padding-bottom: 5px;">Items</h3>
+            <div>${itemsHtml}</div>
+        `;
+        
+        orderStatusSelect.value = order.status;
+        
+        orderModalOverlay.style.display = 'block';
+        orderModal.classList.add('active');
+    };
+
+    if (closeOrderModalBtn) {
+        closeOrderModalBtn.addEventListener('click', () => {
+            orderModalOverlay.style.display = 'none';
+            orderModal.classList.remove('active');
+        });
+    }
+
+    if (orderModalOverlay) {
+        orderModalOverlay.addEventListener('click', () => {
+            orderModalOverlay.style.display = 'none';
+            orderModal.classList.remove('active');
+        });
+    }
+
+    if (updateOrderStatusBtn) {
+        updateOrderStatusBtn.addEventListener('click', () => {
+            if (currentOpenOrderId && typeof db !== 'undefined') {
+                const newStatus = orderStatusSelect.value;
+                updateOrderStatusBtn.textContent = 'Updating...';
+                db.collection('marwa_orders').doc(currentOpenOrderId).update({
+                    status: newStatus
+                }).then(() => {
+                    updateOrderStatusBtn.textContent = 'Update';
+                    orderModalOverlay.style.display = 'none';
+                    orderModal.classList.remove('active');
+                }).catch(err => {
+                    console.error('Error updating order:', err);
+                    updateOrderStatusBtn.textContent = 'Update';
+                    alert('Failed to update order status.');
+                });
+            }
+        });
+    }
+
     // Initial render
     if (typeof window.renderTable === 'function') {
         window.renderTable();
