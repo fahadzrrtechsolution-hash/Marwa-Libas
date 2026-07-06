@@ -69,6 +69,55 @@ function renderHomepage() {
             </style>
         </div>
 
+        <div class="brands-marquee-section" style="padding: 40px 0; background: var(--color-bg-secondary, #f9f9f9); overflow: hidden; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 50px;">
+            <div class="container text-center">
+                <h3 style="font-size: 18px; font-weight: 500; letter-spacing: 2px; color: #555; margin-bottom: 30px; text-transform: uppercase;">Featured Brands</h3>
+            </div>
+            <div class="marquee-wrapper" style="display: flex; white-space: nowrap; overflow: hidden; position: relative;">
+                <div class="marquee-container" style="display: flex; width: max-content; animation: scrollBrands 20s linear infinite;">
+                    <div class="marquee-content" style="display: flex; gap: 60px; padding-right: 60px; align-items: center;">
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Georgia', serif; color: #333;">Khaadi</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Arial', sans-serif; letter-spacing: 2px; color: #333;">SAPPHIRE</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Times New Roman', serif; font-style: italic; color: #333;">Gul Ahmed</span>
+                        <span style="font-size: 28px; font-weight: bold; font-family: 'Impact', sans-serif; color: #333;">J.</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Verdana', sans-serif; color: #333;">Sana Safinaz</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Courier New', monospace; color: #333;">Nishat Linen</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Tahoma', sans-serif; color: #333;">Maria.B</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Trebuchet MS', sans-serif; color: #333;">Alkaram</span>
+                    </div>
+                    <div class="marquee-content" style="display: flex; gap: 60px; padding-right: 60px; align-items: center;">
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Georgia', serif; color: #333;">Khaadi</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Arial', sans-serif; letter-spacing: 2px; color: #333;">SAPPHIRE</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Times New Roman', serif; font-style: italic; color: #333;">Gul Ahmed</span>
+                        <span style="font-size: 28px; font-weight: bold; font-family: 'Impact', sans-serif; color: #333;">J.</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Verdana', sans-serif; color: #333;">Sana Safinaz</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Courier New', monospace; color: #333;">Nishat Linen</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Tahoma', sans-serif; color: #333;">Maria.B</span>
+                        <span style="font-size: 26px; font-weight: bold; font-family: 'Trebuchet MS', sans-serif; color: #333;">Alkaram</span>
+                    </div>
+                </div>
+            </div>
+            <style>
+                @keyframes scrollBrands {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                .marquee-wrapper:hover .marquee-container {
+                    animation-play-state: paused;
+                }
+                .marquee-content span {
+                    opacity: 0.7;
+                    transition: opacity 0.3s, transform 0.3s;
+                    cursor: pointer;
+                    display: inline-block;
+                }
+                .marquee-content span:hover {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+            </style>
+        </div>
+
         <div class="container collection-section" style="margin-top: var(--spacing-xl);">
             <div class="collection-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <h1 class="collection-title" style="margin-bottom: 0; text-align: left;">All Products</h1>
