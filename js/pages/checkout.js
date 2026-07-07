@@ -478,7 +478,11 @@ function renderCheckoutPage() {
             }).catch(err => console.error('FormSubmit Error:', err)); // Silently catch email errors so user still sees success
 
             // 3. Show success screen
-            const whatsappMessage = encodeURIComponent(`Hello Marwa Libas! I have just placed an order (Order ID: #${orderId}). My name is ${firstName} ${lastName}, Total Bill: Rs. ${total.toLocaleString()}. Please confirm my order!`);
+            const productDetailsForWa = orderItems.map(i => {
+                const url = `${window.location.origin}${window.location.pathname}#product/${i.id}`;
+                return `- ${i.quantity}x ${i.title} (${i.size}): ${url}`;
+            }).join('\n');
+            const whatsappMessage = encodeURIComponent(`Hello Marwa Libas! I have just placed an order (Order ID: #${orderId}). My name is ${firstName} ${lastName}, Total Bill: Rs. ${total.toLocaleString()}.\n\nItems Ordered:\n${productDetailsForWa}\n\nPlease confirm my order!`);
             const whatsappUrl = `https://wa.me/923229043703?text=${whatsappMessage}`;
 
             appContent.innerHTML = `
