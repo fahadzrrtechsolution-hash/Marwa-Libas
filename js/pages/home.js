@@ -10,7 +10,7 @@ function renderHomepage() {
     });
 
     const renderCategorySection = (title, items) => `
-        <div style="background: linear-gradient(180deg, #fcfcfb 0%, #f4f5f6 100%); padding: 60px 0; margin-bottom: 40px; border-top: 1px solid #eee; border-bottom: 1px solid #ddd; box-shadow: inset 0px 2px 10px rgba(0,0,0,0.02);">
+        <div style="background: linear-gradient(180deg, #f0f2f4 0%, #e8e9eb 100%); padding: 60px 0; margin-bottom: 40px; border-top: 1px solid #ddd; border-bottom: 1px solid #ccc; box-shadow: inset 0px 2px 10px rgba(0,0,0,0.03);">
             <div class="container text-center">
                 <div style="display: inline-block; position: relative; margin-bottom: 45px;">
                     <h2 style="font-family: inherit; font-size: 26px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin: 0; padding-bottom: 15px; color: #111111; text-shadow: 1px 1px 1px rgba(255,255,255,0.8);">${title}</h2>
