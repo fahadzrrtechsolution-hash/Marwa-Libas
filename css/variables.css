@@ -15,10 +15,9 @@
     --color-text-muted: #888888;
     
     --color-brand: #1a362d; /* Premium Deep Green */
-    --color-accent: #c5a880; /* Elegant Soft Gold */
-    --color-accent-dark: #b3956d;
-    --color-premium: #722F37; /* Rich Burgundy - 3rd Premium Color */
-    --color-sale: #d9534f; /* Sale Red Badge */
+    --color-accent: #1a362d; /* Accent mapped to Green */
+    --color-accent-dark: #111111; /* Dark Accent mapped to Black */
+    --color-sale: #111111; /* Sale mapped to Black */
     --color-border: #e2e2e2;
     --color-border-dark: #222222;
 

@@ -132,9 +132,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-outline:hover {
-    background-color: var(--color-premium);
+    background-color: var(--color-text-primary);
     color: var(--color-bg-primary);
-    border-color: var(--color-premium);
+    border-color: var(--color-text-primary);
 }
 
 .btn-block {
