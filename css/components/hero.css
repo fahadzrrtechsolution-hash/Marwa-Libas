@@ -211,34 +211,39 @@
 
 @media (max-width: 576px) {
     .hero-section {
-        height: 80vh;
-        min-height: 400px;
+        height: auto;
+        aspect-ratio: 4/3;
+        min-height: unset;
         align-items: flex-end;
-        padding-bottom: 60px;
+        padding-bottom: 20px;
+    }
+    .hero-bg-img {
+        object-position: center top;
     }
     .hero-content {
-        margin: 0 20px 20px 20px;
-        padding: 30px 25px;
+        margin: 0 15px 15px 15px;
+        padding: 20px 15px;
         text-align: left;
-        width: calc(100% - 40px);
+        width: calc(100% - 30px);
         max-width: 100%;
-        border-radius: 16px;
+        border-radius: 12px;
     }
     .hero-title {
-        font-size: 36px;
-        margin-bottom: 20px;
+        font-size: 26px;
+        margin-bottom: 12px;
     }
     .hero-subtitle {
-        font-size: 12px;
-        margin-bottom: 15px;
+        font-size: 10px;
+        margin-bottom: 10px;
     }
     .hero-discount {
-        font-size: 14px;
-        margin-bottom: 25px;
+        font-size: 12px;
+        margin-bottom: 15px;
+        padding: 3px 10px;
     }
     .hero-actions .btn {
-        padding: 15px 35px;
-        font-size: 12px;
+        padding: 12px 20px;
+        font-size: 11px;
         width: 100%;
         text-align: center;
     }
