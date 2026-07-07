@@ -11,8 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const ADMIN_PASSWORD = 'marwalibas123';
 
     if(loginBtn) {
+        // Check if already logged in
+        if (localStorage.getItem('marwa_admin_logged_in') === 'true') {
+            loginScreen.style.display = 'none';
+            mainLayout.style.display = 'flex';
+        }
+
         loginBtn.addEventListener('click', () => {
             if (passInput.value === ADMIN_PASSWORD) {
+                localStorage.setItem('marwa_admin_logged_in', 'true');
                 loginScreen.style.display = 'none';
                 mainLayout.style.display = 'flex';
             } else {
@@ -23,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         passInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') loginBtn.click();
         });
+        
+        // Optional: Add a logout function if needed later, e.g. 
+        // window.adminLogout = () => { localStorage.removeItem('marwa_admin_logged_in'); location.reload(); }
     }
 
     // --- State Management ---
@@ -782,5 +792,170 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (typeof window.renderCollectionsTable === 'function') {
         window.renderCollectionsTable();
+    }
+
+    // --- Home Categories Admin Logic ---
+    const womenHcTbody = document.getElementById('women-categories-tbody');
+    const menHcTbody = document.getElementById('men-categories-tbody');
+    const kidsHcTbody = document.getElementById('kids-categories-tbody');
+    
+    const hcModal = document.getElementById('home-category-modal');
+    const closeHcBtn = document.getElementById('close-home-category-modal-btn');
+    const cancelHcBtn = document.getElementById('cancel-home-category-modal-btn');
+    const hcForm = document.getElementById('home-category-form');
+    const hcModalTitle = document.getElementById('home-category-modal-title');
+    const hcImageContainer = document.getElementById('home-category-image-upload-container');
+
+    window.renderHomeCategoriesTable = () => {
+        const categories = window.homeCategories || [];
+        
+        const renderGroup = (tbody, groupName) => {
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            const groupCategories = categories.filter(c => c.group === groupName);
+            
+            if(groupCategories.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding: 40px;">No categories found. Add a new category to get started.</td></tr>`;
+                return;
+            }
+
+            groupCategories.forEach(cat => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><img src="${cat.image}" alt="${cat.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"></td>
+                    <td>${cat.title}</td>
+                    <td>${cat.link}</td>
+                    <td>
+                        <button class="action-btn edit-hc-btn" data-id="${cat.id}" title="Edit">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </button>
+                        <button class="action-btn delete delete-hc-btn" data-id="${cat.id}" title="Delete">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        };
+
+        renderGroup(womenHcTbody, "SHOP WOMEN'S CATEGORIES");
+        renderGroup(menHcTbody, "SHOP MEN'S CATEGORIES");
+        renderGroup(kidsHcTbody, "SHOP KIDS CATEGORIES");
+
+        // Attach actions
+        document.querySelectorAll('.edit-hc-btn').forEach(btn => {
+            btn.addEventListener('click', () => openHcModal(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-hc-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteHc(btn.getAttribute('data-id')));
+        });
+    };
+
+    let currentAddGroup = '';
+
+    const openHcModal = (id = null, group = null) => {
+        if (!hcForm) return;
+        hcForm.reset();
+        
+        if (id) {
+            hcModalTitle.textContent = "Edit Category";
+            const cat = window.homeCategories.find(c => c.id === id);
+            
+            document.getElementById('home-category-id').value = cat.id;
+            document.getElementById('home-category-group').value = cat.group; // hidden input
+            document.getElementById('home-category-title').value = cat.title;
+            document.getElementById('home-category-link').value = cat.link;
+            
+            hcImageContainer.innerHTML = '';
+            addImageRow(hcImageContainer, cat.image);
+        } else {
+            hcModalTitle.textContent = "Add Category";
+            document.getElementById('home-category-id').value = '';
+            document.getElementById('home-category-group').value = group || ''; // hidden input
+            currentAddGroup = group;
+            hcImageContainer.innerHTML = '';
+            addImageRow(hcImageContainer);
+        }
+
+        hcModal.classList.add('active');
+    };
+
+    const closeHcModal = () => {
+        if (hcModal) hcModal.classList.remove('active');
+    };
+
+    // Bind Add Buttons for the three tabs
+    document.querySelectorAll('.add-hc-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.getAttribute('data-group');
+            openHcModal(null, group);
+        });
+    });
+    
+    if (closeHcBtn) closeHcBtn.addEventListener('click', closeHcModal);
+    if (cancelHcBtn) cancelHcBtn.addEventListener('click', closeHcModal);
+
+    const deleteHc = (id) => {
+        if (confirm('Are you sure you want to delete this category?')) {
+            window.homeCategories = window.homeCategories.filter(c => c.id !== id);
+            
+            if (typeof deleteHomeCategoryFromDb === 'function') {
+                deleteHomeCategoryFromDb(id);
+            } else {
+                localStorage.setItem('marwa_home_categories', JSON.stringify(window.homeCategories));
+            }
+            
+            if (typeof window.renderHomeCategoriesTable === 'function') window.renderHomeCategoriesTable();
+        }
+    };
+
+    if (hcForm) {
+        hcForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const imageInputs = hcImageContainer.querySelectorAll('.base64-input');
+            const imagesArray = Array.from(imageInputs).map(inp => inp.value).filter(val => val !== '');
+            const mainImage = imagesArray.length > 0 ? imagesArray[0] : '';
+
+            if (!mainImage) {
+                alert('Please provide an image for the category.');
+                return;
+            }
+
+            let catId = document.getElementById('home-category-id').value;
+            if (!catId) {
+                catId = 'hc-' + Date.now();
+            }
+
+            const newCategory = {
+                id: catId,
+                group: document.getElementById('home-category-group').value,
+                title: document.getElementById('home-category-title').value,
+                image: mainImage,
+                link: document.getElementById('home-category-link').value
+            };
+
+            const existingIndex = window.homeCategories.findIndex(c => c.id === newCategory.id);
+            
+            if (existingIndex > -1) {
+                window.homeCategories[existingIndex] = newCategory;
+            } else {
+                window.homeCategories.push(newCategory);
+            }
+
+            if (typeof saveHomeCategoryToDb === 'function') {
+                saveHomeCategoryToDb(newCategory);
+            } else {
+                localStorage.setItem('marwa_home_categories', JSON.stringify(window.homeCategories));
+            }
+            
+            if (typeof window.renderHomeCategoriesTable === 'function') window.renderHomeCategoriesTable();
+            closeHcModal();
+        });
+    }
+
+    if (typeof window.renderHomeCategoriesTable === 'function') {
+        window.renderHomeCategoriesTable();
     }
 });

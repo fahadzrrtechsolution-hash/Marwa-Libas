@@ -181,14 +181,33 @@ const DEFAULT_COLLECTIONS = [
     { id: "col-summer", title: "Summer Collection", image: "assets/skyfall_dress.png", link: "#collection/summer" }
 ];
 
+const DEFAULT_HOME_CATEGORIES = [
+    { id: "hc-w1", group: "SHOP WOMEN'S CATEGORIES", title: "Clothing", image: "assets/maheen.jpg", link: "#collection/women-clothing" },
+    { id: "hc-w2", group: "SHOP WOMEN'S CATEGORIES", title: "Accessories", image: "assets/maya_dress.png", link: "#collection/women-accessories" },
+    { id: "hc-w3", group: "SHOP WOMEN'S CATEGORIES", title: "Footwear", image: "assets/parizad_dress.png", link: "#collection/women-footwear" },
+    { id: "hc-w4", group: "SHOP WOMEN'S CATEGORIES", title: "Lingerie and Sleepwear", image: "assets/skyfall_dress.png", link: "#collection/women-lingerie-sleepwear" },
+    
+    { id: "hc-m1", group: "SHOP MEN'S CATEGORIES", title: "Unstitched", image: "assets/parizad_dress.png", link: "#collection/men-unstitched" },
+    { id: "hc-m2", group: "SHOP MEN'S CATEGORIES", title: "Kurta", image: "assets/skyfall_dress.png", link: "#collection/men-kurta" },
+    { id: "hc-m3", group: "SHOP MEN'S CATEGORIES", title: "Waistcoat", image: "assets/maheen.jpg", link: "#collection/men-waistcoat" },
+    { id: "hc-m4", group: "SHOP MEN'S CATEGORIES", title: "Trousers", image: "assets/maya_dress.png", link: "#collection/men-trousers" },
+    
+    { id: "hc-k1", group: "SHOP KIDS CATEGORIES", title: "Boys", image: "assets/skyfall_dress.png", link: "#collection/kids-boys" },
+    { id: "hc-k2", group: "SHOP KIDS CATEGORIES", title: "Girls", image: "assets/maya_dress.png", link: "#collection/kids-girls" },
+    { id: "hc-k3", group: "SHOP KIDS CATEGORIES", title: "Infants", image: "assets/maheen.jpg", link: "#collection/kids-infants" },
+    { id: "hc-k4", group: "SHOP KIDS CATEGORIES", title: "Accessories", image: "assets/parizad_dress.png", link: "#collection/kids-accessories" }
+];
+
 let PRODUCTS = DEFAULT_PRODUCTS; // Start with default products
 let BANNERS = DEFAULT_BANNERS;
 let COLLECTIONS = DEFAULT_COLLECTIONS;
+let HOME_CATEGORIES = DEFAULT_HOME_CATEGORIES;
 
 // Create events to notify when data is loaded
 const productsLoadedEvent = new Event('productsLoaded');
 const bannersLoadedEvent = new Event('bannersLoaded');
 const collectionsLoadedEvent = new Event('collectionsLoaded');
+const homeCategoriesLoadedEvent = new Event('homeCategoriesLoaded');
 
 // Read from Firebase Firestore
 if (typeof db !== 'undefined') {
@@ -269,6 +288,30 @@ if (typeof db !== 'undefined') {
         }
     });
 
+    // Home Categories Listener
+    db.collection('marwa_home_categories').onSnapshot((snapshot) => {
+        let loadedHC = [];
+        snapshot.forEach(doc => {
+            loadedHC.push(doc.data());
+        });
+
+        if (loadedHC.length > 0) {
+            HOME_CATEGORIES = loadedHC;
+        } else {
+            HOME_CATEGORIES = DEFAULT_HOME_CATEGORIES;
+            DEFAULT_HOME_CATEGORIES.forEach(c => db.collection('marwa_home_categories').doc(c.id).set(c));
+        }
+        
+        window.dispatchEvent(homeCategoriesLoadedEvent);
+        
+        if (typeof window.renderHomeCategoriesTable === 'function') {
+            window.homeCategories = HOME_CATEGORIES;
+            window.renderHomeCategoriesTable();
+        } else if (typeof handleRoute === 'function') {
+            handleRoute(); // Might need to re-render homepage
+        }
+    });
+
 } else {
     // Fallback if Firebase fails to load
     const savedProducts = localStorage.getItem('marwa_products');
@@ -283,9 +326,14 @@ if (typeof db !== 'undefined') {
     if (savedCollections) {
         COLLECTIONS = JSON.parse(savedCollections);
     }
+    const savedHC = localStorage.getItem('marwa_home_categories');
+    if (savedHC) {
+        HOME_CATEGORIES = JSON.parse(savedHC);
+    }
     window.dispatchEvent(productsLoadedEvent);
     window.dispatchEvent(bannersLoadedEvent);
     window.dispatchEvent(collectionsLoadedEvent);
+    window.dispatchEvent(homeCategoriesLoadedEvent);
 }
 
 // Helper to save product to Firebase
@@ -329,3 +377,18 @@ function deleteCollectionFromDb(id) {
         return db.collection('marwa_collections').doc(id).delete();
     }
 }
+
+// Helper to save home category to Firebase
+function saveHomeCategoryToDb(category) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_home_categories').doc(category.id).set(category);
+    }
+}
+
+// Helper to delete home category from Firebase
+function deleteHomeCategoryFromDb(id) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_home_categories').doc(id).delete();
+    }
+}
+

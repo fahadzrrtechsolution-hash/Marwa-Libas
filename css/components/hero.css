@@ -143,19 +143,50 @@
 
 @media (max-width: 576px) {
     .hero-section {
-        height: 350px;
-        align-items: flex-end;
-        padding-bottom: 60px;
+        height: 60vw;
+        min-height: 200px;
+        max-height: 300px;
+        align-items: center;
+        padding-bottom: 0;
+        border-radius: 12px;
+    }
+    .hero-bg-img {
+        object-position: center;
     }
     .hero-content {
         padding: 0 20px;
-        text-align: center;
+        text-align: left;
         width: 100%;
+        max-width: 65%;
     }
     .hero-title {
-        font-size: 42px;
+        font-size: 20px;
+        margin-bottom: 6px;
+        line-height: 1.1;
+        letter-spacing: 0;
+    }
+    .hero-subtitle {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+    .hero-discount {
+        font-size: 12px;
+        padding: 4px 8px;
+        margin-bottom: 12px;
     }
     .hero-actions {
-        justify-content: center;
+        justify-content: flex-start;
+    }
+    .hero-actions .btn {
+        padding: 6px 14px;
+        font-size: 10px;
+        border-width: 1px;
+    }
+    .hero-pagination {
+        bottom: 10px;
+    }
+    .hero-pagination .dot {
+        width: 6px;
+        height: 6px;
     }
 }

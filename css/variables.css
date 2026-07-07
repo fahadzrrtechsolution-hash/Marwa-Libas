@@ -2,8 +2,8 @@
    DESIGN SYSTEM & CUSTOM VARIABLES
    ========================================== */
 :root {
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Outfit', sans-serif;
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
 
     /* Color Palette */
     --color-bg-primary: #ffffff;
