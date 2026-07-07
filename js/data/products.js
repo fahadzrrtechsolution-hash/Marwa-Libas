@@ -198,10 +198,11 @@ const DEFAULT_HOME_CATEGORIES = [
     { id: "hc-k4", group: "SHOP KIDS CATEGORIES", title: "Accessories", image: "assets/parizad_dress.png", link: "#collection/kids-accessories" }
 ];
 
-let PRODUCTS = DEFAULT_PRODUCTS; // Start with default products
-let BANNERS = DEFAULT_BANNERS;
-let COLLECTIONS = DEFAULT_COLLECTIONS;
-let HOME_CATEGORIES = DEFAULT_HOME_CATEGORIES;
+// Load from localStorage cache for instant UI rendering, fallback to defaults
+let PRODUCTS = JSON.parse(localStorage.getItem('marwa_products')) || DEFAULT_PRODUCTS;
+let BANNERS = JSON.parse(localStorage.getItem('marwa_banners')) || DEFAULT_BANNERS;
+let COLLECTIONS = JSON.parse(localStorage.getItem('marwa_collections')) || DEFAULT_COLLECTIONS;
+let HOME_CATEGORIES = JSON.parse(localStorage.getItem('marwa_home_categories')) || DEFAULT_HOME_CATEGORIES;
 
 // Create events to notify when data is loaded
 const productsLoadedEvent = new Event('productsLoaded');
@@ -219,6 +220,7 @@ if (typeof db !== 'undefined') {
 
         if (loadedProducts.length > 0) {
             PRODUCTS = loadedProducts;
+            localStorage.setItem('marwa_products', JSON.stringify(PRODUCTS));
         } else {
             PRODUCTS = DEFAULT_PRODUCTS;
             // Automatically seed Firebase with default products on first run
@@ -249,6 +251,7 @@ if (typeof db !== 'undefined') {
 
         if (loadedBanners.length > 0) {
             BANNERS = loadedBanners;
+            localStorage.setItem('marwa_banners', JSON.stringify(BANNERS));
         } else {
             BANNERS = DEFAULT_BANNERS;
             DEFAULT_BANNERS.forEach(b => db.collection('marwa_banners').doc(b.id).set(b));
@@ -273,6 +276,7 @@ if (typeof db !== 'undefined') {
 
         if (loadedCollections.length > 0) {
             COLLECTIONS = loadedCollections;
+            localStorage.setItem('marwa_collections', JSON.stringify(COLLECTIONS));
         } else {
             COLLECTIONS = DEFAULT_COLLECTIONS;
             DEFAULT_COLLECTIONS.forEach(c => db.collection('marwa_collections').doc(c.id).set(c));
@@ -297,6 +301,7 @@ if (typeof db !== 'undefined') {
 
         if (loadedHC.length > 0) {
             HOME_CATEGORIES = loadedHC;
+            localStorage.setItem('marwa_home_categories', JSON.stringify(HOME_CATEGORIES));
         } else {
             HOME_CATEGORIES = DEFAULT_HOME_CATEGORIES;
             DEFAULT_HOME_CATEGORIES.forEach(c => db.collection('marwa_home_categories').doc(c.id).set(c));

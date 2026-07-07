@@ -19,7 +19,7 @@ function renderProductPage(productId) {
     // Build Images
     let thumbnailsHtml = '';
     const imagesToUse = (product.images && product.images.length > 0) ? product.images : [product.localImage || product.image];
-    
+
     // If only one image, we can just duplicate it with CSS filters to simulate a gallery if desired, or just show the actual images.
     // Let's just show actual images:
     if (imagesToUse.length === 1) {
@@ -35,6 +35,91 @@ function renderProductPage(productId) {
     }
 
     const mainImageToUse = imagesToUse[0];
+
+    const productReviews = state.reviews[product.id] || [];
+    let avgRating = 0;
+    if (productReviews.length > 0) {
+        const total = productReviews.reduce((sum, rev) => sum + rev.rating, 0);
+        avgRating = (total / productReviews.length).toFixed(1);
+    }
+
+    // Generate stars for average rating
+    let avgStarsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= Math.round(avgRating)) {
+            avgStarsHtml += `<svg width="16" height="16" fill="gold" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+        } else {
+            avgStarsHtml += `<svg width="16" height="16" fill="none" stroke="gold" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+        }
+    }
+
+    const ratingDisplayHtml = productReviews.length > 0
+        ? `<div class="product-detail-rating" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+            <div class="stars" style="display: flex;">${avgStarsHtml}</div>
+            <span style="font-size: 14px; color: #666;">${avgRating} (${productReviews.length} Reviews)</span>
+           </div>`
+        : `<div class="product-detail-rating" style="margin-bottom: 15px; font-size: 14px; color: #666;">No reviews yet</div>`;
+
+    let reviewsListHtml = '';
+    if (productReviews.length === 0) {
+        reviewsListHtml = `<p>Be the first to review this product!</p>`;
+    } else {
+        reviewsListHtml = productReviews.map(rev => {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<svg width="14" height="14" fill="${i <= rev.rating ? 'gold' : 'none'}" stroke="gold" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+            }
+            return `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <strong>${rev.name}</strong>
+                            <span class="verified-badge">✓ Verified Buyer</span>
+                        </div>
+                        <div class="review-date">${rev.date}</div>
+                    </div>
+                    <div class="review-stars">${stars}</div>
+                    <p class="review-text">${rev.text}</p>
+                </div>
+            `;
+        }).join('');
+    }
+
+    const reviewsSectionHtml = `
+        <div class="product-reviews-section">
+            <h2 class="reviews-section-title">Customer Reviews</h2>
+            <div class="reviews-layout">
+                <div class="reviews-list">
+                    ${reviewsListHtml}
+                </div>
+                <div class="review-form-container">
+                    <h3>Write a Review</h3>
+                    <form id="add-review-form" class="review-form">
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <div class="star-rating-input" id="star-rating-input">
+                                <span class="star active" data-value="1">★</span>
+                                <span class="star active" data-value="2">★</span>
+                                <span class="star active" data-value="3">★</span>
+                                <span class="star active" data-value="4">★</span>
+                                <span class="star active" data-value="5">★</span>
+                            </div>
+                            <input type="hidden" id="review-rating-value" value="5">
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="review-name" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label>Review</label>
+                            <textarea id="review-text" required placeholder="What did you like about this dress?" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
 
     appContent.innerHTML = `
         <div class="container product-detail-container">
@@ -61,6 +146,7 @@ function renderProductPage(productId) {
                     </div>
 
                     <h1 class="product-detail-title">${product.title}</h1>
+                    ${ratingDisplayHtml}
                     <div class="product-card-price-row" style="font-size: 24px;">
                         <span class="price-original">Rs. ${product.originalPrice.toLocaleString()}</span>
                         <span class="price-sale">Rs. ${product.price.toLocaleString()}</span>
@@ -146,6 +232,8 @@ function renderProductPage(productId) {
                     </div>
                 </div>
             </div>
+            
+            ${reviewsSectionHtml}
         </div>
 
         <!-- Sticky ATC bar -->
@@ -165,111 +253,144 @@ function renderProductPage(productId) {
         ` : ''}
     `;
 
-    setupProductPageListeners(product);
-}
+            setupProductPageListeners(product);
+        }
 
 function setupProductPageListeners(product) {
-    // Thumbnails click
-    document.querySelectorAll('.thumb-item').forEach(thumb => {
-        thumb.addEventListener('click', function() {
-            document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            
-            const mainImg = document.getElementById('main-product-img');
-            mainImg.src = this.src;
-            mainImg.style.filter = this.style.filter;
-        });
-    });
+                // Thumbnails click
+                document.querySelectorAll('.thumb-item').forEach(thumb => {
+                    thumb.addEventListener('click', function () {
+                        document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
 
-    // Size Selectors
-    const sizeBtns = document.querySelectorAll('#detail-size-selector .size-btn');
-    sizeBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            sizeBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
+                        const mainImg = document.getElementById('main-product-img');
+                        mainImg.src = this.src;
+                        mainImg.style.filter = this.style.filter;
+                    });
+                });
 
-    // Qty Selectors
-    let qty = 1;
-    const qtyVal = document.getElementById('detail-qty-value');
-    
-    if(qtyVal) {
-        document.getElementById('detail-qty-minus').addEventListener('click', () => {
-            if (qty > 1) {
-                qty--;
-                qtyVal.textContent = qty;
-            }
-        });
+                // Size Selectors
+                const sizeBtns = document.querySelectorAll('#detail-size-selector .size-btn');
+                sizeBtns.forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        sizeBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
 
-        document.getElementById('detail-qty-plus').addEventListener('click', () => {
-            qty++;
-            qtyVal.textContent = qty;
-        });
-    }
+                // Qty Selectors
+                let qty = 1;
+                const qtyVal = document.getElementById('detail-qty-value');
 
-    // Add To Cart Action
-    const handleAddToCartAction = () => {
-        const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
-        const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
-        addToCart(product.id, selectedSize, qty);
-    };
+                if (qtyVal) {
+                    document.getElementById('detail-qty-minus').addEventListener('click', () => {
+                        if (qty > 1) {
+                            qty--;
+                            qtyVal.textContent = qty;
+                        }
+                    });
 
-    const detailAtcBtn = document.getElementById('detail-add-to-cart');
-    if(detailAtcBtn) detailAtcBtn.addEventListener('click', handleAddToCartAction);
-    
-    const stickyAtcBtn = document.getElementById('sticky-add-to-cart-btn');
-    if (stickyAtcBtn) stickyAtcBtn.addEventListener('click', handleAddToCartAction);
-
-    // Buy Now
-    const buyNowBtn = document.getElementById('detail-buy-now');
-    if(buyNowBtn) {
-        buyNowBtn.addEventListener('click', () => {
-            const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
-            const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
-            addToCart(product.id, selectedSize, qty);
-            window.location.hash = "#checkout";
-        });
-    }
-
-    // Accordions
-    document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', function() {
-            const item = this.parentElement;
-            const content = this.nextElementSibling;
-            
-            const isActive = item.classList.contains('active');
-            
-            // Close all
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('active');
-                i.querySelector('.accordion-content').style.maxHeight = '0px';
-            });
-
-            if (!isActive) {
-                item.classList.add('active');
-                content.style.maxHeight = content.scrollHeight + 'px';
-            }
-        });
-    });
-
-    // Sticky ATC Bar visibility
-    const stickyAtc = document.getElementById('sticky-atc-bar');
-    const mainAtcBtn = document.getElementById('detail-add-to-cart');
-    
-    if (window.IntersectionObserver) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    stickyAtc.classList.add('visible');
-                } else {
-                    stickyAtc.classList.remove('visible');
+                    document.getElementById('detail-qty-plus').addEventListener('click', () => {
+                        qty++;
+                        qtyVal.textContent = qty;
+                    });
                 }
-            });
-        }, { threshold: 0.1 });
 
-        if (mainAtcBtn) {
-            observer.observe(mainAtcBtn);
-        }
-    }
-}
+                // Add To Cart Action
+                const handleAddToCartAction = () => {
+                    const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
+                    const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
+                    addToCart(product.id, selectedSize, qty);
+                };
+
+                const detailAtcBtn = document.getElementById('detail-add-to-cart');
+                if (detailAtcBtn) detailAtcBtn.addEventListener('click', handleAddToCartAction);
+
+                const stickyAtcBtn = document.getElementById('sticky-add-to-cart-btn');
+                if (stickyAtcBtn) stickyAtcBtn.addEventListener('click', handleAddToCartAction);
+
+                // Buy Now
+                const buyNowBtn = document.getElementById('detail-buy-now');
+                if (buyNowBtn) {
+                    buyNowBtn.addEventListener('click', () => {
+                        const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
+                        const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
+                        addToCart(product.id, selectedSize, qty);
+                        window.location.hash = "#checkout";
+                    });
+                }
+
+                // Accordions
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.addEventListener('click', function () {
+                        const item = this.parentElement;
+                        const content = this.nextElementSibling;
+
+                        const isActive = item.classList.contains('active');
+
+                        // Close all
+                        document.querySelectorAll('.accordion-item').forEach(i => {
+                            i.classList.remove('active');
+                            i.querySelector('.accordion-content').style.maxHeight = '0px';
+                        });
+
+                        if (!isActive) {
+                            item.classList.add('active');
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                        }
+                    });
+                });
+
+                // Sticky ATC Bar visibility
+                const stickyAtc = document.getElementById('sticky-atc-bar');
+                const mainAtcBtn = document.getElementById('detail-add-to-cart');
+
+                if (window.IntersectionObserver) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (!entry.isIntersecting) {
+                                stickyAtc.classList.add('visible');
+                            } else {
+                                stickyAtc.classList.remove('visible');
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    if (mainAtcBtn) {
+                        observer.observe(mainAtcBtn);
+                    }
+                }
+
+                // Reviews Form Listeners
+                const stars = document.querySelectorAll('#star-rating-input .star');
+                const ratingInput = document.getElementById('review-rating-value');
+                
+                stars.forEach(star => {
+                    star.addEventListener('click', function() {
+                        const val = parseInt(this.getAttribute('data-value'));
+                        ratingInput.value = val;
+                        stars.forEach(s => {
+                            const sVal = parseInt(s.getAttribute('data-value'));
+                            if (sVal <= val) {
+                                s.classList.add('active');
+                            } else {
+                                s.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+
+                const reviewForm = document.getElementById('add-review-form');
+                if (reviewForm) {
+                    reviewForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const name = document.getElementById('review-name').value;
+                        const text = document.getElementById('review-text').value;
+                        const rating = parseInt(document.getElementById('review-rating-value').value);
+                        
+                        if (name && text) {
+                            addReview(product.id, { name, text, rating });
+                        }
+                    });
+                }
+            }

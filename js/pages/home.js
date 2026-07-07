@@ -78,7 +78,7 @@ function renderHomepage() {
                             <h1 class="hero-title" style="${themeStyle}">${banner.title}</h1>
                             ${banner.discount ? `<div class="hero-discount" style="${themeStyle}">${banner.discount}</div>` : ''}
                             <div class="hero-actions">
-                                <a href="${banner.btnLink}" class="${btnClass}" style="${themeStyleBorder}">${banner.btnText}</a>
+                                <a href="${banner.btnLink}" class="btn">${banner.btnText}</a>
                             </div>
                         </div>
                     </div>`;
@@ -162,14 +162,20 @@ function renderHomepage() {
                 }
                 .premium-shop-btn {
                     font-size: 11px;
-                    font-weight: 500;
+                    font-weight: 600;
                     text-transform: uppercase;
                     letter-spacing: 1px;
-                    color: rgba(255,255,255,0.9);
+                    color: #000;
+                    background: #fff;
+                    padding: 10px 25px;
+                    border-radius: 30px;
                     opacity: 0;
-                    transform: translateY(5px);
+                    transform: translateY(15px);
                     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                    display: inline-block;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-top: 10px;
                 }
                 .premium-shop-btn .arrow {
                     display: inline-block;
@@ -189,8 +195,12 @@ function renderHomepage() {
                     opacity: 1;
                     transform: translateY(0);
                 }
-                .premium-category-card:hover .premium-shop-btn .arrow {
-                    transform: translateX(4px);
+                .premium-category-card:hover .premium-shop-btn:hover {
+                    background: #000;
+                    color: #fff;
+                }
+                .premium-category-card:hover .premium-shop-btn:hover .arrow {
+                    transform: translateX(6px);
                 }
 
                 @media(max-width: 767px) {

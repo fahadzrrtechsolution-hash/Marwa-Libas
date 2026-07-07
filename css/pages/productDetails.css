@@ -301,3 +301,138 @@
         display: none;
     }
 }
+
+/* ==========================================
+   REVIEWS SECTION
+   ========================================== */
+.product-reviews-section {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.reviews-section-title {
+    font-size: 24px;
+    margin-bottom: var(--spacing-lg);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reviews-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+    .reviews-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Review Cards */
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.review-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-author strong {
+    font-size: 16px;
+    color: var(--color-text-primary);
+}
+
+.verified-badge {
+    font-size: 11px;
+    color: #4CAF50;
+    margin-left: 8px;
+    font-weight: 600;
+}
+
+.review-date {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.review-stars {
+    margin-bottom: 10px;
+}
+
+.review-text {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* Review Form */
+.review-form-container {
+    background: #fdfdfd;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    height: fit-content;
+}
+
+.review-form-container h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-text-primary);
+}
+
+/* Star Rating Input */
+.star-rating-input {
+    display: flex;
+    gap: 5px;
+    font-size: 24px;
+    color: #e5e7eb;
+    cursor: pointer;
+}
+
+.star-rating-input .star {
+    transition: color 0.2s ease;
+}
+
+.star-rating-input .star.active {
+    color: gold;
+}

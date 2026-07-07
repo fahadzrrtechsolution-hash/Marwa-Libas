@@ -105,7 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = new Image();
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                const MAX_WIDTH = 800;
+                // Increased MAX_WIDTH to preserve 1920x1080 banner quality
+                const MAX_WIDTH = 1920;
                 let width = img.width;
                 let height = img.height;
                 
@@ -117,7 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                callback(canvas.toDataURL('image/jpeg', 0.8));
+                // Use WebP to ensure 1920px image stays under Firebase 1MB limit
+                callback(canvas.toDataURL('image/webp', 0.85));
             };
             img.src = e.target.result;
         };

@@ -1,10 +1,7 @@
-
-
-
-
 let state = {
     cart: JSON.parse(localStorage.getItem('marwa_cart')) || [],
     wishlist: JSON.parse(localStorage.getItem('marwa_wishlist')) || [],
+    reviews: JSON.parse(localStorage.getItem('marwa_reviews')) || {},
     searchQuery: "",
     currentPage: "home",
     selectedCollection: "new-arrivals"
@@ -13,6 +10,7 @@ let state = {
 function saveState() {
     localStorage.setItem('marwa_cart', JSON.stringify(state.cart));
     localStorage.setItem('marwa_wishlist', JSON.stringify(state.wishlist));
+    localStorage.setItem('marwa_reviews', JSON.stringify(state.reviews));
     updateBadges();
 }
 
@@ -102,5 +100,26 @@ function toggleWishlist(productId) {
             svg.setAttribute('fill', isWishlisted ? 'var(--color-sale)' : 'none');
             svg.setAttribute('stroke', isWishlisted ? 'var(--color-sale)' : 'currentColor');
         });
+    }
+}
+
+function addReview(productId, reviewData) {
+    if (!state.reviews[productId]) {
+        state.reviews[productId] = [];
+    }
+    // Add date to the review
+    const newReview = {
+        ...reviewData,
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    };
+    state.reviews[productId].push(newReview);
+    saveState();
+    
+    // Re-render product page if we are on it
+    if (window.location.hash.startsWith('#product/')) {
+        const currentProductId = window.location.hash.split('/')[1];
+        if (String(currentProductId) === String(productId)) {
+            renderProductPage(productId);
+        }
     }
 }
