@@ -193,14 +193,53 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Render Table ---
+    const adminFilterStock = document.getElementById('admin-filter-stock');
+    const adminFilterMinPrice = document.getElementById('admin-filter-min-price');
+    const adminFilterMaxPrice = document.getElementById('admin-filter-max-price');
+    const adminFilterCollection = document.getElementById('admin-filter-collection');
+    const adminApplyFilterBtn = document.getElementById('admin-apply-filter-btn');
+
+    if (adminApplyFilterBtn) {
+        adminApplyFilterBtn.addEventListener('click', () => {
+            window.renderTable();
+        });
+    }
+
     window.renderTable = () => {
         tbody.innerHTML = '';
         if(!window.products || window.products.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 40px;">No products found. Add a new product to get started.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding: 40px;">No products found. Add a new product to get started.</td></tr>`;
             return;
         }
 
-        window.products.forEach(product => {
+        let displayProducts = window.products;
+
+        if (adminFilterStock && adminApplyFilterBtn) {
+            const stockFilter = adminFilterStock.value;
+            const minPrice = parseFloat(adminFilterMinPrice.value);
+            const maxPrice = parseFloat(adminFilterMaxPrice.value);
+            const collectionFilter = adminFilterCollection.value;
+            
+            displayProducts = displayProducts.filter(p => {
+                const isInStock = p.stock !== 0 && p.stock !== 'Out of Stock';
+                if (stockFilter === 'in-stock' && !isInStock) return false;
+                if (stockFilter === 'out-of-stock' && isInStock) return false;
+                
+                if (!isNaN(minPrice) && p.price < minPrice) return false;
+                if (!isNaN(maxPrice) && p.price > maxPrice) return false;
+                
+                if (collectionFilter !== 'all' && p.collection !== collectionFilter) return false;
+                
+                return true;
+            });
+        }
+
+        if(displayProducts.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding: 40px;">No products found matching the criteria.</td></tr>`;
+            return;
+        }
+
+        displayProducts.forEach(product => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><img src="${(product.images && product.images.length > 0) ? product.images[0] : (product.localImage || product.image)}" alt="${product.title}"></td>

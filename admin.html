@@ -84,6 +84,40 @@
                 </header>
 
                 <div class="admin-content">
+                    <div class="card table-card" style="margin-bottom: 20px; padding: 15px; background: white; display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Availability</label>
+                            <select id="admin-filter-stock" class="form-control" style="padding: 8px;">
+                                <option value="all">All</option>
+                                <option value="in-stock">In Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Min Price (Rs)</label>
+                            <input type="number" id="admin-filter-min-price" class="form-control" style="padding: 8px;" placeholder="0">
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Max Price (Rs)</label>
+                            <input type="number" id="admin-filter-max-price" class="form-control" style="padding: 8px;" placeholder="Any">
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Collection</label>
+                            <select id="admin-filter-collection" class="form-control" style="padding: 8px;">
+                                <option value="all">All Collections</option>
+                                <option value="new-arrivals">New Arrivals</option>
+                                <option value="eid-ul-adha">Eid ul-Adha</option>
+                                <option value="best-sellers">Best Sellers</option>
+                                <option value="luxury-lawn">Luxury Lawn</option>
+                                <option value="summer">Summer Collection</option>
+                                <option value="under-2290">Under 2290</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" id="admin-apply-filter-btn" style="padding: 8px 20px; height: 38px;">Apply Filter</button>
+                        </div>
+                    </div>
+
                     <div class="card table-card">
                         <table class="admin-table">
                             <thead>

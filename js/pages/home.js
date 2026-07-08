@@ -9,60 +9,127 @@ function renderHomepage() {
         productsHtml += renderProductCard(product);
     });
 
-    const renderCategorySection = (title, items) => `
-        <div style="background: linear-gradient(180deg, #f0f2f4 0%, #e8e9eb 100%); padding: 60px 0; margin-bottom: 40px; border-top: 1px solid #ddd; border-bottom: 1px solid #ccc; box-shadow: inset 0px 2px 10px rgba(0,0,0,0.03);">
-            <div class="container text-center">
-                <div style="display: inline-block; position: relative; margin-bottom: 45px;">
-                    <h2 style="font-family: inherit; font-size: 26px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin: 0; padding-bottom: 15px; color: #111111; text-shadow: 1px 1px 1px rgba(255,255,255,0.8);">${title}</h2>
-                    <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 3px; background: #1a362d; border-radius: 2px;"></div>
-                </div>
+    let dynamicCategoriesHtml = `
+        <div class="category-top-nav" style="background: #ffffff; border-bottom: 1px solid #eaeaea; padding: 15px 0; overflow: visible; margin-bottom: 20px; position: relative; z-index: 100;">
+            <div class="container" style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap; position: relative;">
                 
-                <div class="collections-grid">
-                ${items.map(col => `
-                <a href="${col.link}" class="premium-category-card">
-                    <div class="premium-img-wrapper">
-                        <img src="${col.image}" alt="${col.title}" class="premium-col-img" loading="lazy">
+                <div class="category-dropdown-wrapper">
+                    <a href="#collection/women" class="category-chip">Women <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <div class="category-dropdown">
+                        <a href="#collection/women-clothing">Clothing</a>
+                        <a href="#collection/women-accessories">Accessories</a>
+                        <a href="#collection/women-footwear">Footwear</a>
+                        <a href="#collection/women-lingerie">Lingerie and Sleepwear</a>
                     </div>
-                    <div class="premium-overlay">
-                        <div class="premium-text-box">
-                            <h4 class="premium-title">${col.title}</h4>
-                            <span class="premium-shop-btn">Shop Now <span class="arrow">→</span></span>
-                        </div>
+                </div>
+
+                <div class="category-dropdown-wrapper">
+                    <a href="#collection/men" class="category-chip">Men <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <div class="category-dropdown">
+                        <a href="#collection/men-clothing">Clothing</a>
+                        <a href="#collection/men-footwear">Footwear</a>
+                        <a href="#collection/men-accessories">Accessories</a>
+                        <a href="#collection/men-inner-sleepwear">Inner and Sleepwear</a>
                     </div>
-                </a>
-                `).join('')}
+                </div>
+                <div class="category-dropdown-wrapper">
+                    <a href="#collection/kids" class="category-chip">Kids <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <div class="category-dropdown">
+                        <a href="#collection/kids-girl">Girl</a>
+                        <a href="#collection/kids-boy">Boy</a>
+                        <a href="#collection/kids-boy-newborn">Boy Newborn</a>
+                        <a href="#collection/kids-girl-newborn">Girl Newborn</a>
+                    </div>
+                </div>
+                <div class="category-dropdown-wrapper">
+                    <a href="#collection/beauty" class="category-chip">Beauty <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <div class="category-dropdown">
+                        <a href="#collection/beauty-fragrance">Fragrance</a>
+                        <a href="#collection/beauty-hair-care">Hair Care</a>
+                        <a href="#collection/beauty-makeup">Makeup</a>
+                        <a href="#collection/beauty-skincare">Skincare</a>
+                        <a href="#collection/beauty-bath-body">Bath & Body</a>
+                    </div>
+                </div>
             </div>
+            <style>
+                .category-dropdown-wrapper {
+                    position: relative;
+                    display: inline-block;
+                }
+                .category-dropdown {
+                    visibility: hidden;
+                    opacity: 0;
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(15px);
+                    background-color: #fff;
+                    min-width: 220px;
+                    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+                    border-radius: 8px;
+                    padding: 12px 0;
+                    z-index: 200;
+                    border: 1px solid rgba(0,0,0,0.05);
+                    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.3s;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .category-dropdown-wrapper:hover .category-dropdown {
+                    visibility: visible;
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(10px); /* a little gap below nav */
+                }
+                .category-dropdown::before {
+                    content: '';
+                    position: absolute;
+                    top: -10px;
+                    left: 0;
+                    width: 100%;
+                    height: 10px;
+                }
+                .category-dropdown a {
+                    color: #444;
+                    padding: 12px 24px;
+                    text-decoration: none;
+                    font-size: 14px;
+                    font-weight: 500;
+                    transition: all 0.2s ease;
+                    text-align: left;
+                    position: relative;
+                }
+                .category-dropdown a:hover {
+                    background-color: #fafafa;
+                    color: #000;
+                    padding-left: 28px; /* smooth slide-in effect for text */
+                }
+
+                .category-chip {
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 8px 15px;
+                    background: transparent;
+                    color: #222;
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 1.5px;
+                    transition: all 0.3s ease;
+                    border: none;
+                }
+                .category-chip:hover {
+                    color: #000;
+                    text-decoration: underline;
+                    text-underline-offset: 6px;
+                    background: transparent !important;
+                }
+            </style>
         </div>
-    </div>
     `;
-
-    // Group HOME_CATEGORIES dynamically
-    const groupedCategories = {};
-    if (typeof HOME_CATEGORIES !== 'undefined') {
-        HOME_CATEGORIES.forEach(cat => {
-            if (!groupedCategories[cat.group]) {
-                groupedCategories[cat.group] = [];
-            }
-            groupedCategories[cat.group].push(cat);
-        });
-    }
-
-    let dynamicCategoriesHtml = '';
-    const categoryOrder = ["SHOP WOMEN'S CATEGORIES", "SHOP MEN'S CATEGORIES", "SHOP KIDS CATEGORIES"];
-    
-    // Render ordered groups first
-    categoryOrder.forEach(group => {
-        if (groupedCategories[group]) {
-            dynamicCategoriesHtml += renderCategorySection(group, groupedCategories[group]);
-            delete groupedCategories[group];
-        }
-    });
-
-    // Render any other remaining groups
-    for (const group in groupedCategories) {
-        dynamicCategoriesHtml += renderCategorySection(group, groupedCategories[group]);
-    }
     appContent.innerHTML = `
+        ${dynamicCategoriesHtml}
+
         <div class="hero-container fade-in">
             <section class="hero-section" id="hero-slider">
                 ${BANNERS.map((banner, index) => {
@@ -90,149 +157,6 @@ function renderHomepage() {
             </section>
         </div>
 
-        ${dynamicCategoriesHtml}
-            <style>
-                .collections-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                    gap: 25px;
-                    max-width: 1000px;
-                    margin: 0 auto;
-                    padding: 0 15px;
-                }
-                .premium-category-card {
-                    position: relative;
-                    display: block;
-                    width: 100%;
-                    aspect-ratio: 4/5;
-                    border-radius: 4px;
-                    overflow: hidden;
-                    text-decoration: none;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-                }
-                .premium-img-wrapper {
-                    width: 100%;
-                    height: 100%;
-                    overflow: hidden;
-                    background-color: #f5f5f5;
-                }
-                .premium-col-img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    object-position: top center;
-                    display: block;
-                    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                }
-                .premium-overlay {
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 50%;
-                    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: flex-end;
-                    padding-bottom: 25px;
-                    pointer-events: none;
-                }
-                .premium-text-box {
-                    background: rgba(255, 255, 255, 0.1);
-                    backdrop-filter: blur(8px);
-                    -webkit-backdrop-filter: blur(8px);
-                    padding: 15px 20px;
-                    border-radius: 4px;
-                    border: 1px solid rgba(255,255,255,0.2);
-                    width: 85%;
-                    text-align: center;
-                    transform: translateY(10px);
-                    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s ease;
-                    pointer-events: auto;
-                }
-                .premium-title {
-                    font-size: 15px;
-                    font-weight: 600;
-                    letter-spacing: 1.5px;
-                    text-transform: uppercase;
-                    margin: 0 0 4px 0;
-                    color: #fff;
-                    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                }
-                .premium-shop-btn {
-                    font-size: 11px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 1px;
-                    color: #000;
-                    background: #fff;
-                    padding: 10px 25px;
-                    border-radius: 30px;
-                    opacity: 0;
-                    transform: translateY(15px);
-                    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                    margin-top: 10px;
-                }
-                .premium-shop-btn .arrow {
-                    display: inline-block;
-                    transition: transform 0.3s ease;
-                }
-                
-                /* Hover Effects */
-                .premium-category-card:hover .premium-col-img {
-                    transform: scale(1.08);
-                }
-                .premium-category-card:hover .premium-text-box {
-                    transform: translateY(0);
-                    background: rgba(255, 255, 255, 0.2);
-                    border-color: rgba(255,255,255,0.4);
-                }
-                .premium-category-card:hover .premium-shop-btn {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-                .premium-category-card:hover .premium-shop-btn:hover {
-                    background: #000;
-                    color: #fff;
-                }
-                .premium-category-card:hover .premium-shop-btn:hover .arrow {
-                    transform: translateX(6px);
-                }
-
-                @media(max-width: 767px) {
-                    .collections-grid {
-                        grid-template-columns: repeat(2, 1fr) !important;
-                        gap: 15px !important;
-                        padding: 0 10px;
-                    }
-                    .premium-category-card {
-                        aspect-ratio: 3/4;
-                    }
-                    .premium-text-box {
-                        width: 92%;
-                        padding: 10px 5px;
-                        transform: translateY(0);
-                    }
-                    .premium-title {
-                        font-size: 12px;
-                        letter-spacing: 1px;
-                        margin-bottom: 2px;
-                    }
-                    .premium-shop-btn {
-                        font-size: 9px;
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                    .premium-overlay {
-                        padding-bottom: 15px;
-                    }
-                }
-            </style>
-        </div>
 
         <div class="container collection-section" style="margin-top: var(--spacing-xl);">
             <div class="collection-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
