@@ -239,15 +239,30 @@ function renderProductPage(productId) {
         <!-- Sticky ATC bar -->
         ${!product.isExternal && product.stock !== 0 ? `
         <div class="sticky-atc-bar" id="sticky-atc-bar">
-            <div class="sticky-atc-product">
-                <img src="${product.localImage}" alt="${product.title}">
-                <div>
-                    <div class="sticky-atc-title">${product.title}</div>
-                    <div class="sticky-atc-price">Rs. ${product.price.toLocaleString()}</div>
+            <div class="sticky-atc-inner">
+                <div class="sticky-atc-product">
+                    <img src="${product.localImage}" alt="${product.title}">
+                    <div>
+                        <div class="sticky-atc-title">${product.title}</div>
+                        <div class="sticky-atc-price">Rs. ${product.price.toLocaleString()} PKR</div>
+                    </div>
                 </div>
-            </div>
-            <div class="sticky-atc-actions">
-                <button class="btn btn-primary" id="sticky-add-to-cart-btn">Add To Cart</button>
+                <div class="sticky-atc-actions">
+                    <div class="sticky-size-selector">
+                        <select id="sticky-size">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="sticky-qty-selector">
+                        <button id="sticky-qty-minus">-</button>
+                        <span id="sticky-qty-value">1</span>
+                        <button id="sticky-qty-plus">+</button>
+                    </div>
+                    <button class="t4s-ani-shake" id="sticky-add-to-cart-btn">Add To Cart</button>
+                </div>
             </div>
         </div>
         ` : ''}
@@ -296,7 +311,7 @@ function setupProductPageListeners(product) {
                     });
                 }
 
-                // Add To Cart Action
+                // Add To Cart Action (Main)
                 const handleAddToCartAction = () => {
                     const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
                     const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
@@ -306,8 +321,27 @@ function setupProductPageListeners(product) {
                 const detailAtcBtn = document.getElementById('detail-add-to-cart');
                 if (detailAtcBtn) detailAtcBtn.addEventListener('click', handleAddToCartAction);
 
+                // Sticky Add To Cart Action
                 const stickyAtcBtn = document.getElementById('sticky-add-to-cart-btn');
-                if (stickyAtcBtn) stickyAtcBtn.addEventListener('click', handleAddToCartAction);
+                if (stickyAtcBtn) {
+                    let stickyQty = 1;
+                    const stickyQtyVal = document.getElementById('sticky-qty-value');
+                    document.getElementById('sticky-qty-minus').addEventListener('click', () => {
+                        if (stickyQty > 1) {
+                            stickyQty--;
+                            stickyQtyVal.textContent = stickyQty;
+                        }
+                    });
+                    document.getElementById('sticky-qty-plus').addEventListener('click', () => {
+                        stickyQty++;
+                        stickyQtyVal.textContent = stickyQty;
+                    });
+
+                    stickyAtcBtn.addEventListener('click', () => {
+                        const stickySize = document.getElementById('sticky-size').value;
+                        addToCart(product.id, stickySize, stickyQty);
+                    });
+                }
 
                 // Buy Now
                 const buyNowBtn = document.getElementById('detail-buy-now');

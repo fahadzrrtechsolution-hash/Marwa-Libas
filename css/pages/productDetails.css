@@ -279,15 +279,25 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: var(--color-bg-primary);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
-    padding: 12px var(--spacing-lg);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
     z-index: 99;
     transform: translateY(100%);
-    transition: transform var(--transition-smooth);
+    transition: transform 0.4s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sticky-atc-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
 }
 
 .sticky-atc-bar.visible {
@@ -297,40 +307,111 @@
 .sticky-atc-product {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: 15px;
 }
 
 .sticky-atc-product img {
-    width: 50px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     object-fit: cover;
-    border-radius: var(--border-radius);
+    border-radius: 50%;
 }
 
 .sticky-atc-title {
     font-size: 14px;
     font-weight: 600;
+    color: #1a3028;
 }
 
 .sticky-atc-price {
     font-size: 13px;
-    color: var(--color-text-secondary);
+    font-weight: 500;
+    color: #b8623b;
+    margin-top: 2px;
 }
 
 .sticky-atc-actions {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: 15px;
+}
+
+.sticky-size-selector select {
+    padding: 8px 30px 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%23333" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right 10px center;
+    background-size: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+    min-width: 90px;
+}
+
+.sticky-qty-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    padding: 2px 5px;
+    background-color: #fff;
+}
+
+.sticky-qty-selector button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 5px 12px;
+    cursor: pointer;
+    color: #333;
+}
+
+.sticky-qty-selector span {
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+#sticky-add-to-cart-btn {
+    background-color: #40917f;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#sticky-add-to-cart-btn:hover {
+    background-color: #347667;
 }
 
 @media (max-width: 768px) {
-    .sticky-atc-bar {
+    .sticky-atc-inner {
+        padding: 10px;
+        gap: 10px;
         flex-direction: column;
-        gap: var(--spacing-sm);
-        align-items: stretch;
     }
     .sticky-atc-product {
         display: none;
+    }
+    .sticky-atc-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .sticky-size-selector select {
+        min-width: 70px;
+    }
+    #sticky-add-to-cart-btn {
+        flex: 1;
     }
 }
 
@@ -340,6 +421,7 @@
 .product-reviews-section {
     margin-top: var(--spacing-xl);
     padding-top: var(--spacing-xl);
+    padding-bottom: 100px;
     border-top: 1px solid var(--color-border);
 }
 
