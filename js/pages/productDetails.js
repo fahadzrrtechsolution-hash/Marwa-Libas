@@ -130,11 +130,11 @@ function renderProductPage(productId) {
             <div class="product-detail-layout">
                 <!-- Gallery Column -->
                 <div class="product-gallery">
-                    <div class="gallery-thumbnails">
-                        ${thumbnailsHtml}
-                    </div>
                     <div class="gallery-main">
                         <img id="main-product-img" src="${mainImageToUse}" alt="${product.title}">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        ${thumbnailsHtml}
                     </div>
                 </div>
 
@@ -145,11 +145,11 @@ function renderProductPage(productId) {
                         <span>${product.stock === 0 ? 'Item is sold out.' : product.stock > 0 && product.stock <= 5 ? `Hurry! Only ${product.stock} items left in stock.` : 'In Stock'}</span>
                     </div>
 
-                    <h1 class="product-detail-title">${product.title}</h1>
+                    <h1 class="product-detail-title" style="font-family: var(--font-heading); text-transform: uppercase; font-size: 28px; margin-bottom: 5px;">${product.title}</h1>
                     ${ratingDisplayHtml}
-                    <div class="product-card-price-row" style="font-size: 24px;">
-                        <span class="price-original">Rs. ${product.originalPrice.toLocaleString()}</span>
-                        <span class="price-sale">Rs. ${product.price.toLocaleString()}</span>
+                    <div class="product-card-price-row" style="font-size: 22px; margin-bottom: 15px;">
+                        <span class="price-sale" style="font-weight: bold; color: #000;">Rs. ${product.price.toLocaleString()}</span>
+                        <span class="price-original" style="text-decoration: line-through; color: #999; margin-left: 10px;">Rs. ${product.originalPrice.toLocaleString()}</span>
                     </div>
 
                     <div class="preorder-banner">
@@ -183,18 +183,18 @@ function renderProductPage(productId) {
                         <div>
                             <span class="selector-label">Quantity:</span>
                             <div class="qty-selector-row">
-                                <div class="detail-qty-box">
-                                    <button class="detail-qty-btn" id="detail-qty-minus">-</button>
-                                    <span class="detail-qty-val" id="detail-qty-value">1</span>
-                                    <button class="detail-qty-btn" id="detail-qty-plus">+</button>
+                                <div class="detail-qty-box" style="border: 1px solid #ccc; display: inline-flex; align-items: center; width: 120px; justify-content: space-between;">
+                                    <button class="detail-qty-btn" id="detail-qty-minus" style="background: none; border: none; padding: 10px 15px; cursor: pointer; font-size: 18px;">-</button>
+                                    <span class="detail-qty-val" id="detail-qty-value" style="font-weight: bold;">1</span>
+                                    <button class="detail-qty-btn" id="detail-qty-plus" style="background: none; border: none; padding: 10px 15px; cursor: pointer; font-size: 18px;">+</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Action buttons -->
                         <div class="checkout-actions-group">
-                            <button class="btn btn-primary btn-block t4s-ani-shake" id="detail-add-to-cart">Add to Cart</button>
-                            <button class="btn btn-dark btn-block" id="detail-buy-now">Buy It Now</button>
+                            <button class="btn btn-block" id="detail-add-to-cart">Add to cart</button>
+                            <button class="btn btn-block" id="detail-buy-now">Buy it now</button>
                         </div>
                     `}
 
