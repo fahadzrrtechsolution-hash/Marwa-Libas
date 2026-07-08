@@ -245,10 +245,10 @@ function renderHomepage() {
         </div>
 
 
-        <div class="brands-marquee-section" style="padding: 60px 0; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); overflow: hidden; position: relative; margin-bottom: 60px; box-shadow: inset 0px 5px 15px rgba(0,0,0,0.02);">
+        <div class="brands-marquee-section" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); overflow: hidden; position: relative; box-shadow: inset 0px 5px 15px rgba(0,0,0,0.02);">
             <div class="container text-center">
-                <div style="display: inline-block; position: relative; margin-bottom: 40px;">
-                    <h3 style="font-size: 24px; font-weight: 700; letter-spacing: 3px; color: #222; text-transform: uppercase; margin: 0; padding-bottom: 10px;">Featured Brands</h3>
+                <div class="brands-title-wrapper" style="display: inline-block; position: relative;">
+                    <h3 class="brands-title" style="font-weight: 700; letter-spacing: 3px; color: #222; text-transform: uppercase; margin: 0; padding-bottom: 10px;">Featured Brands</h3>
                     <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--color-accent, #333); border-radius: 2px;"></div>
                 </div>
             </div>
@@ -260,7 +260,7 @@ function renderHomepage() {
                 
                 <div class="marquee-container" style="display: flex; width: max-content; animation: scrollBrands 30s linear infinite;">
                     <!-- Content 1 -->
-                    <div class="marquee-content" style="display: flex; gap: 40px; padding-right: 40px; align-items: center; padding-top: 15px; padding-bottom: 25px;">
+                    <div class="marquee-content" style="display: flex; gap: 40px; padding-right: 40px; align-items: center;">
                         <div class="brand-card"><span style="font-family: 'Georgia', serif;">Khaadi</span></div>
                         <div class="brand-card"><span style="font-family: 'Arial', sans-serif; letter-spacing: 2px;">SAPPHIRE</span></div>
                         <div class="brand-card"><span style="font-family: 'Times New Roman', serif; font-style: italic;">Gul Ahmed</span></div>
@@ -271,7 +271,7 @@ function renderHomepage() {
                         <div class="brand-card"><span style="font-family: 'Trebuchet MS', sans-serif;">Alkaram</span></div>
                     </div>
                     <!-- Content 2 (Duplicate for smooth scroll) -->
-                    <div class="marquee-content" style="display: flex; gap: 40px; padding-right: 40px; align-items: center; padding-top: 15px; padding-bottom: 25px;">
+                    <div class="marquee-content" style="display: flex; gap: 40px; padding-right: 40px; align-items: center;">
                         <div class="brand-card"><span style="font-family: 'Georgia', serif;">Khaadi</span></div>
                         <div class="brand-card"><span style="font-family: 'Arial', sans-serif; letter-spacing: 2px;">SAPPHIRE</span></div>
                         <div class="brand-card"><span style="font-family: 'Times New Roman', serif; font-style: italic;">Gul Ahmed</span></div>
@@ -284,6 +284,44 @@ function renderHomepage() {
                 </div>
             </div>
             <style>
+                .brands-marquee-section {
+                    padding: 60px 0;
+                    margin-bottom: 60px;
+                }
+                .brands-title-wrapper {
+                    margin-bottom: 40px;
+                }
+                .brands-title {
+                    font-size: 24px;
+                }
+                .marquee-content {
+                    padding-top: 15px;
+                    padding-bottom: 25px;
+                }
+                @media (max-width: 767px) {
+                    .brands-marquee-section {
+                        padding: 15px 0;
+                        margin-bottom: 20px;
+                    }
+                    .brands-title-wrapper {
+                        margin-bottom: 15px;
+                    }
+                    .brands-title {
+                        font-size: 16px;
+                    }
+                    .marquee-content {
+                        padding-top: 5px;
+                        padding-bottom: 10px;
+                    }
+                    .brand-card {
+                        padding: 5px 15px !important;
+                        min-width: 120px !important;
+                        height: 45px !important;
+                    }
+                    .brand-card span {
+                        font-size: 14px !important;
+                    }
+                }
                 @keyframes scrollBrands {
                     0% { transform: translateX(0); }
                     100% { transform: translateX(-50%); }

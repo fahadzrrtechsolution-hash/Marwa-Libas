@@ -60,6 +60,28 @@
     color: var(--color-text-primary);
 }
 
+@keyframes floatLogo {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-3px) scale(1.02); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+.logo-img {
+    animation: floatLogo 4s ease-in-out infinite;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+    will-change: transform;
+}
+
+.logo-link {
+    display: inline-block;
+}
+
+.logo-link:hover .logo-img {
+    animation-play-state: paused;
+    transform: scale(1.1) translateY(-2px);
+    filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));
+}
+
 .icon-btn {
     color: var(--color-text-primary);
     display: flex;
