@@ -193,11 +193,56 @@ const DEFAULT_PRODUCTS = [
         image: "assets/sky-fall-2pc.png",
         localImage: "assets/skyfall_dress.png",
         badge: "Comfort",
-        collection: "women-lingerie-sleepwear",
+        collection: "women-lingerie",
         description: "Luxurious silk sleepwear set for maximum comfort.",
         specs: {
             "Fabric": "Silk Blend",
             "Pieces": "2 Piece (Top + Bottom)"
+        }
+    },
+    {
+        id: "men-clothing-1",
+        title: "Men's Classic Kurta",
+        price: 3500,
+        originalPrice: 5000,
+        image: "assets/parizad_dress.png",
+        localImage: "assets/parizad_dress.png",
+        badge: "Classic",
+        collection: "men-clothing",
+        description: "A comfortable and stylish traditional kurta for men.",
+        specs: {
+            "Fabric": "Wash & Wear",
+            "Color": "Navy Blue"
+        }
+    },
+    {
+        id: "kids-girl-1",
+        title: "Little Princess Frock",
+        price: 2200,
+        originalPrice: 3000,
+        image: "assets/maya_dress.png",
+        localImage: "assets/maya_dress.png",
+        badge: "Cute",
+        collection: "kids-girl",
+        description: "An adorable floral frock for your little princess.",
+        specs: {
+            "Fabric": "Cotton",
+            "Age Group": "4-5 Years"
+        }
+    },
+    {
+        id: "beauty-fragrance-1",
+        title: "Oud & Roses Perfume",
+        price: 4500,
+        originalPrice: 6000,
+        image: "assets/maheen.jpg",
+        localImage: "assets/maheen.jpg",
+        badge: "Best Seller",
+        collection: "beauty-fragrance",
+        description: "A captivating blend of oriental oud and fresh roses.",
+        specs: {
+            "Volume": "100ml",
+            "Type": "Eau De Parfum"
         }
     }
 ];
