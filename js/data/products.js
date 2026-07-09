@@ -138,6 +138,67 @@ const DEFAULT_PRODUCTS = [
             "Top Style": "Long Straight Cut",
             "Bottom Style": "Trouser with lace details"
         }
+    },
+    {
+        id: "women-clothing-1",
+        title: "Floral Chiffon Dress",
+        price: 4500,
+        originalPrice: 6500,
+        image: "assets/maheen.jpg",
+        localImage: "assets/maheen.jpg",
+        badge: "New",
+        collection: "women-clothing",
+        description: "A beautiful floral chiffon dress, perfect for evening gatherings.",
+        specs: {
+            "Fabric": "Chiffon",
+            "Color": "Floral Print",
+            "Season": "All Season"
+        }
+    },
+    {
+        id: "women-accessories-1",
+        title: "Elegant Pearl Necklace",
+        price: 1500,
+        originalPrice: 2500,
+        image: "assets/maya-2pc.png",
+        localImage: "assets/maya_dress.png",
+        badge: "Sale",
+        collection: "women-accessories",
+        description: "An elegant pearl necklace to complete your premium look.",
+        specs: {
+            "Material": "Faux Pearl",
+            "Type": "Necklace"
+        }
+    },
+    {
+        id: "women-footwear-1",
+        title: "Classic Block Heels",
+        price: 3200,
+        originalPrice: 4000,
+        image: "assets/parizad-3pc.png",
+        localImage: "assets/parizad_dress.png",
+        badge: "Trending",
+        collection: "women-footwear",
+        description: "Comfortable and stylish block heels for everyday wear.",
+        specs: {
+            "Material": "Faux Leather",
+            "Heel Height": "2 inches"
+        }
+    },
+    {
+        id: "women-sleepwear-1",
+        title: "Silk Sleepwear Set",
+        price: 2800,
+        originalPrice: 4500,
+        image: "assets/sky-fall-2pc.png",
+        localImage: "assets/skyfall_dress.png",
+        badge: "Comfort",
+        collection: "women-lingerie-sleepwear",
+        description: "Luxurious silk sleepwear set for maximum comfort.",
+        specs: {
+            "Fabric": "Silk Blend",
+            "Pieces": "2 Piece (Top + Bottom)"
+        }
     }
 ];
 
@@ -236,7 +297,7 @@ if (typeof db !== 'undefined') {
             window.renderTable();
         } else if (typeof handleRoute === 'function') {
             // Re-render the current route on the main site
-            handleRoute();
+            handleRoute(true);
         }
     }, (error) => {
         console.error("Error fetching products from Firebase:", error);
@@ -263,7 +324,7 @@ if (typeof db !== 'undefined') {
             window.banners = BANNERS;
             window.renderBannersTable();
         } else if (typeof handleRoute === 'function') {
-            handleRoute();
+            handleRoute(true);
         }
     });
 
@@ -288,7 +349,7 @@ if (typeof db !== 'undefined') {
             window.collections = COLLECTIONS;
             window.renderCollectionsTable();
         } else if (typeof handleRoute === 'function') {
-            handleRoute();
+            handleRoute(true);
         }
     });
 
@@ -313,7 +374,7 @@ if (typeof db !== 'undefined') {
             window.homeCategories = HOME_CATEGORIES;
             window.renderHomeCategoriesTable();
         } else if (typeof handleRoute === 'function') {
-            handleRoute(); // Might need to re-render homepage
+            handleRoute(true); // Might need to re-render homepage
         }
     });
 

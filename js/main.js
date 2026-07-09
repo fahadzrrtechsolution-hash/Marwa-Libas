@@ -8,7 +8,8 @@
 
 
 
-function handleRoute() {
+function handleRoute(eventOrInitial) {
+    const isInitialLoad = eventOrInitial === true;
     const hash = window.location.hash || '#home';
     const contentDiv = document.getElementById('app-content');
     
@@ -21,7 +22,10 @@ function handleRoute() {
     document.getElementById('search-drawer-overlay')?.classList.remove('active');
     document.body.style.paddingRight = '';
     document.body.style.overflow = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    if (!isInitialLoad) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // CSS page transition
     if (contentDiv) {
@@ -67,7 +71,7 @@ function handleRoute() {
 
 function initRouter() {
     window.addEventListener('hashchange', handleRoute);
-    handleRoute();
+    handleRoute(true);
 }
 
 function initApp() {

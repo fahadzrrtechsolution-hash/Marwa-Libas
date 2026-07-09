@@ -1,11 +1,16 @@
 function renderCollectionPage(collectionId) {
     const appContent = document.getElementById('app-content');
     
+    // Read user preferences from localStorage
+    const savedCols = localStorage.getItem('marwa_grid_cols');
+    const defaultCols = savedCols ? parseInt(savedCols) : (window.innerWidth < 768 ? 2 : 6);
+    const savedSort = localStorage.getItem('marwa_sort_pref') || 'featured';
+
     // Store current state
     window.currentCollectionState = {
         id: collectionId,
-        cols: window.innerWidth < 768 ? 2 : 6, // default 6 on desktop, 2 on mobile
-        sort: 'featured',
+        cols: defaultCols,
+        sort: savedSort,
         baseProducts: PRODUCTS.filter(p => p.collection === collectionId || collectionId === 'all'),
         filter: null // initialized on first render
     };
@@ -183,6 +188,7 @@ function setupToolbarListeners() {
         btn.addEventListener('click', function() {
             const cols = parseInt(this.getAttribute('data-cols'));
             window.currentCollectionState.cols = cols;
+            localStorage.setItem('marwa_grid_cols', cols);
             renderCollectionContent();
         });
     });
@@ -191,6 +197,7 @@ function setupToolbarListeners() {
     if (sortSelect) {
         sortSelect.addEventListener('change', function() {
             window.currentCollectionState.sort = this.value;
+            localStorage.setItem('marwa_sort_pref', this.value);
             renderCollectionContent();
         });
     }
