@@ -2,6 +2,32 @@
 
 
 function renderHomepage() {
+    // Dropdown toggle logic
+    window.toggleCategoryDropdown = function(element, event) {
+        event.stopPropagation();
+        const parent = element.parentElement;
+        const isActive = parent.classList.contains('active');
+        
+        // Close all other dropdowns
+        document.querySelectorAll('.category-dropdown-wrapper.active').forEach(wrapper => {
+            wrapper.classList.remove('active');
+        });
+        
+        // Toggle current one
+        if (!isActive) {
+            parent.classList.add('active');
+        }
+    };
+
+    // Close when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.category-dropdown-wrapper')) {
+            document.querySelectorAll('.category-dropdown-wrapper.active').forEach(wrapper => {
+                wrapper.classList.remove('active');
+            });
+        }
+    });
+
     const appContent = document.getElementById('app-content');
     
     let productsHtml = '';
@@ -14,7 +40,7 @@ function renderHomepage() {
             <div class="container" style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap; position: relative;">
                 
                 <div class="category-dropdown-wrapper">
-                    <a href="#collection/women" class="category-chip">Women <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <a href="javascript:void(0)" class="category-chip" onclick="toggleCategoryDropdown(this, event)">Women <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
                     <div class="category-dropdown">
                         <a href="#collection/women-clothing">Clothing</a>
                         <a href="#collection/women-accessories">Accessories</a>
@@ -24,7 +50,7 @@ function renderHomepage() {
                 </div>
 
                 <div class="category-dropdown-wrapper">
-                    <a href="#collection/men" class="category-chip">Men <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <a href="javascript:void(0)" class="category-chip" onclick="toggleCategoryDropdown(this, event)">Men <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
                     <div class="category-dropdown">
                         <a href="#collection/men-clothing">Clothing</a>
                         <a href="#collection/men-footwear">Footwear</a>
@@ -33,7 +59,7 @@ function renderHomepage() {
                     </div>
                 </div>
                 <div class="category-dropdown-wrapper">
-                    <a href="#collection/kids" class="category-chip">Kids <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <a href="javascript:void(0)" class="category-chip" onclick="toggleCategoryDropdown(this, event)">Kids <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
                     <div class="category-dropdown">
                         <a href="#collection/kids-girl">Girl</a>
                         <a href="#collection/kids-boy">Boy</a>
@@ -42,7 +68,7 @@ function renderHomepage() {
                     </div>
                 </div>
                 <div class="category-dropdown-wrapper">
-                    <a href="#collection/beauty" class="category-chip">Beauty <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                    <a href="javascript:void(0)" class="category-chip" onclick="toggleCategoryDropdown(this, event)">Beauty <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
                     <div class="category-dropdown">
                         <a href="#collection/beauty-fragrance">Fragrance</a>
                         <a href="#collection/beauty-hair-care">Hair Care</a>
@@ -75,7 +101,8 @@ function renderHomepage() {
                     display: flex;
                     flex-direction: column;
                 }
-                .category-dropdown-wrapper:hover .category-dropdown {
+                .category-dropdown-wrapper:hover .category-dropdown,
+                .category-dropdown-wrapper.active .category-dropdown {
                     visibility: visible;
                     opacity: 1;
                     transform: translateX(-50%) translateY(10px); /* a little gap below nav */
@@ -99,8 +126,8 @@ function renderHomepage() {
                     position: relative;
                 }
                 .category-dropdown a:hover {
-                    background-color: #fafafa;
-                    color: #000;
+                    background-color: var(--color-bg-secondary);
+                    color: var(--color-brand);
                     padding-left: 28px; /* smooth slide-in effect for text */
                 }
 
@@ -123,6 +150,36 @@ function renderHomepage() {
                     text-decoration: underline;
                     text-underline-offset: 6px;
                     background: transparent !important;
+                }
+                @media (max-width: 768px) {
+                    .category-dropdown {
+                        min-width: 160px;
+                    }
+                    /* Women and Men open to the right */
+                    .category-dropdown-wrapper:nth-child(1) .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(2) .category-dropdown {
+                        left: 0;
+                        transform: translateY(15px);
+                    }
+                    .category-dropdown-wrapper:nth-child(1):hover .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(1).active .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(2):hover .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(2).active .category-dropdown {
+                        transform: translateY(10px);
+                    }
+                    /* Kids and Beauty open to the left */
+                    .category-dropdown-wrapper:nth-child(3) .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(4) .category-dropdown {
+                        left: auto;
+                        right: 0;
+                        transform: translateY(15px);
+                    }
+                    .category-dropdown-wrapper:nth-child(3):hover .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(3).active .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(4):hover .category-dropdown,
+                    .category-dropdown-wrapper:nth-child(4).active .category-dropdown {
+                        transform: translateY(10px);
+                    }
                 }
             </style>
         </div>

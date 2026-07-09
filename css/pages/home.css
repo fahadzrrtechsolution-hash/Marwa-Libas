@@ -47,3 +47,16 @@
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-lg);
 }
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+@media (max-width: 768px) {
+    .collection-title {
+        font-size: 24px;
+    }
+    
+    .curated-banner h2 {
+        font-size: 22px;
+    }
+}
