@@ -3,7 +3,7 @@
 function renderProductCard(product) {
     const isWishlisted = state.wishlist.includes(product.id);
     const wishlistIconColor = isWishlisted ? '#ff3b30' : 'none';
-    const wishlistStroke = isWishlisted ? '#ff3b30' : 'currentColor';
+    const wishlistStroke = isWishlisted ? '#ff3b30' : '#000000';
     let badgesHtml = '';
     
     // Discount Badge (Orange Circle)

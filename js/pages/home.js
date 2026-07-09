@@ -36,8 +36,8 @@ function renderHomepage() {
     });
 
     let dynamicCategoriesHtml = `
-        <div class="category-top-nav" style="background: #ffffff; border-bottom: 1px solid #eaeaea; padding: 15px 0; overflow: visible; margin-bottom: 20px; position: relative; z-index: 100;">
-            <div class="container" style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap; position: relative;">
+        <div class="category-top-nav" style="background: #ffffff; padding: 15px 0; overflow: visible; margin-bottom: 20px; position: relative; z-index: 100;">
+            <div class="container category-top-nav-container">
                 
                 <div class="category-dropdown-wrapper">
                     <a href="javascript:void(0)" class="category-chip" onclick="toggleCategoryDropdown(this, event)">Women <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
@@ -79,6 +79,13 @@ function renderHomepage() {
                 </div>
             </div>
             <style>
+                .category-top-nav-container {
+                    display: flex;
+                    gap: 15px;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                }
                 .category-dropdown-wrapper {
                     position: relative;
                     display: inline-block;
@@ -89,15 +96,16 @@ function renderHomepage() {
                     position: absolute;
                     top: 100%;
                     left: 50%;
-                    transform: translateX(-50%) translateY(15px);
-                    background-color: #fff;
+                    transform: translateX(-50%) translateY(15px) scale(0.95);
+                    background-color: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(10px);
                     min-width: 220px;
-                    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-                    border-radius: 8px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+                    border-radius: 12px;
                     padding: 12px 0;
                     z-index: 200;
                     border: 1px solid rgba(0,0,0,0.05);
-                    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.3s;
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                     display: flex;
                     flex-direction: column;
                 }
@@ -105,7 +113,7 @@ function renderHomepage() {
                 .category-dropdown-wrapper.active .category-dropdown {
                     visibility: visible;
                     opacity: 1;
-                    transform: translateX(-50%) translateY(10px); /* a little gap below nav */
+                    transform: translateX(-50%) translateY(10px) scale(1);
                 }
                 .category-dropdown::before {
                     content: '';
@@ -117,7 +125,7 @@ function renderHomepage() {
                 }
                 .category-dropdown a {
                     color: #444;
-                    padding: 12px 24px;
+                    padding: 10px 24px;
                     text-decoration: none;
                     font-size: 14px;
                     font-weight: 500;
@@ -126,59 +134,72 @@ function renderHomepage() {
                     position: relative;
                 }
                 .category-dropdown a:hover {
-                    background-color: var(--color-bg-secondary);
-                    color: var(--color-brand);
-                    padding-left: 28px; /* smooth slide-in effect for text */
+                    background-color: rgba(0,0,0,0.03);
+                    color: #000;
+                    padding-left: 30px;
                 }
 
                 .category-chip {
                     display: inline-flex;
                     align-items: center;
-                    padding: 8px 15px;
-                    background: transparent;
+                    padding: 10px 22px;
+                    background: #f8f8f8;
+                    border-radius: 30px;
                     color: #222;
                     text-decoration: none;
-                    font-size: 16px;
+                    font-size: 13px;
                     font-weight: 600;
                     text-transform: uppercase;
-                    letter-spacing: 1.5px;
-                    transition: all 0.3s ease;
-                    border: none;
+                    letter-spacing: 1px;
+                    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                    border: 1px solid transparent;
+                    white-space: nowrap;
                 }
-                .category-chip:hover {
-                    color: #000;
-                    text-decoration: underline;
-                    text-underline-offset: 6px;
-                    background: transparent !important;
+                .category-chip svg {
+                    transition: transform 0.3s ease;
                 }
+                .category-dropdown-wrapper:hover .category-chip,
+                .category-dropdown-wrapper.active .category-chip {
+                    background: var(--color-brand);
+                    color: #fff;
+                    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+                    text-decoration: none;
+                }
+                .category-dropdown-wrapper:hover .category-chip svg,
+                .category-dropdown-wrapper.active .category-chip svg {
+                    transform: rotate(180deg);
+                }
+
                 @media (max-width: 768px) {
+                    .category-top-nav-container {
+                        justify-content: center;
+                        flex-wrap: wrap;
+                    }
                     .category-dropdown {
                         min-width: 160px;
                     }
-                    /* Women and Men open to the right */
                     .category-dropdown-wrapper:nth-child(1) .category-dropdown,
                     .category-dropdown-wrapper:nth-child(2) .category-dropdown {
                         left: 0;
-                        transform: translateY(15px);
+                        transform: translateY(15px) scale(0.95);
                     }
                     .category-dropdown-wrapper:nth-child(1):hover .category-dropdown,
                     .category-dropdown-wrapper:nth-child(1).active .category-dropdown,
                     .category-dropdown-wrapper:nth-child(2):hover .category-dropdown,
                     .category-dropdown-wrapper:nth-child(2).active .category-dropdown {
-                        transform: translateY(10px);
+                        transform: translateY(10px) scale(1);
                     }
-                    /* Kids and Beauty open to the left */
                     .category-dropdown-wrapper:nth-child(3) .category-dropdown,
                     .category-dropdown-wrapper:nth-child(4) .category-dropdown {
                         left: auto;
                         right: 0;
-                        transform: translateY(15px);
+                        transform: translateY(15px) scale(0.95);
                     }
                     .category-dropdown-wrapper:nth-child(3):hover .category-dropdown,
                     .category-dropdown-wrapper:nth-child(3).active .category-dropdown,
                     .category-dropdown-wrapper:nth-child(4):hover .category-dropdown,
                     .category-dropdown-wrapper:nth-child(4).active .category-dropdown {
-                        transform: translateY(10px);
+                        transform: translateY(10px) scale(1);
                     }
                 }
             </style>

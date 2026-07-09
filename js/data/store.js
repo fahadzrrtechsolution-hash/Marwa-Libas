@@ -97,8 +97,8 @@ function toggleWishlist(productId) {
     } else {
         document.querySelectorAll(`.wishlist-toggle-btn[data-product-id="${productId}"] svg`).forEach(svg => {
             const isWishlisted = state.wishlist.includes(productId);
-            svg.setAttribute('fill', isWishlisted ? 'var(--color-sale)' : 'none');
-            svg.setAttribute('stroke', isWishlisted ? 'var(--color-sale)' : 'currentColor');
+            svg.setAttribute('fill', isWishlisted ? '#ff3b30' : 'none');
+            svg.setAttribute('stroke', isWishlisted ? '#ff3b30' : '#000000');
         });
     }
 }
