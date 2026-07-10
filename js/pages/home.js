@@ -378,24 +378,47 @@ function renderHomepage() {
     `;
 
     // Initialize Hero Slider
+    const heroSection = document.getElementById('hero-slider');
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-pagination .dot');
     if (slides.length > 0) {
         let currentSlide = 0;
         let slideInterval;
 
-        const goToSlide = (index) => {
-            slides[currentSlide].classList.remove('active');
-            dots[currentSlide].classList.remove('active');
-            currentSlide = index;
+        const goToSlide = (index, direction = 'right') => {
+            const previousSlide = currentSlide;
+            
+            // Handle wrap around
+            if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else if (index >= slides.length) {
+                currentSlide = 0;
+            } else {
+                currentSlide = index;
+            }
+
+            // Remove active classes
+            slides[previousSlide].classList.remove('active', 'slide-left', 'slide-right');
+            dots[previousSlide].classList.remove('active');
+
+            // Add direction class to outgoing slide
+            slides[previousSlide].classList.add(direction === 'right' ? 'slide-left' : 'slide-right');
+            
+            // Prepare incoming slide direction
+            slides[currentSlide].classList.remove('active', 'slide-left', 'slide-right');
+            slides[currentSlide].classList.add(direction === 'right' ? 'slide-right' : 'slide-left');
+            
+            // Force reflow
+            void slides[currentSlide].offsetWidth;
+
+            // Make it active and reset transform
+            slides[currentSlide].classList.remove('slide-left', 'slide-right');
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
         };
 
-        const nextSlide = () => {
-            const next = (currentSlide + 1) % slides.length;
-            goToSlide(next);
-        };
+        const nextSlide = () => goToSlide(currentSlide + 1, 'right');
+        const prevSlide = () => goToSlide(currentSlide - 1, 'left');
 
         const startSlider = () => {
             if (slideInterval) clearInterval(slideInterval);
@@ -404,10 +427,85 @@ function renderHomepage() {
 
         dots.forEach((dot, idx) => {
             dot.addEventListener('click', () => {
-                goToSlide(idx);
+                const direction = idx > currentSlide ? 'right' : 'left';
+                if (idx !== currentSlide) {
+                    goToSlide(idx, direction);
+                }
                 startSlider(); // reset timer on manual click
             });
         });
+
+        // Touch/Drag Events for swiping
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        const handleDragStart = (e) => {
+            isDragging = true;
+            startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            currentX = startX;
+            if (slideInterval) clearInterval(slideInterval); // pause auto-scroll
+            
+            // Remove transition temporarily for 1:1 finger tracking
+            slides[currentSlide].style.transition = 'none';
+        };
+
+        const handleDragMove = (e) => {
+            if (!isDragging) return;
+            currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            let diff = currentX - startX;
+            
+            // Move the current slide with the finger
+            slides[currentSlide].style.transform = `translateX(${diff}px)`;
+        };
+
+        const handleDragEnd = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            let endX = e.type.includes('mouse') ? e.pageX : e.changedTouches[0].clientX;
+            let diff = startX - endX;
+
+            // Restore transition
+            slides[currentSlide].style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease';
+
+            // Threshold for swipe
+            if (Math.abs(diff) > 70) {
+                // Animate current slide out immediately
+                slides[currentSlide].style.transform = `translateX(${-Math.sign(diff) * 100}%)`;
+                
+                if (diff > 0) {
+                    setTimeout(() => {
+                        slides[currentSlide].style.transform = ''; // Clear inline styles
+                        nextSlide(); 
+                    }, 50);
+                } else {
+                    setTimeout(() => {
+                        slides[currentSlide].style.transform = ''; 
+                        prevSlide(); 
+                    }, 50);
+                }
+            } else {
+                // Snap back if threshold not met
+                slides[currentSlide].style.transform = 'translateX(0)';
+                setTimeout(() => {
+                    slides[currentSlide].style.transform = ''; 
+                }, 600);
+            }
+            startSlider(); // resume auto-scroll
+        };
+
+        if (heroSection) {
+            // Mouse events
+            heroSection.addEventListener('mousedown', handleDragStart);
+            heroSection.addEventListener('mousemove', handleDragMove);
+            heroSection.addEventListener('mouseup', handleDragEnd);
+            heroSection.addEventListener('mouseleave', handleDragEnd);
+            
+            // Touch events
+            heroSection.addEventListener('touchstart', handleDragStart, {passive: true});
+            heroSection.addEventListener('touchmove', handleDragMove, {passive: true});
+            heroSection.addEventListener('touchend', handleDragEnd, {passive: true});
+        }
 
         startSlider();
     }

@@ -14,6 +14,17 @@
     overflow: hidden;
     height: 70vh;
     min-height: 500px;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: grab;
+    border-radius: 24px;
+    margin: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.hero-section:active {
+    cursor: grabbing;
 }
 
 .hero-slide {
@@ -23,7 +34,8 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.05) translateX(0);
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
     display: flex;
     align-items: center;
     z-index: 1;
@@ -33,7 +45,18 @@
 
 .hero-slide.active {
     opacity: 1;
+    transform: scale(1) translateX(0);
     z-index: 2;
+}
+
+.hero-slide.slide-left {
+    transform: scale(1.05) translateX(-15%);
+    opacity: 0;
+}
+
+.hero-slide.slide-right {
+    transform: scale(1.05) translateX(15%);
+    opacity: 0;
 }
 
 .hero-bg-img {
@@ -45,6 +68,8 @@
     object-fit: cover;
     object-position: top center;
     z-index: 0;
+    pointer-events: none;
+    -webkit-user-drag: none;
 }
 
 .hero-slide.active .hero-bg-img {
