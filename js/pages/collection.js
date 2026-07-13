@@ -158,7 +158,50 @@ function renderCollectionContent() {
     });
 
     if (sortedProducts.length === 0) {
-        productsHtml = `<p class="text-center" style="grid-column: 1/-1; padding: 40px;">No products found in this collection.</p>`;
+        productsHtml = `
+            <div style="grid-column: 1/-1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 20px; background: #0a0a0a; position: relative; border-radius: 20px; overflow: hidden; text-align: center; min-height: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+                
+                <!-- Animated Background Glows -->
+                <div style="position: absolute; top: -100px; left: -100px; width: 300px; height: 300px; background: rgba(212, 175, 55, 0.15); filter: blur(100px); border-radius: 50%; animation: pulseGlow 4s alternate infinite;"></div>
+                <div style="position: absolute; bottom: -100px; right: -100px; width: 300px; height: 300px; background: rgba(255, 255, 255, 0.05); filter: blur(100px); border-radius: 50%; animation: pulseGlow 5s alternate-reverse infinite;"></div>
+                
+                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; animation: comingSoonFadeIn 1s ease-out;">
+                    
+                    <!-- Elegant Dropping Line Animation -->
+                    <div style="width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, #d4af37); margin-bottom: 30px; animation: dropLine 2.5s infinite;"></div>
+                    
+                    <h3 style="font-size: clamp(32px, 5vw, 56px); font-weight: 300; letter-spacing: 12px; margin-bottom: 20px; text-transform: uppercase; background: linear-gradient(45deg, #fff, #d4af37, #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmerText 3s linear infinite; background-size: 200% auto;">Coming Soon</h3>
+                    
+                    <p style="font-size: 14px; color: #888; max-width: 450px; line-height: 1.8; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase;">
+                        Curating the finest aesthetics.<br>Our exclusive collection is in the works.
+                    </p>
+                    
+                    <button onclick="location.hash='#home'" style="padding: 15px 40px; border-radius: 0; font-size: 13px; letter-spacing: 3px; border: 1px solid rgba(255,255,255,0.2); color: white; background: transparent; cursor: pointer; transition: all 0.4s ease; text-transform: uppercase;" onmouseover="this.style.background='white'; this.style.color='black';" onmouseout="this.style.background='transparent'; this.style.color='white';">
+                        Return to Store
+                    </button>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes shimmerText {
+                    to { background-position: 200% center; }
+                }
+                @keyframes dropLine {
+                    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+                    40% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+                    60% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+                    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+                }
+                @keyframes pulseGlow {
+                    0% { transform: scale(1); opacity: 0.5; }
+                    100% { transform: scale(1.2); opacity: 1; }
+                }
+                @keyframes comingSoonFadeIn {
+                    from { opacity: 0; transform: translateY(30px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            </style>
+        `;
     }
 
     // Dynamic Filter Content
