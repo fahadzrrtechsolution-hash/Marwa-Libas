@@ -210,6 +210,7 @@ function renderHomepage() {
 
         <div class="hero-container fade-in">
             <section class="hero-section" id="hero-slider">
+                <div class="hero-track" id="hero-track">
                 ${BANNERS.map((banner, index) => {
                     const themeStyle = banner.theme === 'dark' ? 'color: var(--color-bg-primary);' : '';
                     const themeStyleBorder = banner.theme === 'dark' ? 'border-color: var(--color-bg-primary); color: var(--color-bg-primary);' : '';
@@ -228,6 +229,7 @@ function renderHomepage() {
                         </div>
                     </div>`;
                 }).join('')}
+                </div>
                 
                 <div class="hero-pagination" id="hero-pagination">
                     ${BANNERS.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}" data-index="${index}"></span>`).join('')}
@@ -379,75 +381,59 @@ function renderHomepage() {
 
     // Initialize Hero Slider
     const heroSection = document.getElementById('hero-slider');
+    const track = document.getElementById('hero-track');
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-pagination .dot');
     if (slides.length > 0) {
         let currentSlide = 0;
         let slideInterval;
 
-        const goToSlide = (index, direction = 'right') => {
-            const previousSlide = currentSlide;
-            
-            // Handle wrap around
-            if (index < 0) {
-                currentSlide = slides.length - 1;
-            } else if (index >= slides.length) {
-                currentSlide = 0;
-            } else {
-                currentSlide = index;
-            }
+        const goToSlide = (index) => {
+            if (index < 0) currentSlide = slides.length - 1;
+            else if (index >= slides.length) currentSlide = 0;
+            else currentSlide = index;
 
-            // Remove active classes
-            slides[previousSlide].classList.remove('active', 'slide-left', 'slide-right');
-            dots[previousSlide].classList.remove('active');
+            track.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-            // Add direction class to outgoing slide
-            slides[previousSlide].classList.add(direction === 'right' ? 'slide-left' : 'slide-right');
-            
-            // Prepare incoming slide direction
-            slides[currentSlide].classList.remove('active', 'slide-left', 'slide-right');
-            slides[currentSlide].classList.add(direction === 'right' ? 'slide-right' : 'slide-left');
-            
-            // Force reflow
-            void slides[currentSlide].offsetWidth;
-
-            // Make it active and reset transform
-            slides[currentSlide].classList.remove('slide-left', 'slide-right');
+            slides.forEach(s => s.classList.remove('active'));
             slides[currentSlide].classList.add('active');
+            
+            dots.forEach(d => d.classList.remove('active'));
             dots[currentSlide].classList.add('active');
         };
 
-        const nextSlide = () => goToSlide(currentSlide + 1, 'right');
-        const prevSlide = () => goToSlide(currentSlide - 1, 'left');
+        const nextSlide = () => goToSlide(currentSlide + 1);
+        const prevSlide = () => goToSlide(currentSlide - 1);
 
         const startSlider = () => {
             if (slideInterval) clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, 4500); // 4.5 seconds auto-scroll
+            slideInterval = setInterval(nextSlide, 4500); 
         };
 
         dots.forEach((dot, idx) => {
             dot.addEventListener('click', () => {
-                const direction = idx > currentSlide ? 'right' : 'left';
-                if (idx !== currentSlide) {
-                    goToSlide(idx, direction);
-                }
-                startSlider(); // reset timer on manual click
+                goToSlide(idx);
+                startSlider(); 
             });
         });
 
-        // Touch/Drag Events for swiping
         let startX = 0;
         let currentX = 0;
         let isDragging = false;
+        let heroWidth = heroSection.offsetWidth;
+
+        // Update width on resize
+        window.addEventListener('resize', () => {
+            heroWidth = heroSection.offsetWidth;
+        });
 
         const handleDragStart = (e) => {
             isDragging = true;
             startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
             currentX = startX;
-            if (slideInterval) clearInterval(slideInterval); // pause auto-scroll
-            
-            // Remove transition temporarily for 1:1 finger tracking
-            slides[currentSlide].style.transition = 'none';
+            if (slideInterval) clearInterval(slideInterval); 
+            track.style.transition = 'none';
         };
 
         const handleDragMove = (e) => {
@@ -455,8 +441,11 @@ function renderHomepage() {
             currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
             let diff = currentX - startX;
             
-            // Move the current slide with the finger
-            slides[currentSlide].style.transform = `translateX(${diff}px)`;
+            // Add resistance at edges
+            if (currentSlide === 0 && diff > 0) diff *= 0.3;
+            else if (currentSlide === slides.length - 1 && diff < 0) diff *= 0.3;
+
+            track.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
         };
 
         const handleDragEnd = (e) => {
@@ -465,43 +454,21 @@ function renderHomepage() {
             let endX = e.type.includes('mouse') ? e.pageX : e.changedTouches[0].clientX;
             let diff = startX - endX;
 
-            // Restore transition
-            slides[currentSlide].style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease';
-
-            // Threshold for swipe
             if (Math.abs(diff) > 70) {
-                // Animate current slide out immediately
-                slides[currentSlide].style.transform = `translateX(${-Math.sign(diff) * 100}%)`;
-                
-                if (diff > 0) {
-                    setTimeout(() => {
-                        slides[currentSlide].style.transform = ''; // Clear inline styles
-                        nextSlide(); 
-                    }, 50);
-                } else {
-                    setTimeout(() => {
-                        slides[currentSlide].style.transform = ''; 
-                        prevSlide(); 
-                    }, 50);
-                }
+                if (diff > 0) nextSlide(); 
+                else prevSlide(); 
             } else {
-                // Snap back if threshold not met
-                slides[currentSlide].style.transform = 'translateX(0)';
-                setTimeout(() => {
-                    slides[currentSlide].style.transform = ''; 
-                }, 600);
+                goToSlide(currentSlide); 
             }
-            startSlider(); // resume auto-scroll
+            startSlider(); 
         };
 
         if (heroSection) {
-            // Mouse events
             heroSection.addEventListener('mousedown', handleDragStart);
             heroSection.addEventListener('mousemove', handleDragMove);
             heroSection.addEventListener('mouseup', handleDragEnd);
             heroSection.addEventListener('mouseleave', handleDragEnd);
             
-            // Touch events
             heroSection.addEventListener('touchstart', handleDragStart, {passive: true});
             heroSection.addEventListener('touchmove', handleDragMove, {passive: true});
             heroSection.addEventListener('touchend', handleDragEnd, {passive: true});

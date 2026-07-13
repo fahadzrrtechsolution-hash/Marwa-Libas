@@ -70,8 +70,87 @@ function renderCollectionContent() {
 
     const sortedProducts = sortProducts(currentProducts, state.sort);
     
-    let collectionTitle = state.id.replace('-', ' ');
+    let collectionTitle = state.id.replace(/-/g, ' ');
     if (state.id === 'under-2290') collectionTitle = "Dresses under Rs. 2290";
+
+    let categoryBannerHtml = '';
+    
+    let customBanners = [];
+    if (typeof CATEGORY_BANNERS !== 'undefined') {
+        customBanners = CATEGORY_BANNERS.filter(b => b.collectionId === state.id);
+    }
+    
+    if (customBanners.length > 1) {
+        let slidesHtml = '';
+        customBanners.forEach((b, index) => {
+            const displayTitle = b.title || collectionTitle;
+            const subtitleHtml = b.subtitle ? `<p style="font-size: 15px; margin-top: 15px; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${b.subtitle}</p>` : '';
+            const themeColor = b.theme === 'dark' ? '#000' : '#fff';
+            const shadow = b.theme === 'dark' ? 'none' : '0 4px 15px rgba(0,0,0,0.3)';
+            
+            slidesHtml += `
+                <div class="category-slide ${index === 0 ? 'active' : ''}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: ${index === 0 ? '1' : '0'}; transition: opacity 0.8s ease-in-out;">
+                    <img src="${b.image}" alt="${displayTitle}" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: brightness(0.65);">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: ${themeColor}; z-index: 2; width: 100%;">
+                        <h1 style="font-size: 42px; text-transform: uppercase; letter-spacing: 4px; font-weight: 500; text-shadow: ${shadow}; margin: 0;">${displayTitle}</h1>
+                        ${subtitleHtml}
+                    </div>
+                </div>
+            `;
+        });
+        
+        categoryBannerHtml = `
+            <div class="collection-banner category-slider-container" style="position: relative; width: 100%; height: 350px; overflow: hidden; margin-bottom: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                ${slidesHtml}
+                <button class="cat-prev-slide" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="cat-next-slide" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        `;
+    } else {
+        let collectionImage = 'assets/hero_banner.png';
+        let displayTitle = collectionTitle;
+        let subtitleHtml = `<p style="font-size: 15px; margin-top: 15px; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Explore Collection</p>`;
+        let themeColor = '#fff';
+        let shadow = '0 4px 15px rgba(0,0,0,0.3)';
+
+        if (customBanners.length === 1) {
+            const b = customBanners[0];
+            collectionImage = b.image;
+            displayTitle = b.title || collectionTitle;
+            if(b.subtitle) subtitleHtml = `<p style="font-size: 15px; margin-top: 15px; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${b.subtitle}</p>`;
+            themeColor = b.theme === 'dark' ? '#000' : '#fff';
+            shadow = b.theme === 'dark' ? 'none' : '0 4px 15px rgba(0,0,0,0.3)';
+        } else {
+            if (typeof HOME_CATEGORIES !== 'undefined') {
+                const hc = HOME_CATEGORIES.find(c => c.link.includes(state.id));
+                if (hc) {
+                    displayTitle = hc.group.replace('SHOP ', '') + ' - ' + hc.title;
+                    collectionImage = hc.image;
+                }
+            }
+            if (collectionImage === 'assets/hero_banner.png' && typeof COLLECTIONS !== 'undefined') {
+                const col = COLLECTIONS.find(c => c.link.includes(state.id));
+                if (col) {
+                    displayTitle = col.title;
+                    collectionImage = col.image;
+                }
+            }
+        }
+        
+        categoryBannerHtml = `
+            <div class="collection-banner" style="position: relative; width: 100%; height: 350px; overflow: hidden; margin-bottom: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <img src="${collectionImage}" alt="${displayTitle}" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: brightness(0.65);">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: ${themeColor}; z-index: 2; width: 100%;">
+                    <h1 style="font-size: 42px; text-transform: uppercase; letter-spacing: 4px; font-weight: 500; text-shadow: ${shadow}; margin: 0;">${displayTitle}</h1>
+                    ${subtitleHtml}
+                </div>
+            </div>
+        `;
+    }
 
     let productsHtml = '';
     sortedProducts.forEach(product => {
@@ -133,6 +212,7 @@ function renderCollectionContent() {
     const appContent = document.getElementById('app-content');
     appContent.innerHTML = `
         <div class="container collection-section" style="max-width: 1600px; padding-top: 40px;">
+            ${categoryBannerHtml}
             <div class="collection-toolbar" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 15px 0; margin-bottom: 30px;">
                 <div class="toolbar-left">
                     <button class="btn-filter" style="background: none; border: none; font-weight: 500; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
@@ -180,6 +260,50 @@ function renderCollectionContent() {
     // Reattach listeners
     setupQuickBuyListeners();
     setupToolbarListeners();
+    setupCategorySlider();
+}
+
+function setupCategorySlider() {
+    const container = document.querySelector('.category-slider-container');
+    if (!container) return;
+
+    const slides = container.querySelectorAll('.category-slide');
+    const prevBtn = container.querySelector('.cat-prev-slide');
+    const nextBtn = container.querySelector('.cat-next-slide');
+    
+    if (!slides.length) return;
+    
+    let currentIdx = 0;
+    let autoPlayInterval;
+
+    const showSlide = (idx) => {
+        slides.forEach(s => {
+            s.style.opacity = '0';
+            s.classList.remove('active');
+        });
+        slides[idx].style.opacity = '1';
+        slides[idx].classList.add('active');
+    };
+
+    const nextSlide = () => {
+        currentIdx = (currentIdx + 1) % slides.length;
+        showSlide(currentIdx);
+    };
+
+    const prevSlide = () => {
+        currentIdx = (currentIdx - 1 + slides.length) % slides.length;
+        showSlide(currentIdx);
+    };
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
+
+    const resetInterval = () => {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(nextSlide, 5000);
+    };
+
+    autoPlayInterval = setInterval(nextSlide, 5000);
 }
 
 function setupToolbarListeners() {

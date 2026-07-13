@@ -40,6 +40,10 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     Banners
                 </a></li>
+                <li><a href="#" data-view="category-banners">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    Cat. Banners
+                </a></li>
                 <li><a href="#" data-view="collections">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     Collections
@@ -170,6 +174,31 @@
                             </tr>
                         </thead>
                         <tbody id="banners-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Category Banners View -->
+            <div id="view-category-banners" class="admin-view" style="display: none;">
+                <div class="admin-header">
+                    <h1 class="admin-title">Manage Category Banners</h1>
+                    <button class="btn btn-primary" id="add-category-banner-btn">Add Category Banner</button>
+                </div>
+                
+                <div class="admin-card table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th width="100">Image</th>
+                                <th>Collection ID</th>
+                                <th>Title</th>
+                                <th>Subtitle</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="category-banners-tbody">
                             <!-- Populated dynamically -->
                         </tbody>
                     </table>
@@ -426,7 +455,81 @@
         </div>
     </div>
 
-    <!-- Order Details Modal -->
+    <!-- Category Banner Form Modal -->
+    <div class="modal-overlay" id="category-banner-modal-overlay"></div>
+    <div class="modal" id="category-banner-modal">
+        <div class="modal-header">
+            <h2 id="category-banner-modal-title">Add Category Banner</h2>
+            <button class="close-btn" id="close-category-banner-modal-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="category-banner-form">
+                <input type="hidden" id="category-banner-id">
+                
+                <div class="form-group">
+                    <label>Banner Image</label>
+                    <div id="category-banner-image-upload-container">
+                        <!-- Upload input injected here -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category-banner-collection">Select Category / Collection</label>
+                    <select id="category-banner-collection" class="form-control" required>
+                        <option value="new-arrivals">New Arrivals</option>
+                        <option value="eid-ul-adha">Eid ul-Adha</option>
+                        <option value="best-sellers">Best Sellers</option>
+                        <option value="luxury-lawn">Luxury Lawn</option>
+                        <option value="summer">Summer Collection</option>
+                        <option value="under-2290">Under 2290</option>
+                        <optgroup label="Women">
+                            <option value="women-clothing">Women's Clothing</option>
+                            <option value="women-accessories">Women's Accessories</option>
+                            <option value="women-footwear">Women's Footwear</option>
+                            <option value="women-lingerie">Women's Lingerie & Sleepwear</option>
+                        </optgroup>
+                        <optgroup label="Men">
+                            <option value="men-clothing">Men's Clothing</option>
+                            <option value="men-footwear">Men's Footwear</option>
+                            <option value="men-accessories">Men's Accessories</option>
+                            <option value="men-inner-sleepwear">Men's Inner & Sleepwear</option>
+                        </optgroup>
+                        <optgroup label="Kids">
+                            <option value="kids-girl">Kids Girl</option>
+                            <option value="kids-boy">Kids Boy</option>
+                            <option value="kids-boy-newborn">Boy Newborn</option>
+                            <option value="kids-girl-newborn">Girl Newborn</option>
+                        </optgroup>
+                        <optgroup label="Beauty">
+                            <option value="beauty-fragrance">Fragrance</option>
+                            <option value="beauty-hair-care">Hair Care</option>
+                            <option value="beauty-makeup">Makeup</option>
+                            <option value="beauty-skincare">Skincare</option>
+                            <option value="beauty-bath-body">Bath & Body</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="category-banner-title">Title (Optional)</label>
+                        <input type="text" id="category-banner-title" class="form-control" placeholder="e.g. SALE">
+                    </div>
+                    <div class="form-group">
+                        <label for="category-banner-subtitle">Subtitle (Optional)</label>
+                        <input type="text" id="category-banner-subtitle" class="form-control" placeholder="e.g. Mid-Summer">
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="margin-top: 20px; text-align: right;">
+                    <button type="button" class="btn btn-outline" id="cancel-category-banner-modal-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-category-banner-btn">Save Category Banner</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="modal-overlay" id="order-modal-overlay"></div>
     <div class="modal" id="order-modal">
         <div class="modal-header">

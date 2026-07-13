@@ -75,6 +75,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const collectionModalTitle = document.getElementById('collection-modal-title');
     const collectionImageContainer = document.getElementById('collection-image-upload-container');
 
+    // --- Category Banners DOM Elements ---
+    const cbTbody = document.getElementById('category-banners-tbody');
+    const addCbBtn = document.getElementById('add-category-banner-btn');
+    const cbModal = document.getElementById('category-banner-modal');
+    const cbOverlay = document.getElementById('category-banner-modal-overlay');
+    const closeCbBtn = document.getElementById('close-category-banner-modal-btn');
+    const cancelCbBtn = document.getElementById('cancel-category-banner-modal-btn');
+    const cbForm = document.getElementById('category-banner-form');
+    const cbModalTitle = document.getElementById('category-banner-modal-title');
+    const cbImageContainer = document.getElementById('category-banner-image-upload-container');
+
     // --- Navigation Logic ---
     const navLinks = document.querySelectorAll('.sidebar-nav a[data-view]');
     const views = document.querySelectorAll('.admin-view');
@@ -339,6 +350,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- Render Category Banners Table ---
+    window.renderCategoryBannersTable = () => {
+        cbTbody.innerHTML = '';
+        if(!window.categoryBanners || window.categoryBanners.length === 0) {
+            cbTbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 40px;">No category banners found. Add a new category banner to get started.</td></tr>`;
+            return;
+        }
+
+        window.categoryBanners.forEach(cb => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><img src="${cb.image}" alt="${cb.title || cb.collectionId}"></td>
+                <td style="text-transform: capitalize;"><strong>${cb.collectionId.replace('-', ' ')}</strong></td>
+                <td>${cb.title || '-'}</td>
+                <td>${cb.subtitle || '-'}</td>
+                <td>
+                    <button class="action-btn edit-category-banner-btn" data-id="${cb.id}" title="Edit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </button>
+                    <button class="action-btn delete delete-category-banner-btn" data-id="${cb.id}" title="Delete">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                </td>
+            `;
+            cbTbody.appendChild(tr);
+        });
+
+        // Attach actions
+        document.querySelectorAll('.edit-category-banner-btn').forEach(btn => {
+            btn.addEventListener('click', () => openCbModal(btn.getAttribute('data-id')));
+        });
+        document.querySelectorAll('.delete-category-banner-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteCategoryBanner(btn.getAttribute('data-id')));
+        });
+    };
+
     // --- Modal Logic ---
     const isExternalCheckbox = document.getElementById('product-is-external');
     const externalFieldsContainer = document.getElementById('external-fields-container');
@@ -465,37 +512,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Collection Modal Logic ---
     const openCollectionModal = (id = null) => {
         collectionForm.reset();
+        collectionImageContainer.innerHTML = ''; // clear
         
         if (id) {
-            collectionModalTitle.textContent = "Edit Collection";
-            const col = window.collections.find(c => c.id === id);
-            
-            document.getElementById('collection-id').value = col.id;
-            document.getElementById('collection-title').value = col.title;
-            document.getElementById('collection-link').value = col.link;
-            
-            collectionImageContainer.innerHTML = '';
-            addImageRow(collectionImageContainer, col.image);
+            collectionModalTitle.textContent = 'Edit Collection';
+            const collection = window.collections.find(c => c.id === id);
+            if(collection) {
+                document.getElementById('collection-id').value = collection.id;
+                document.getElementById('collection-title').value = collection.title;
+                document.getElementById('collection-link').value = collection.link;
+                addImageRow(collectionImageContainer, collection.image);
+            }
         } else {
-            collectionModalTitle.textContent = "Add Collection";
+            collectionModalTitle.textContent = 'Add Collection';
             document.getElementById('collection-id').value = '';
-            collectionImageContainer.innerHTML = '';
             addImageRow(collectionImageContainer);
         }
-
+        
+        collectionOverlay.style.display = 'block';
         collectionModal.classList.add('active');
-        collectionOverlay.classList.add('active');
     };
 
     const closeCollectionModal = () => {
+        collectionOverlay.style.display = 'none';
         collectionModal.classList.remove('active');
-        collectionOverlay.classList.remove('active');
     };
 
-    if(addCollectionBtn) addCollectionBtn.addEventListener('click', () => openCollectionModal());
-    if(closeCollectionBtn) closeCollectionBtn.addEventListener('click', closeCollectionModal);
-    if(cancelCollectionBtn) cancelCollectionBtn.addEventListener('click', closeCollectionModal);
-    if(collectionOverlay) collectionOverlay.addEventListener('click', closeCollectionModal);
+    if (addCollectionBtn) addCollectionBtn.addEventListener('click', () => openCollectionModal());
+    if (closeCollectionBtn) closeCollectionBtn.addEventListener('click', closeCollectionModal);
+    if (cancelCollectionBtn) cancelCollectionBtn.addEventListener('click', closeCollectionModal);
+    if (collectionOverlay) collectionOverlay.addEventListener('click', closeCollectionModal);
+
+    // --- Category Banner Modal Logic ---
+    const openCbModal = (id = null) => {
+        cbImageContainer.innerHTML = '';
+        
+        if (id) {
+            cbModalTitle.textContent = 'Edit Category Banner';
+            const banner = window.categoryBanners.find(cb => cb.id === id);
+            if(banner) {
+                document.getElementById('category-banner-id').value = banner.id;
+                document.getElementById('category-banner-collection').value = banner.collectionId;
+                document.getElementById('category-banner-title').value = banner.title || '';
+                document.getElementById('category-banner-subtitle').value = banner.subtitle || '';
+                document.getElementById('category-banner-theme').value = banner.theme || 'light';
+                document.getElementById('category-banner-discount').value = banner.discount || '';
+                addImageRow(cbImageContainer, banner.image);
+            }
+        } else {
+            cbModalTitle.textContent = 'Add Category Banner';
+            cbForm.reset();
+            document.getElementById('category-banner-id').value = '';
+            addImageRow(cbImageContainer);
+        }
+        
+        cbOverlay.style.display = 'block';
+        cbModal.classList.add('active');
+    };
+
+    const closeCbModal = () => {
+        cbOverlay.style.display = 'none';
+        cbModal.classList.remove('active');
+    };
+
+    if (addCbBtn) addCbBtn.addEventListener('click', () => openCbModal());
+    if (closeCbBtn) closeCbBtn.addEventListener('click', closeCbModal);
+    if (cancelCbBtn) cancelCbBtn.addEventListener('click', closeCbModal);
+    if (cbOverlay) cbOverlay.addEventListener('click', closeCbModal);
 
     // --- Form Submission ---
     form.addEventListener('submit', (e) => {
@@ -682,6 +765,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const deleteCategoryBanner = (id) => {
+        if(confirm("Are you sure you want to delete this category banner?")) {
+            if (typeof deleteCategoryBannerFromDb === 'function') {
+                deleteCategoryBannerFromDb(id);
+            } else {
+                window.categoryBanners = (window.categoryBanners || []).filter(c => c.id !== id);
+                localStorage.setItem('marwa_category_banners', JSON.stringify(window.categoryBanners));
+            }
+        }
+    };
+
     // --- Orders Logic ---
     const ordersTbody = document.getElementById('orders-tbody');
     const orderModal = document.getElementById('order-modal');
@@ -833,6 +927,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (typeof window.renderCollectionsTable === 'function') {
         window.renderCollectionsTable();
+    }
+    if (typeof window.renderCategoryBannersTable === 'function') {
+        window.renderCategoryBannersTable();
     }
 
     // --- Home Categories Admin Logic ---

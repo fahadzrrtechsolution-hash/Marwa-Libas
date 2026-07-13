@@ -304,6 +304,8 @@ const DEFAULT_HOME_CATEGORIES = [
     { id: "hc-k4", group: "SHOP KIDS CATEGORIES", title: "Accessories", image: "assets/parizad_dress.png", link: "#collection/kids-accessories" }
 ];
 
+const DEFAULT_CATEGORY_BANNERS = [];
+
 // Load from localStorage cache for instant UI rendering, fallback to defaults
 let PRODUCTS = JSON.parse(localStorage.getItem('marwa_products')) || DEFAULT_PRODUCTS;
 let BANNERS = JSON.parse(localStorage.getItem('marwa_banners')) || DEFAULT_BANNERS;
@@ -423,6 +425,31 @@ if (typeof db !== 'undefined') {
         }
     });
 
+    // Category Banners Listener
+    db.collection('marwa_category_banners').onSnapshot((snapshot) => {
+        let loadedCB = [];
+        snapshot.forEach(doc => {
+            loadedCB.push(doc.data());
+        });
+
+        if (loadedCB.length > 0) {
+            CATEGORY_BANNERS = loadedCB;
+            localStorage.setItem('marwa_category_banners', JSON.stringify(CATEGORY_BANNERS));
+        } else {
+            CATEGORY_BANNERS = DEFAULT_CATEGORY_BANNERS;
+            DEFAULT_CATEGORY_BANNERS.forEach(cb => db.collection('marwa_category_banners').doc(cb.id).set(cb));
+        }
+        
+        window.dispatchEvent(categoryBannersLoadedEvent);
+        
+        if (typeof window.renderCategoryBannersTable === 'function') {
+            window.categoryBanners = CATEGORY_BANNERS;
+            window.renderCategoryBannersTable();
+        } else if (typeof handleRoute === 'function') {
+            handleRoute(true);
+        }
+    });
+
 } else {
     // Fallback if Firebase fails to load
     const savedProducts = localStorage.getItem('marwa_products');
@@ -441,10 +468,15 @@ if (typeof db !== 'undefined') {
     if (savedHC) {
         HOME_CATEGORIES = JSON.parse(savedHC);
     }
+    const savedCB = localStorage.getItem('marwa_category_banners');
+    if (savedCB) {
+        CATEGORY_BANNERS = JSON.parse(savedCB);
+    }
     window.dispatchEvent(productsLoadedEvent);
     window.dispatchEvent(bannersLoadedEvent);
     window.dispatchEvent(collectionsLoadedEvent);
     window.dispatchEvent(homeCategoriesLoadedEvent);
+    window.dispatchEvent(categoryBannersLoadedEvent);
 }
 
 // Helper to save product to Firebase
@@ -503,3 +535,16 @@ function deleteHomeCategoryFromDb(id) {
     }
 }
 
+// Helper to save category banner to Firebase
+function saveCategoryBannerToDb(banner) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_category_banners').doc(banner.id).set(banner);
+    }
+}
+
+// Helper to delete category banner from Firebase
+function deleteCategoryBannerFromDb(id) {
+    if (typeof db !== 'undefined') {
+        return db.collection('marwa_category_banners').doc(id).delete();
+    }
+}
