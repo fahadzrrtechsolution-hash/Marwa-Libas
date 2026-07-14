@@ -121,6 +121,43 @@ function renderProductPage(productId) {
         </div>
     `;
 
+    // Related Products Logic
+    const relatedProducts = PRODUCTS.filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
+    let relatedProductsHtml = '';
+    
+    if (relatedProducts.length > 0) {
+        let gridHtml = '';
+        relatedProducts.forEach(p => {
+            const displayImg = p.localImage || p.image || (p.images && p.images[0]) || '';
+            const priceHtml = `Rs. ${p.price.toLocaleString()}`;
+            const oldPriceHtml = p.originalPrice > p.price ? `<span style="text-decoration: line-through; color: #999; font-size: 13px; margin-left: 5px;">Rs. ${p.originalPrice.toLocaleString()}</span>` : '';
+            
+            gridHtml += `
+                <div class="product-card">
+                    <a href="#product/${p.id}" class="product-image-container">
+                        <img src="${displayImg}" alt="${p.title}" class="product-image">
+                    </a>
+                    <div class="product-info">
+                        <a href="#product/${p.id}" class="product-title">${p.title}</a>
+                        <div class="product-price">
+                            ${priceHtml} ${oldPriceHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        relatedProductsHtml = `
+            <div class="related-products-section">
+                <h2 class="related-products-title">More Collection</h2>
+                <div class="related-products-grid">
+                    ${gridHtml}
+                </div>
+            </div>
+        `;
+    }
+
+
     appContent.innerHTML = `
         <div class="container product-detail-container">
             <div class="breadcrumbs">
@@ -130,40 +167,75 @@ function renderProductPage(productId) {
             <div class="product-detail-layout">
                 <!-- Gallery Column -->
                 <div class="product-gallery">
-                    <div class="gallery-main">
-                        <img id="main-product-img" src="${mainImageToUse}" alt="${product.title}">
-                    </div>
                     <div class="gallery-thumbnails">
                         ${thumbnailsHtml}
+                    </div>
+                    <div class="gallery-main">
+                        <img id="main-product-img" src="${mainImageToUse}" alt="${product.title}">
                     </div>
                 </div>
 
                 <!-- Info Column -->
                 <div class="product-info-col">
-                    <div class="urgency-widget">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <span>${product.stock === 0 ? 'Item is sold out.' : product.stock > 0 && product.stock <= 5 ? `Hurry! Only ${product.stock} items left in stock.` : 'In Stock'}</span>
+                    <div class="brand-header-row">
+                        <div>
+                            <div class="brand-title">${product.brandName || product.externalBrand || 'Zellbury'}</div>
+                            <div class="brand-meta">
+                                ★ ${avgRating} | ${product.stock !== undefined ? product.stock : 100} items
+                            </div>
+                        </div>
+                        <img src="assets/zellbury-logo.png" alt="Logo" class="brand-logo-img" onerror="this.style.display='none'">
                     </div>
 
-                    <h1 class="product-detail-title" style="font-family: var(--font-heading); text-transform: uppercase; font-size: 28px; margin-bottom: 5px;">${product.title}</h1>
-                    ${ratingDisplayHtml}
-                    <div class="product-card-price-row" style="font-size: 22px; margin-bottom: 15px;">
-                        <span class="price-sale" style="font-weight: bold; color: #000;">Rs. ${product.price.toLocaleString()}</span>
-                        <span class="price-original" style="text-decoration: line-through; color: #999; margin-left: 10px;">Rs. ${product.originalPrice.toLocaleString()}</span>
+                    <div class="product-title-row">
+                        <h1 class="product-detail-title">${product.title}</h1>
+                        <div class="action-icons">
+                            <button class="icon-btn" title="Share" id="detail-share-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                            </button>
+                            <button class="icon-btn wishlist-toggle-btn" data-product-id="${product.id}" title="Wishlist">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="${state.wishlist.includes(product.id) ? '#ff3b30' : 'none'}" stroke="${state.wishlist.includes(product.id) ? '#ff3b30' : '#000000'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="preorder-banner">
-                        <strong>Pre-Order Article:</strong> Delivery will take 7 to 9 working days from confirmation date.
+                    <div class="product-card-price-row">
+                        <span class="price-sale">PKR ${product.price.toLocaleString()}</span>
+                        ${product.originalPrice > product.price ? `<span class="price-original">PKR ${product.originalPrice.toLocaleString()}</span>` : ''}
+                    </div>
+
+                    <div class="shipping-details-box">
+                        <div class="shipping-header">
+                            <span class="express-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Express</span>
+                            Instant dispatch, no delays
+                        </div>
+                        <div class="shipping-row">
+                            <div class="shipping-info">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                <div class="shipping-info-text">
+                                    <strong>Est. shipping by ${new Date(Date.now() + 3*24*60*60*1000).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</strong>
+                                    <span>Express delivery · Pakistan</span>
+                                </div>
+                            </div>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="shipping-row">
+                            <div class="shipping-info">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <div class="shipping-info-text">
+                                    <strong>Easy 14 days return and refund</strong>
+                                    <span>Return for a different size within 14 days.</span>
+                                </div>
+                            </div>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
                     </div>
 
                     <!-- Size Selector -->
                     <div>
-                        <span class="selector-label">Select Size:</span>
+                        <span class="selector-label">Size</span>
                         <div class="size-selector-row" id="detail-size-selector">
-                            <button class="size-btn active" data-size="S">S</button>
-                            <button class="size-btn" data-size="M">M</button>
-                            <button class="size-btn" data-size="L">L</button>
-                            <button class="size-btn" data-size="XL">XL</button>
+                            <button class="size-btn active" data-size="Unstitched">Unstitched</button>
                         </div>
                     </div>
 
@@ -176,63 +248,48 @@ function renderProductPage(productId) {
                         </div>
                     ` : (product.stock === 0) ? `
                         <div class="checkout-actions-group" style="margin-top: 30px;">
-                            <button class="btn btn-block" style="background: #e5e7eb; color: #9ca3af; cursor: not-allowed;" disabled>Out of Stock</button>
+                            <button class="btn-block" style="background: #e5e7eb; color: #9ca3af; cursor: not-allowed;" disabled>Out of Stock</button>
                         </div>
                     ` : `
                         <!-- Quantity Selector -->
                         <div>
-                            <span class="selector-label">Quantity:</span>
+                            <span class="selector-label">Quantity</span>
                             <div class="qty-selector-row">
-                                <div class="detail-qty-box" style="border: 1px solid #ccc; display: inline-flex; align-items: center; width: 120px; justify-content: space-between;">
-                                    <button class="detail-qty-btn" id="detail-qty-minus" style="background: none; border: none; padding: 10px 15px; cursor: pointer; font-size: 18px;">-</button>
-                                    <span class="detail-qty-val" id="detail-qty-value" style="font-weight: bold;">1</span>
-                                    <button class="detail-qty-btn" id="detail-qty-plus" style="background: none; border: none; padding: 10px 15px; cursor: pointer; font-size: 18px;">+</button>
+                                <div class="detail-qty-box">
+                                    <button class="detail-qty-btn" id="detail-qty-minus">-</button>
+                                    <div class="detail-qty-val" id="detail-qty-value">1</div>
+                                    <button class="detail-qty-btn" id="detail-qty-plus">+</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Action buttons -->
                         <div class="checkout-actions-group">
-                            <button class="btn btn-block" id="detail-add-to-cart">Add to cart</button>
-                            <button class="btn btn-block" id="detail-buy-now">Buy it now</button>
+                            <button class="btn-block" id="detail-add-to-cart">Add To Bag (PKR ${product.price.toLocaleString()})</button>
+                            <button class="btn-block" id="detail-buy-now">Buy Now</button>
                         </div>
                     `}
 
-                    <!-- Accordions -->
-                    <div class="product-specs-accordion">
-                        <div class="accordion-item active">
-                            <button class="accordion-header">
-                                Description
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </button>
-                            <div class="accordion-content" style="max-height: 500px;">
-                                <p>${product.description}</p>
-                            </div>
+                    <div class="product-details-section">
+                        <h3>Product Details</h3>
+                        <table class="specs-table">
+                            ${specsHtml}
+                        </table>
+                        
+                        <div class="additional-desc">
+                            <h4>Additional Description:</h4>
+                            ${product.description.replace(/\n/g, '<br>')}
                         </div>
-                        <div class="accordion-item">
-                            <button class="accordion-header">
-                                Specifications
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </button>
-                            <div class="accordion-content">
-                                <table class="specs-table">
-                                    ${specsHtml}
-                                </table>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <button class="accordion-header">
-                                Delivery & Return Policy
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </button>
-                            <div class="accordion-content">
-                                <p>Standard delivery across Pakistan takes 4-7 working days. Pre-order articles require 7-9 working days. Easy return and exchange policy is valid within 14 days of receipt if items are in original condition with tags attached.</p>
-                            </div>
+
+                        <div class="additional-desc">
+                            <h4>Disclaimer:</h4>
+                            ${product.disclaimer ? product.disclaimer.replace(/\n/g, '<br>') : 'Actual product color may vary slightly from the image.'}
                         </div>
                     </div>
                 </div>
             </div>
             
+            ${relatedProductsHtml}
             ${reviewsSectionHtml}
         </div>
 
@@ -250,10 +307,7 @@ function renderProductPage(productId) {
                 <div class="sticky-atc-actions">
                     <div class="sticky-size-selector">
                         <select id="sticky-size">
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
+                            <option value="Unstitched">Unstitched</option>
                         </select>
                     </div>
                     <div class="sticky-qty-selector">
@@ -261,7 +315,7 @@ function renderProductPage(productId) {
                         <span id="sticky-qty-value">1</span>
                         <button id="sticky-qty-plus">+</button>
                     </div>
-                    <button class="t4s-ani-shake" id="sticky-add-to-cart-btn">Add To Cart</button>
+                    <button class="t4s-ani-shake" id="sticky-add-to-cart-btn">Add To Bag</button>
                 </div>
             </div>
         </div>

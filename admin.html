@@ -97,12 +97,6 @@
                             <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Collection</label>
                             <select id="admin-filter-collection" class="form-control" style="padding: 8px;">
                                 <option value="all">All Collections</option>
-                                <option value="new-arrivals">New Arrivals</option>
-                                <option value="eid-ul-adha">Eid ul-Adha</option>
-                                <option value="best-sellers">Best Sellers</option>
-                                <option value="luxury-lawn">Luxury Lawn</option>
-                                <option value="summer">Summer Collection</option>
-                                <option value="under-2290">Under 2290</option>
                                 <optgroup label="Women">
                                     <option value="women-clothing">Women's Clothing</option>
                                     <option value="women-accessories">Women's Accessories</option>
@@ -282,9 +276,15 @@
             <form id="product-form">
                 <input type="hidden" id="product-id">
                 
-                <div class="form-group">
-                    <label for="product-title">Title</label>
-                    <input type="text" id="product-title" class="form-control" required>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                    <div class="form-group">
+                        <label for="product-title">Title</label>
+                        <input type="text" id="product-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-brand-name">Brand Name</label>
+                        <input type="text" id="product-brand-name" class="form-control" placeholder="e.g. Zellbury">
+                    </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
@@ -301,12 +301,6 @@
                 <div class="form-group">
                     <label for="product-collection">Collection</label>
                     <select id="product-collection" class="form-control" required>
-                        <option value="new-arrivals">New Arrivals</option>
-                        <option value="eid-ul-adha">Eid ul-Adha</option>
-                        <option value="best-sellers">Best Sellers</option>
-                        <option value="luxury-lawn">Luxury Lawn</option>
-                        <option value="summer">Summer Collection</option>
-                        <option value="under-2290">Under 2290</option>
                         <optgroup label="Women">
                             <option value="women-clothing">Women's Clothing</option>
                             <option value="women-accessories">Women's Accessories</option>
@@ -374,13 +368,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="product-desc">Description</label>
-                    <textarea id="product-desc" class="form-control" rows="3" required></textarea>
+                    <label for="product-desc">Additional Description</label>
+                    <textarea id="product-desc" class="form-control" rows="3" placeholder="Detailed product description..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-disclaimer">Disclaimer (Optional)</label>
+                    <textarea id="product-disclaimer" class="form-control" rows="2" placeholder="e.g. Actual product color may vary slightly from the image."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Specifications (Format: Key:Value, one per line)</label>
-                    <textarea id="product-specs" class="form-control" rows="4" placeholder="Fabric: Cotton Lawn&#10;Color: Pink" required></textarea>
+                    <textarea id="product-specs" class="form-control" rows="6" placeholder="Color Type: Black&#10;Product ID: RTX2417&#10;Number Of Pieces: 3 piece&#10;Product Type: Daily wear&#10;Season: Summer wear&#10;Shirt Fabric: Lawn" required></textarea>
                 </div>
 
                 <div class="modal-footer" style="margin-top: 20px; text-align: right;">
@@ -478,12 +477,6 @@
                 <div class="form-group">
                     <label for="category-banner-collection">Select Category / Collection</label>
                     <select id="category-banner-collection" class="form-control" required>
-                        <option value="new-arrivals">New Arrivals</option>
-                        <option value="eid-ul-adha">Eid ul-Adha</option>
-                        <option value="best-sellers">Best Sellers</option>
-                        <option value="luxury-lawn">Luxury Lawn</option>
-                        <option value="summer">Summer Collection</option>
-                        <option value="under-2290">Under 2290</option>
                         <optgroup label="Women">
                             <option value="women-clothing">Women's Clothing</option>
                             <option value="women-accessories">Women's Accessories</option>

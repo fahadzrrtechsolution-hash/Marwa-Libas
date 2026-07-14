@@ -408,13 +408,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (id) {
             modalTitle.textContent = "Edit Product";
             const product = window.products.find(p => p.id === id);
-            
             document.getElementById('product-id').value = product.id;
             document.getElementById('product-title').value = product.title;
             document.getElementById('product-price').value = product.price;
             document.getElementById('product-original-price').value = product.originalPrice;
             document.getElementById('product-collection').value = product.collection;
             document.getElementById('product-badge').value = product.badge || '';
+            document.getElementById('product-brand-name').value = product.brandName || '';
             document.getElementById('product-stock').value = product.stock !== undefined ? product.stock : 10;
 
             if(product.isExternal) {
@@ -438,7 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 addImageRow(imageContainer);
             }
 
-            document.getElementById('product-desc').value = product.description;
+            document.getElementById('product-desc').value = product.description || '';
+            document.getElementById('product-disclaimer').value = product.disclaimer || '';
             
             // Format specs back to string
             let specsStr = '';
@@ -610,10 +611,12 @@ document.addEventListener('DOMContentLoaded', () => {
             isExternal: isExternalCheckbox ? isExternalCheckbox.checked : false,
             externalBrand: document.getElementById('product-external-brand') ? document.getElementById('product-external-brand').value : '',
             externalUrl: document.getElementById('product-external-url') ? document.getElementById('product-external-url').value : '',
+            brandName: document.getElementById('product-brand-name').value,
             image: mainImage,
             localImage: mainImage,
             images: imagesArray,
             description: document.getElementById('product-desc').value,
+            disclaimer: document.getElementById('product-disclaimer').value,
             specs: specsObj
         };
 
