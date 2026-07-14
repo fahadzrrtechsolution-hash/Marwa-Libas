@@ -1,6 +1,6 @@
 function renderContactPage() {
-    const appContent = document.getElementById('app-content');
-    appContent.innerHTML = `
+  const appContent = document.getElementById("app-content");
+  appContent.innerHTML = `
         <div class="container">
             <div class="contact-layout">
                 <div>
@@ -68,14 +68,16 @@ function renderContactPage() {
         </div>
     `;
 
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Check if user is running the site locally from their hard drive
-            if (window.location.protocol === 'file:') {
-                e.preventDefault();
-                alert("Form submission is disabled during local offline testing because email services block 'file://' requests for security reasons. \n\nDon't worry! This form is perfectly configured and will work automatically once your website is live on the internet.");
-            }
-        });
-    }
+  const contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      // Check if user is running the site locally from their hard drive
+      if (window.location.protocol === "file:") {
+        e.preventDefault();
+        alert(
+          "Form submission is disabled during local offline testing because email services block 'file://' requests for security reasons. \n\nDon't worry! This form is perfectly configured and will work automatically once your website is live on the internet.",
+        );
+      }
+    });
+  }
 }

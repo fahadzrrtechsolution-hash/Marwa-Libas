@@ -1,41 +1,42 @@
-
-
-
 function renderHomepage() {
-    // Dropdown toggle logic
-    window.toggleCategoryDropdown = function(element, event) {
-        event.stopPropagation();
-        const parent = element.parentElement;
-        const isActive = parent.classList.contains('active');
-        
-        // Close all other dropdowns
-        document.querySelectorAll('.category-dropdown-wrapper.active').forEach(wrapper => {
-            wrapper.classList.remove('active');
+  // Dropdown toggle logic
+  window.toggleCategoryDropdown = function (element, event) {
+    event.stopPropagation();
+    const parent = element.parentElement;
+    const isActive = parent.classList.contains("active");
+
+    // Close all other dropdowns
+    document
+      .querySelectorAll(".category-dropdown-wrapper.active")
+      .forEach((wrapper) => {
+        wrapper.classList.remove("active");
+      });
+
+    // Toggle current one
+    if (!isActive) {
+      parent.classList.add("active");
+    }
+  };
+
+  // Close when clicking outside
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".category-dropdown-wrapper")) {
+      document
+        .querySelectorAll(".category-dropdown-wrapper.active")
+        .forEach((wrapper) => {
+          wrapper.classList.remove("active");
         });
-        
-        // Toggle current one
-        if (!isActive) {
-            parent.classList.add('active');
-        }
-    };
+    }
+  });
 
-    // Close when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.category-dropdown-wrapper')) {
-            document.querySelectorAll('.category-dropdown-wrapper.active').forEach(wrapper => {
-                wrapper.classList.remove('active');
-            });
-        }
-    });
+  const appContent = document.getElementById("app-content");
 
-    const appContent = document.getElementById('app-content');
-    
-    let productsHtml = '';
-    PRODUCTS.forEach(product => {
-        productsHtml += renderProductCard(product);
-    });
+  let productsHtml = "";
+  PRODUCTS.forEach((product) => {
+    productsHtml += renderProductCard(product);
+  });
 
-    let dynamicCategoriesHtml = `
+  let dynamicCategoriesHtml = `
         <div class="category-top-nav" style="background: #ffffff; padding: 15px 0; overflow: visible; margin-bottom: 20px; position: relative; z-index: 100;">
             <div class="container category-top-nav-container">
                 
@@ -205,25 +206,25 @@ function renderHomepage() {
             </style>
         </div>
     `;
-    appContent.innerHTML = `
+  appContent.innerHTML = `
         ${dynamicCategoriesHtml}
 
         <div class="hero-container fade-in">
             <section class="hero-section" id="hero-slider">
                 <div class="hero-track" id="hero-track">
                 ${BANNERS.map((banner, index) => {
-                    return `
-                    <div class="hero-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
+                  return `
+                    <div class="hero-slide ${index === 0 ? "active" : ""}" data-index="${index}">
                         <a href="${banner.btnLink}">
                             <img src="${banner.image}" alt="Banner" class="hero-bg-img">
                         </a>
                     </div>
                     `;
-                }).join('')}
+                }).join("")}
                 </div>
                 
                 <div class="hero-pagination" id="hero-pagination">
-                    ${BANNERS.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}" data-index="${index}"></span>`).join('')}
+                    ${BANNERS.map((_, index) => `<span class="dot ${index === 0 ? "active" : ""}" data-index="${index}"></span>`).join("")}
                 </div>
             </section>
         </div>
@@ -370,103 +371,111 @@ function renderHomepage() {
         </div>
     `;
 
-    // Initialize Hero Slider
-    const heroSection = document.getElementById('hero-slider');
-    const track = document.getElementById('hero-track');
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-pagination .dot');
-    if (slides.length > 0) {
-        let currentSlide = 0;
-        let slideInterval;
+  // Initialize Hero Slider
+  const heroSection = document.getElementById("hero-slider");
+  const track = document.getElementById("hero-track");
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll(".hero-pagination .dot");
+  if (slides.length > 0) {
+    let currentSlide = 0;
+    let slideInterval;
 
-        const goToSlide = (index) => {
-            if (index < 0) currentSlide = slides.length - 1;
-            else if (index >= slides.length) currentSlide = 0;
-            else currentSlide = index;
+    const goToSlide = (index) => {
+      if (index < 0) currentSlide = slides.length - 1;
+      else if (index >= slides.length) currentSlide = 0;
+      else currentSlide = index;
 
-            track.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      track.style.transition = "transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)";
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-            slides.forEach(s => s.classList.remove('active'));
-            slides[currentSlide].classList.add('active');
-            
-            dots.forEach(d => d.classList.remove('active'));
-            dots[currentSlide].classList.add('active');
-        };
+      slides.forEach((s) => s.classList.remove("active"));
+      slides[currentSlide].classList.add("active");
 
-        const nextSlide = () => goToSlide(currentSlide + 1);
-        const prevSlide = () => goToSlide(currentSlide - 1);
+      dots.forEach((d) => d.classList.remove("active"));
+      dots[currentSlide].classList.add("active");
+    };
 
-        const startSlider = () => {
-            if (slideInterval) clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, 4500); 
-        };
+    const nextSlide = () => goToSlide(currentSlide + 1);
+    const prevSlide = () => goToSlide(currentSlide - 1);
 
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                goToSlide(idx);
-                startSlider(); 
-            });
-        });
+    const startSlider = () => {
+      if (slideInterval) clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 4500);
+    };
 
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
-        let heroWidth = heroSection.offsetWidth;
-
-        // Update width on resize
-        window.addEventListener('resize', () => {
-            heroWidth = heroSection.offsetWidth;
-        });
-
-        const handleDragStart = (e) => {
-            isDragging = true;
-            startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            currentX = startX;
-            if (slideInterval) clearInterval(slideInterval); 
-            track.style.transition = 'none';
-        };
-
-        const handleDragMove = (e) => {
-            if (!isDragging) return;
-            currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            let diff = currentX - startX;
-            
-            // Add resistance at edges
-            if (currentSlide === 0 && diff > 0) diff *= 0.3;
-            else if (currentSlide === slides.length - 1 && diff < 0) diff *= 0.3;
-
-            track.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
-        };
-
-        const handleDragEnd = (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            let endX = e.type.includes('mouse') ? e.pageX : e.changedTouches[0].clientX;
-            let diff = startX - endX;
-
-            if (Math.abs(diff) > 70) {
-                if (diff > 0) nextSlide(); 
-                else prevSlide(); 
-            } else {
-                goToSlide(currentSlide); 
-            }
-            startSlider(); 
-        };
-
-        if (heroSection) {
-            heroSection.addEventListener('mousedown', handleDragStart);
-            heroSection.addEventListener('mousemove', handleDragMove);
-            heroSection.addEventListener('mouseup', handleDragEnd);
-            heroSection.addEventListener('mouseleave', handleDragEnd);
-            
-            heroSection.addEventListener('touchstart', handleDragStart, {passive: true});
-            heroSection.addEventListener('touchmove', handleDragMove, {passive: true});
-            heroSection.addEventListener('touchend', handleDragEnd, {passive: true});
-        }
-
+    dots.forEach((dot, idx) => {
+      dot.addEventListener("click", () => {
+        goToSlide(idx);
         startSlider();
+      });
+    });
+
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    let heroWidth = heroSection.offsetWidth;
+
+    // Update width on resize
+    window.addEventListener("resize", () => {
+      heroWidth = heroSection.offsetWidth;
+    });
+
+    const handleDragStart = (e) => {
+      isDragging = true;
+      startX = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+      currentX = startX;
+      if (slideInterval) clearInterval(slideInterval);
+      track.style.transition = "none";
+    };
+
+    const handleDragMove = (e) => {
+      if (!isDragging) return;
+      currentX = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+      let diff = currentX - startX;
+
+      // Add resistance at edges
+      if (currentSlide === 0 && diff > 0) diff *= 0.3;
+      else if (currentSlide === slides.length - 1 && diff < 0) diff *= 0.3;
+
+      track.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
+    };
+
+    const handleDragEnd = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      let endX = e.type.includes("mouse")
+        ? e.pageX
+        : e.changedTouches[0].clientX;
+      let diff = startX - endX;
+
+      if (Math.abs(diff) > 70) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+      } else {
+        goToSlide(currentSlide);
+      }
+      startSlider();
+    };
+
+    if (heroSection) {
+      heroSection.addEventListener("mousedown", handleDragStart);
+      heroSection.addEventListener("mousemove", handleDragMove);
+      heroSection.addEventListener("mouseup", handleDragEnd);
+      heroSection.addEventListener("mouseleave", handleDragEnd);
+
+      heroSection.addEventListener("touchstart", handleDragStart, {
+        passive: true,
+      });
+      heroSection.addEventListener("touchmove", handleDragMove, {
+        passive: true,
+      });
+      heroSection.addEventListener("touchend", handleDragEnd, {
+        passive: true,
+      });
     }
 
-    setupQuickBuyListeners();
+    startSlider();
+  }
+
+  setupQuickBuyListeners();
 }

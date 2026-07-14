@@ -1,19 +1,22 @@
 function renderCartPage() {
-    const appContent = document.getElementById('app-content');
-    
-    if (state.cart.length === 0) {
-        appContent.innerHTML = `
+  const appContent = document.getElementById("app-content");
+
+  if (state.cart.length === 0) {
+    appContent.innerHTML = `
             <div class="container text-center" style="padding: 100px 0;">
                 <h2>Your cart is empty.</h2>
                 <p style="margin: 20px 0;"><a href="#home" class="btn btn-primary">Continue Shopping</a></p>
             </div>
         `;
-        return;
-    }
+    return;
+  }
 
-    const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = state.cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 
-    let itemsHtml = `
+  let itemsHtml = `
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;" class="cart-table-desktop">
             <thead>
                 <tr style="border-bottom: 1px solid var(--color-border); text-align: left;">
@@ -25,8 +28,8 @@ function renderCartPage() {
             <tbody>
     `;
 
-    state.cart.forEach((item, index) => {
-        itemsHtml += `
+  state.cart.forEach((item, index) => {
+    itemsHtml += `
             <tr style="border-bottom: 1px solid var(--color-border);">
                 <td style="padding: 30px 0;">
                     <div style="display: flex; gap: 20px; align-items: center;">
@@ -51,14 +54,14 @@ function renderCartPage() {
                 </td>
             </tr>
         `;
-    });
+  });
 
-    itemsHtml += `
+  itemsHtml += `
             </tbody>
         </table>
     `;
 
-    appContent.innerHTML = `
+  appContent.innerHTML = `
         <div class="container" style="max-width: 1200px; padding: 80px 20px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px;">
                 <h1 style="font-size: 40px; font-weight: 400; margin: 0; font-family: 'Playfair Display', serif;">Your cart</h1>
@@ -90,28 +93,28 @@ function renderCartPage() {
         </style>
     `;
 
-    // Setup listeners
-    appContent.querySelectorAll('.cp-minus-qty').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const index = parseInt(this.getAttribute('data-index'));
-            updateCartQty(index, state.cart[index].quantity - 1);
-            if (window.location.hash === '#cart') renderCartPage(); // Re-render this page
-        });
+  // Setup listeners
+  appContent.querySelectorAll(".cp-minus-qty").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const index = parseInt(this.getAttribute("data-index"));
+      updateCartQty(index, state.cart[index].quantity - 1);
+      if (window.location.hash === "#cart") renderCartPage(); // Re-render this page
     });
+  });
 
-    appContent.querySelectorAll('.cp-plus-qty').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const index = parseInt(this.getAttribute('data-index'));
-            updateCartQty(index, state.cart[index].quantity + 1);
-            if (window.location.hash === '#cart') renderCartPage(); // Re-render this page
-        });
+  appContent.querySelectorAll(".cp-plus-qty").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const index = parseInt(this.getAttribute("data-index"));
+      updateCartQty(index, state.cart[index].quantity + 1);
+      if (window.location.hash === "#cart") renderCartPage(); // Re-render this page
     });
+  });
 
-    appContent.querySelectorAll('.cart-page-remove').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const index = parseInt(this.getAttribute('data-index'));
-            removeCartItem(index);
-            if (window.location.hash === '#cart') renderCartPage(); // Re-render this page
-        });
+  appContent.querySelectorAll(".cart-page-remove").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const index = parseInt(this.getAttribute("data-index"));
+      removeCartItem(index);
+      if (window.location.hash === "#cart") renderCartPage(); // Re-render this page
     });
+  });
 }

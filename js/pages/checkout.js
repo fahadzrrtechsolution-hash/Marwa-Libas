@@ -1,26 +1,26 @@
-
-
-
 function renderCheckoutPage() {
-    const appContent = document.getElementById('app-content');
-    
-    if (state.cart.length === 0) {
-        appContent.innerHTML = `
+  const appContent = document.getElementById("app-content");
+
+  if (state.cart.length === 0) {
+    appContent.innerHTML = `
             <div class="container text-center" style="padding: 100px 0;">
                 <h2>Your cart is empty.</h2>
                 <p style="margin: 20px 0;"><a href="#home" class="btn btn-primary">Go to Shopping</a></p>
             </div>
         `;
-        return;
-    }
+    return;
+  }
 
-    const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = 149; // Updated to match user's screenshot
-    const total = subtotal + shipping;
+  const subtotal = state.cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+  const shipping = 149; // Updated to match user's screenshot
+  const total = subtotal + shipping;
 
-    let itemsHtml = '';
-    state.cart.forEach(item => {
-        itemsHtml += `
+  let itemsHtml = "";
+  state.cart.forEach((item) => {
+    itemsHtml += `
             <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-md); align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-md);">
                 <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 65px; object-fit: cover; border-radius: var(--border-radius);">
                 <div style="flex: 1;">
@@ -30,9 +30,9 @@ function renderCheckoutPage() {
                 <span style="font-weight: 600;">Rs. ${(item.price * item.quantity).toLocaleString()}</span>
             </div>
         `;
-    });
+  });
 
-    appContent.innerHTML = `
+  appContent.innerHTML = `
         <style>
             .shopify-checkout {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -362,130 +362,148 @@ function renderCheckoutPage() {
         </div>
     `;
 
-    // Add event listeners for radio buttons to update active styling
-    const radioInputs = document.querySelectorAll('.shopify-checkout input[type="radio"]');
-    radioInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            const box = this.closest('.content-box');
-            if (!box) return;
-            const rows = box.querySelectorAll('.content-box-row');
-            rows.forEach(r => r.classList.remove('active'));
-            this.closest('.content-box-row').classList.add('active');
-            
-            if (this.name === 'payment') {
-                const bankDetails = document.getElementById('bank-details-box');
-                if (bankDetails) {
-                    bankDetails.style.display = this.value === 'bank' ? 'block' : 'none';
-                }
-            }
-        });
+  // Add event listeners for radio buttons to update active styling
+  const radioInputs = document.querySelectorAll(
+    '.shopify-checkout input[type="radio"]',
+  );
+  radioInputs.forEach((input) => {
+    input.addEventListener("change", function () {
+      const box = this.closest(".content-box");
+      if (!box) return;
+      const rows = box.querySelectorAll(".content-box-row");
+      rows.forEach((r) => r.classList.remove("active"));
+      this.closest(".content-box-row").classList.add("active");
+
+      if (this.name === "payment") {
+        const bankDetails = document.getElementById("bank-details-box");
+        if (bankDetails) {
+          bankDetails.style.display = this.value === "bank" ? "block" : "none";
+        }
+      }
     });
+  });
 
-    document.getElementById('checkout-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Processing Order...';
-        submitBtn.disabled = true;
+  document
+    .getElementById("checkout-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-        try {
-            const orderId = 'ML-' + Math.floor(100000 + Math.random() * 900000);
-            const email = document.getElementById('chk-email').value;
-            const firstName = document.getElementById('chk-fname').value;
-            const lastName = document.getElementById('chk-lname').value;
-            const address = document.getElementById('chk-address').value;
-            const apartment = document.getElementById('chk-apartment') ? document.getElementById('chk-apartment').value : '';
-            const city = document.getElementById('chk-city').value;
-            const phone = document.getElementById('chk-phone').value;
-            
-            // Collect order items
-            const orderItems = state.cart.map(item => ({
-                id: item.id,
-                title: item.title,
-                size: item.size,
-                price: item.price,
-                quantity: item.quantity,
-                image: item.images ? item.images[0] : ''
-            }));
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Processing Order...";
+      submitBtn.disabled = true;
 
-            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = 250;
-            const total = subtotal + shipping;
+      try {
+        const orderId = "ML-" + Math.floor(100000 + Math.random() * 900000);
+        const email = document.getElementById("chk-email").value;
+        const firstName = document.getElementById("chk-fname").value;
+        const lastName = document.getElementById("chk-lname").value;
+        const address = document.getElementById("chk-address").value;
+        const apartment = document.getElementById("chk-apartment")
+          ? document.getElementById("chk-apartment").value
+          : "";
+        const city = document.getElementById("chk-city").value;
+        const phone = document.getElementById("chk-phone").value;
 
-            const orderData = {
-                orderId,
-                customer: {
-                    firstName,
-                    lastName,
-                    email,
-                    phone,
-                    address,
-                    apartment,
-                    city
-                },
-                items: orderItems,
-                subtotal,
-                shipping,
-                total,
-                status: 'Pending',
-                date: new Date().toISOString()
-            };
+        // Collect order items
+        const orderItems = state.cart.map((item) => ({
+          id: item.id,
+          title: item.title,
+          size: item.size,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.images ? item.images[0] : "",
+        }));
 
-            // 1. Save to Firebase Database
-            let fireDb = typeof db !== 'undefined' ? db : window.db;
-            if (fireDb) {
-                await fireDb.collection('marwa_orders').doc(orderId).set(orderData);
-                
-                // 1.5 Deduct Stock
-                for (let item of orderItems) {
-                    try {
-                        const productRef = fireDb.collection('marwa_products').doc(item.id);
-                        const docSnapshot = await productRef.get();
-                        if (docSnapshot.exists) {
-                            const pData = docSnapshot.data();
-                            if (!pData.isExternal) {
-                                let currentStock = pData.stock !== undefined ? pData.stock : 10;
-                                let newStock = currentStock - item.quantity;
-                                if (newStock < 0) newStock = 0;
-                                await productRef.update({ stock: newStock });
-                            }
-                        }
-                    } catch(e) {
-                        console.error('Error updating stock for item', item.id, e);
-                    }
+        const subtotal = state.cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0,
+        );
+        const shipping = 250;
+        const total = subtotal + shipping;
+
+        const orderData = {
+          orderId,
+          customer: {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            apartment,
+            city,
+          },
+          items: orderItems,
+          subtotal,
+          shipping,
+          total,
+          status: "Pending",
+          date: new Date().toISOString(),
+        };
+
+        // 1. Save to Firebase Database
+        let fireDb = typeof db !== "undefined" ? db : window.db;
+        if (fireDb) {
+          await fireDb.collection("marwa_orders").doc(orderId).set(orderData);
+
+          // 1.5 Deduct Stock
+          for (let item of orderItems) {
+            try {
+              const productRef = fireDb
+                .collection("marwa_products")
+                .doc(item.id);
+              const docSnapshot = await productRef.get();
+              if (docSnapshot.exists) {
+                const pData = docSnapshot.data();
+                if (!pData.isExternal) {
+                  let currentStock =
+                    pData.stock !== undefined ? pData.stock : 10;
+                  let newStock = currentStock - item.quantity;
+                  if (newStock < 0) newStock = 0;
+                  await productRef.update({ stock: newStock });
                 }
+              }
+            } catch (e) {
+              console.error("Error updating stock for item", item.id, e);
             }
+          }
+        }
 
-            // 2. Send Email Notification via FormSubmit
-            const itemsList = orderItems.map(i => `${i.quantity}x ${i.title} (${i.size}) - Rs. ${i.price}`).join('\n');
-            await fetch("https://formsubmit.co/ajax/marwalibas1@gmail.com", {
-                method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: `New Order Received! ${orderId} - Rs. ${total}`,
-                    Name: `${firstName} ${lastName}`,
-                    Phone: phone,
-                    Email: email,
-                    City: city,
-                    Address: `${address} ${apartment}`,
-                    Total_Amount: `Rs. ${total}`,
-                    Items: itemsList
-                })
-            }).catch(err => console.error('FormSubmit Error:', err)); // Silently catch email errors so user still sees success
+        // 2. Send Email Notification via FormSubmit
+        const itemsList = orderItems
+          .map((i) => `${i.quantity}x ${i.title} (${i.size}) - Rs. ${i.price}`)
+          .join("\n");
+        await fetch("https://formsubmit.co/ajax/marwalibas1@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            _subject: `New Order Received! ${orderId} - Rs. ${total}`,
+            Name: `${firstName} ${lastName}`,
+            Phone: phone,
+            Email: email,
+            City: city,
+            Address: `${address} ${apartment}`,
+            Total_Amount: `Rs. ${total}`,
+            Items: itemsList,
+          }),
+        }).catch((err) => console.error("FormSubmit Error:", err)); // Silently catch email errors so user still sees success
 
-            // 3. Show success screen
-            const productDetailsForWa = orderItems.map(i => {
-                const url = `${window.location.origin}${window.location.pathname}#product/${i.id}`;
-                return `- ${i.quantity}x ${i.title} (${i.size}): ${url}`;
-            }).join('\n');
-            const whatsappMessage = encodeURIComponent(`Hello Marwa Libas! I have just placed an order (Order ID: #${orderId}). My name is ${firstName} ${lastName}, Total Bill: Rs. ${total.toLocaleString()}.\n\nItems Ordered:\n${productDetailsForWa}\n\nPlease confirm my order!`);
-            const whatsappUrl = `https://wa.me/923229043703?text=${whatsappMessage}`;
+        // 3. Show success screen
+        const productDetailsForWa = orderItems
+          .map((i) => {
+            const url = `${window.location.origin}${window.location.pathname}#product/${i.id}`;
+            return `- ${i.quantity}x ${i.title} (${i.size}): ${url}`;
+          })
+          .join("\n");
+        const whatsappMessage = encodeURIComponent(
+          `Hello Marwa Libas! I have just placed an order (Order ID: #${orderId}). My name is ${firstName} ${lastName}, Total Bill: Rs. ${total.toLocaleString()}.\n\nItems Ordered:\n${productDetailsForWa}\n\nPlease confirm my order!`,
+        );
+        const whatsappUrl = `https://wa.me/923229043703?text=${whatsappMessage}`;
 
-            appContent.innerHTML = `
+        appContent.innerHTML = `
                 <div class="container text-center" style="padding: 100px 0; max-width: 600px;">
                     <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" style="margin-bottom: var(--spacing-md);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
                     <h1 style="font-size: 36px; margin-bottom: var(--spacing-md);">Order Placed Successfully!</h1>
@@ -503,16 +521,15 @@ function renderCheckoutPage() {
                 </div>
             `;
 
-            // Clear cart
-            state.cart.length = 0;
-            saveState();
-            renderCartDrawer();
-
-        } catch (error) {
-            console.error('Checkout error:', error);
-            alert("There was an error processing your order. Please try again.");
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }
+        // Clear cart
+        state.cart.length = 0;
+        saveState();
+        renderCartDrawer();
+      } catch (error) {
+        console.error("Checkout error:", error);
+        alert("There was an error processing your order. Please try again.");
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
     });
 }

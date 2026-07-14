@@ -2,37 +2,37 @@
    DESIGN SYSTEM & CUSTOM VARIABLES
    ========================================== */
 :root {
-    --font-heading: 'Inter', sans-serif;
-    --font-body: 'Inter', sans-serif;
+  --font-heading: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
 
-    /* Color Palette */
-    --color-bg-primary: #ffffff;
-    --color-bg-secondary: #f9f9f9;
-    --color-bg-tertiary: #f0f0f0;
-    
-    --color-text-primary: #111111;
-    --color-text-secondary: #555555;
-    --color-text-muted: #888888;
-    
-    --color-brand: #1a362d; /* Premium Deep Green */
-    --color-accent: #1a362d; /* Accent mapped to Green */
-    --color-accent-dark: #111111; /* Dark Accent mapped to Black */
-    --color-sale: #111111; /* Sale mapped to Black */
-    --color-border: #e2e2e2;
-    --color-border-dark: #222222;
+  /* Color Palette */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9f9f9;
+  --color-bg-tertiary: #f0f0f0;
 
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 40px;
-    --spacing-xxl: 64px;
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-text-muted: #888888;
 
-    /* Effects */
-    --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    --border-radius: 4px;
-    --transition-fast: 0.2s ease;
-    --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-slow: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --color-brand: #1a362d; /* Premium Deep Green */
+  --color-accent: #1a362d; /* Accent mapped to Green */
+  --color-accent-dark: #111111; /* Dark Accent mapped to Black */
+  --color-sale: #111111; /* Sale mapped to Black */
+  --color-border: #e2e2e2;
+  --color-border-dark: #222222;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-xxl: 64px;
+
+  /* Effects */
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --border-radius: 4px;
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }

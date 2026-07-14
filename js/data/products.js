@@ -1,550 +1,679 @@
 const DEFAULT_PRODUCTS = [
-    {
-        id: "maheen-embroidered-3pc",
-        title: "Maheen Embroidered - 3pc",
-        price: 6250,
-        originalPrice: 6250,
-        image: "assets/maheen.jpg",
-        localImage: "assets/maheen.jpg",
-        badge: "New",
-        collection: "new-arrivals",
-        description: "This exquisite Women's Eastern Ready to wear Kurta Set features a peach pink color with embroidered details. The three-piece ensemble includes a straight kurta, straight trouser, and matching dupatta in lawn cotton fabrics. Perfect for daily wear in the summer, it exudes elegance and style. From Silai Karhai.",
-        specs: {
-            "Fabric": "Cotton Lawn",
-            "Work Technique": "Embroidered",
-            "No. of Pieces": "3-piece",
-            "Season": "Summer Wear",
-            "Color": "Peach",
-            "Top Style": "Kurta",
-            "Bottom Style": "Straight Trouser"
-        }
+  {
+    id: "maheen-embroidered-3pc",
+    title: "Maheen Embroidered - 3pc",
+    price: 6250,
+    originalPrice: 6250,
+    image: "assets/maheen.jpg",
+    localImage: "assets/maheen.jpg",
+    badge: "New",
+    collection: "new-arrivals",
+    description:
+      "This exquisite Women's Eastern Ready to wear Kurta Set features a peach pink color with embroidered details. The three-piece ensemble includes a straight kurta, straight trouser, and matching dupatta in lawn cotton fabrics. Perfect for daily wear in the summer, it exudes elegance and style. From Silai Karhai.",
+    specs: {
+      Fabric: "Cotton Lawn",
+      "Work Technique": "Embroidered",
+      "No. of Pieces": "3-piece",
+      Season: "Summer Wear",
+      Color: "Peach",
+      "Top Style": "Kurta",
+      "Bottom Style": "Straight Trouser",
     },
-    {
-        id: "maya-2pc",
-        title: "Maya - 2pc",
-        price: 4349,
-        originalPrice: 7999,
-        image: "assets/maya-2pc.png",
-        localImage: "assets/maya_dress.png",
-        badge: "Sale",
-        collection: "new-arrivals",
-        description: "A gorgeous sky blue ensemble with delicate and intricate needlework on premium quality lawn fabric. Paired with comfortable cotton trousers, perfect for summer gatherings.",
-        specs: {
-            "Fabric": "Lawn & Cotton",
-            "Work Technique": "Embroidered Neckline & Sleeves",
-            "No. of Pieces": "2 Piece (Shirt + Trousers)",
-            "Season": "Summer Collection 2026",
-            "Color": "Sky Blue",
-            "Top Style": "Straight Shirt",
-            "Bottom Style": "Straight Pants"
-        }
+  },
+  {
+    id: "maya-2pc",
+    title: "Maya - 2pc",
+    price: 4349,
+    originalPrice: 7999,
+    image: "assets/maya-2pc.png",
+    localImage: "assets/maya_dress.png",
+    badge: "Sale",
+    collection: "new-arrivals",
+    description:
+      "A gorgeous sky blue ensemble with delicate and intricate needlework on premium quality lawn fabric. Paired with comfortable cotton trousers, perfect for summer gatherings.",
+    specs: {
+      Fabric: "Lawn & Cotton",
+      "Work Technique": "Embroidered Neckline & Sleeves",
+      "No. of Pieces": "2 Piece (Shirt + Trousers)",
+      Season: "Summer Collection 2026",
+      Color: "Sky Blue",
+      "Top Style": "Straight Shirt",
+      "Bottom Style": "Straight Pants",
     },
-    {
-        id: "pari-zad-3pc",
-        title: "Pari Zad - 3pc",
-        price: 6050,
-        originalPrice: 10990,
-        image: "assets/pari-zad-3pc.png",
-        localImage: "assets/parizad_dress.png",
-        badge: "Sale",
-        collection: "best-sellers",
-        description: "Step into pure elegance with this rich dark purple 3-piece luxury embroidered lawn suit. Handcrafted with gold accents and featuring a premium printed silk dupatta.",
-        specs: {
-            "Fabric": "Luxury Lawn & Silk Dupatta",
-            "Work Technique": "Gold Thread & Tilla Embroidery",
-            "No. of Pieces": "3 Piece (Shirt + Dupatta + Pants)",
-            "Season": "Eid ul-Adha SS’26",
-            "Color": "Deep Purple",
-            "Top Style": "A-Line Long Shirt",
-            "Bottom Style": "Trousers"
-        }
+  },
+  {
+    id: "pari-zad-3pc",
+    title: "Pari Zad - 3pc",
+    price: 6050,
+    originalPrice: 10990,
+    image: "assets/pari-zad-3pc.png",
+    localImage: "assets/parizad_dress.png",
+    badge: "Sale",
+    collection: "best-sellers",
+    description:
+      "Step into pure elegance with this rich dark purple 3-piece luxury embroidered lawn suit. Handcrafted with gold accents and featuring a premium printed silk dupatta.",
+    specs: {
+      Fabric: "Luxury Lawn & Silk Dupatta",
+      "Work Technique": "Gold Thread & Tilla Embroidery",
+      "No. of Pieces": "3 Piece (Shirt + Dupatta + Pants)",
+      Season: "Eid ul-Adha SS’26",
+      Color: "Deep Purple",
+      "Top Style": "A-Line Long Shirt",
+      "Bottom Style": "Trousers",
     },
-    {
-        id: "sky-fall-2pc",
-        title: "Sky Fall - 2pc",
-        price: 4399,
-        originalPrice: 7490,
-        image: "assets/sky-fall-2pc.png",
-        localImage: "assets/skyfall_dress.png",
-        badge: "Sale",
-        collection: "summer",
-        description: "Embrace the pastel charm of summer with Sky Fall. A stunning peach colored printed lawn dress featuring digital floral patterns and modern lace styling details.",
-        specs: {
-            "Fabric": "Digital Printed Lawn",
-            "Work Technique": "Printed with Lace borders",
-            "No. of Pieces": "2 Piece (Shirt + Trousers)",
-            "Season": "Summer Collection 2026",
-            "Color": "Pastel Peach",
-            "Top Style": "Short Kurti Style",
-            "Bottom Style": "Shalwar"
-        }
+  },
+  {
+    id: "sky-fall-2pc",
+    title: "Sky Fall - 2pc",
+    price: 4399,
+    originalPrice: 7490,
+    image: "assets/sky-fall-2pc.png",
+    localImage: "assets/skyfall_dress.png",
+    badge: "Sale",
+    collection: "summer",
+    description:
+      "Embrace the pastel charm of summer with Sky Fall. A stunning peach colored printed lawn dress featuring digital floral patterns and modern lace styling details.",
+    specs: {
+      Fabric: "Digital Printed Lawn",
+      "Work Technique": "Printed with Lace borders",
+      "No. of Pieces": "2 Piece (Shirt + Trousers)",
+      Season: "Summer Collection 2026",
+      Color: "Pastel Peach",
+      "Top Style": "Short Kurti Style",
+      "Bottom Style": "Shalwar",
     },
-    {
-        id: "eliza-2pc",
-        title: "Eliza - 2pc",
-        price: 2190,
-        originalPrice: 4299,
-        image: "assets/eliza-2pc.png",
-        localImage: "assets/eliza_dress.png",
-        badge: "Under 2290",
-        collection: "under-2290",
-        description: "An affordable yet highly fashionable mint green 2-piece set with white lace borders. Made of light, breathable lawn fabric, perfect for everyday casual wear.",
-        specs: {
-            "Fabric": "Breathable Lawn",
-            "Work Technique": "Lace Embroidery Details",
-            "No. of Pieces": "2 Piece (Shirt + Trouser)",
-            "Season": "Summer Essentials",
-            "Color": "Mint Green",
-            "Top Style": "Straight Shirt",
-            "Bottom Style": "Cigarette Pants"
-        }
+  },
+  {
+    id: "eliza-2pc",
+    title: "Eliza - 2pc",
+    price: 2190,
+    originalPrice: 4299,
+    image: "assets/eliza-2pc.png",
+    localImage: "assets/eliza_dress.png",
+    badge: "Under 2290",
+    collection: "under-2290",
+    description:
+      "An affordable yet highly fashionable mint green 2-piece set with white lace borders. Made of light, breathable lawn fabric, perfect for everyday casual wear.",
+    specs: {
+      Fabric: "Breathable Lawn",
+      "Work Technique": "Lace Embroidery Details",
+      "No. of Pieces": "2 Piece (Shirt + Trouser)",
+      Season: "Summer Essentials",
+      Color: "Mint Green",
+      "Top Style": "Straight Shirt",
+      "Bottom Style": "Cigarette Pants",
     },
-    {
-        id: "luxury-lawn-ss26",
-        title: "Amber Luxury - 3pc",
-        price: 7490,
-        originalPrice: 12999,
-        image: "assets/luxury-lawn-ss26.png",
-        localImage: "assets/parizad_dress.png",
-        badge: "Luxury",
-        collection: "luxury-lawn",
-        description: "Crafted for celebration, this dress offers high-grade luxury embroidery with gold threadwork on pure cotton lawn, completed with a premium organza dupatta.",
-        specs: {
-            "Fabric": "Premium Lawn & Organza Dupatta",
-            "Work Technique": "Zari & Sequins Embroidery",
-            "No. of Pieces": "3 Piece",
-            "Season": "Luxury Lawn SS'26",
-            "Color": "Olive Green",
-            "Top Style": "Flared Kurta",
-            "Bottom Style": "Palazzo Pants"
-        }
+  },
+  {
+    id: "luxury-lawn-ss26",
+    title: "Amber Luxury - 3pc",
+    price: 7490,
+    originalPrice: 12999,
+    image: "assets/luxury-lawn-ss26.png",
+    localImage: "assets/parizad_dress.png",
+    badge: "Luxury",
+    collection: "luxury-lawn",
+    description:
+      "Crafted for celebration, this dress offers high-grade luxury embroidery with gold threadwork on pure cotton lawn, completed with a premium organza dupatta.",
+    specs: {
+      Fabric: "Premium Lawn & Organza Dupatta",
+      "Work Technique": "Zari & Sequins Embroidery",
+      "No. of Pieces": "3 Piece",
+      Season: "Luxury Lawn SS'26",
+      Color: "Olive Green",
+      "Top Style": "Flared Kurta",
+      "Bottom Style": "Palazzo Pants",
     },
-    {
-        id: "eid-lawn-parnia",
-        title: "Parnia Eid Special - 3pc",
-        price: 6250,
-        originalPrice: 9999,
-        image: "assets/eid-lawn-parnia.png",
-        localImage: "assets/maya_dress.png",
-        badge: "Eid SS'26",
-        collection: "eid-ul-adha",
-        description: "Make this Eid memorable in this beautifully embroidered sky blue outfit. Adorned with delicate pearls and paired with floral printed organza dupatta.",
-        specs: {
-            "Fabric": "Lawn & Organza",
-            "Work Technique": "Pearl work & Lace embroidery",
-            "No. of Pieces": "3 Piece",
-            "Season": "Eid ul-Adha SS’26",
-            "Color": "Baby Blue",
-            "Top Style": "Long Straight Cut",
-            "Bottom Style": "Trouser with lace details"
-        }
+  },
+  {
+    id: "eid-lawn-parnia",
+    title: "Parnia Eid Special - 3pc",
+    price: 6250,
+    originalPrice: 9999,
+    image: "assets/eid-lawn-parnia.png",
+    localImage: "assets/maya_dress.png",
+    badge: "Eid SS'26",
+    collection: "eid-ul-adha",
+    description:
+      "Make this Eid memorable in this beautifully embroidered sky blue outfit. Adorned with delicate pearls and paired with floral printed organza dupatta.",
+    specs: {
+      Fabric: "Lawn & Organza",
+      "Work Technique": "Pearl work & Lace embroidery",
+      "No. of Pieces": "3 Piece",
+      Season: "Eid ul-Adha SS’26",
+      Color: "Baby Blue",
+      "Top Style": "Long Straight Cut",
+      "Bottom Style": "Trouser with lace details",
     },
-    {
-        id: "women-clothing-1",
-        title: "Floral Chiffon Dress",
-        price: 4500,
-        originalPrice: 6500,
-        image: "assets/maheen.jpg",
-        localImage: "assets/maheen.jpg",
-        badge: "New",
-        collection: "women-clothing",
-        description: "A beautiful floral chiffon dress, perfect for evening gatherings.",
-        specs: {
-            "Fabric": "Chiffon",
-            "Color": "Floral Print",
-            "Season": "All Season"
-        }
+  },
+  {
+    id: "women-clothing-1",
+    title: "Floral Chiffon Dress",
+    price: 4500,
+    originalPrice: 6500,
+    image: "assets/maheen.jpg",
+    localImage: "assets/maheen.jpg",
+    badge: "New",
+    collection: "women-clothing",
+    description:
+      "A beautiful floral chiffon dress, perfect for evening gatherings.",
+    specs: {
+      Fabric: "Chiffon",
+      Color: "Floral Print",
+      Season: "All Season",
     },
-    {
-        id: "women-accessories-1",
-        title: "Elegant Pearl Necklace",
-        price: 1500,
-        originalPrice: 2500,
-        image: "assets/maya-2pc.png",
-        localImage: "assets/maya_dress.png",
-        badge: "Sale",
-        collection: "women-accessories",
-        description: "An elegant pearl necklace to complete your premium look.",
-        specs: {
-            "Material": "Faux Pearl",
-            "Type": "Necklace"
-        }
+  },
+  {
+    id: "women-accessories-1",
+    title: "Elegant Pearl Necklace",
+    price: 1500,
+    originalPrice: 2500,
+    image: "assets/maya-2pc.png",
+    localImage: "assets/maya_dress.png",
+    badge: "Sale",
+    collection: "women-accessories",
+    description: "An elegant pearl necklace to complete your premium look.",
+    specs: {
+      Material: "Faux Pearl",
+      Type: "Necklace",
     },
-    {
-        id: "women-footwear-1",
-        title: "Classic Block Heels",
-        price: 3200,
-        originalPrice: 4000,
-        image: "assets/parizad-3pc.png",
-        localImage: "assets/parizad_dress.png",
-        badge: "Trending",
-        collection: "women-footwear",
-        description: "Comfortable and stylish block heels for everyday wear.",
-        specs: {
-            "Material": "Faux Leather",
-            "Heel Height": "2 inches"
-        }
+  },
+  {
+    id: "women-footwear-1",
+    title: "Classic Block Heels",
+    price: 3200,
+    originalPrice: 4000,
+    image: "assets/parizad-3pc.png",
+    localImage: "assets/parizad_dress.png",
+    badge: "Trending",
+    collection: "women-footwear",
+    description: "Comfortable and stylish block heels for everyday wear.",
+    specs: {
+      Material: "Faux Leather",
+      "Heel Height": "2 inches",
     },
-    {
-        id: "women-sleepwear-1",
-        title: "Silk Sleepwear Set",
-        price: 2800,
-        originalPrice: 4500,
-        image: "assets/sky-fall-2pc.png",
-        localImage: "assets/skyfall_dress.png",
-        badge: "Comfort",
-        collection: "women-lingerie",
-        description: "Luxurious silk sleepwear set for maximum comfort.",
-        specs: {
-            "Fabric": "Silk Blend",
-            "Pieces": "2 Piece (Top + Bottom)"
-        }
+  },
+  {
+    id: "women-sleepwear-1",
+    title: "Silk Sleepwear Set",
+    price: 2800,
+    originalPrice: 4500,
+    image: "assets/sky-fall-2pc.png",
+    localImage: "assets/skyfall_dress.png",
+    badge: "Comfort",
+    collection: "women-lingerie",
+    description: "Luxurious silk sleepwear set for maximum comfort.",
+    specs: {
+      Fabric: "Silk Blend",
+      Pieces: "2 Piece (Top + Bottom)",
     },
-    {
-        id: "men-clothing-1",
-        title: "Men's Classic Kurta",
-        price: 3500,
-        originalPrice: 5000,
-        image: "assets/parizad_dress.png",
-        localImage: "assets/parizad_dress.png",
-        badge: "Classic",
-        collection: "men-clothing",
-        description: "A comfortable and stylish traditional kurta for men.",
-        specs: {
-            "Fabric": "Wash & Wear",
-            "Color": "Navy Blue"
-        }
+  },
+  {
+    id: "men-clothing-1",
+    title: "Men's Classic Kurta",
+    price: 3500,
+    originalPrice: 5000,
+    image: "assets/parizad_dress.png",
+    localImage: "assets/parizad_dress.png",
+    badge: "Classic",
+    collection: "men-clothing",
+    description: "A comfortable and stylish traditional kurta for men.",
+    specs: {
+      Fabric: "Wash & Wear",
+      Color: "Navy Blue",
     },
-    {
-        id: "kids-girl-1",
-        title: "Little Princess Frock",
-        price: 2200,
-        originalPrice: 3000,
-        image: "assets/maya_dress.png",
-        localImage: "assets/maya_dress.png",
-        badge: "Cute",
-        collection: "kids-girl",
-        description: "An adorable floral frock for your little princess.",
-        specs: {
-            "Fabric": "Cotton",
-            "Age Group": "4-5 Years"
-        }
+  },
+  {
+    id: "kids-girl-1",
+    title: "Little Princess Frock",
+    price: 2200,
+    originalPrice: 3000,
+    image: "assets/maya_dress.png",
+    localImage: "assets/maya_dress.png",
+    badge: "Cute",
+    collection: "kids-girl",
+    description: "An adorable floral frock for your little princess.",
+    specs: {
+      Fabric: "Cotton",
+      "Age Group": "4-5 Years",
     },
-    {
-        id: "beauty-fragrance-1",
-        title: "Oud & Roses Perfume",
-        price: 4500,
-        originalPrice: 6000,
-        image: "assets/maheen.jpg",
-        localImage: "assets/maheen.jpg",
-        badge: "Best Seller",
-        collection: "beauty-fragrance",
-        description: "A captivating blend of oriental oud and fresh roses.",
-        specs: {
-            "Volume": "100ml",
-            "Type": "Eau De Parfum"
-        }
-    }
+  },
+  {
+    id: "beauty-fragrance-1",
+    title: "Oud & Roses Perfume",
+    price: 4500,
+    originalPrice: 6000,
+    image: "assets/maheen.jpg",
+    localImage: "assets/maheen.jpg",
+    badge: "Best Seller",
+    collection: "beauty-fragrance",
+    description: "A captivating blend of oriental oud and fresh roses.",
+    specs: {
+      Volume: "100ml",
+      Type: "Eau De Parfum",
+    },
+  },
 ];
 
 const DEFAULT_BANNERS = [
-    {
-        id: "banner-mid-summer",
-        image: "assets/hero_banner.png",
-        subtitle: "Mid-Summer",
-        title: "SALE",
-        discount: "UP TO 50% OFF",
-        btnText: "SHOP NOW",
-        btnLink: "#collection/sale",
-        theme: "light" // means dark text on light bg (or vice-versa, depending on how CSS handles it. The original CSS uses white for standard, dark for some). Let's use 'dark' for dark text.
-    },
-    {
-        id: "banner-new-arrivals",
-        image: "assets/hero_banner_2.png",
-        subtitle: "Luxury Edition",
-        title: "NEW<br>ARRIVALS",
-        discount: "",
-        btnText: "EXPLORE",
-        btnLink: "#collection/new-arrivals",
-        theme: "dark" // Original used style="color: var(--color-bg-primary);" which is usually a dark color or light color? Let's keep it simple.
-    },
-    {
-        id: "banner-festive",
-        image: "assets/hero_banner_3.png",
-        subtitle: "Premium Wear",
-        title: "FESTIVE",
-        discount: "Starting at Rs. 4,500",
-        btnText: "SHOP COLLECTION",
-        btnLink: "#collection/festive",
-        theme: "light"
-    }
+  {
+    id: "banner-mid-summer",
+    image: "assets/hero_banner.png",
+    subtitle: "Mid-Summer",
+    title: "SALE",
+    discount: "UP TO 50% OFF",
+    btnText: "SHOP NOW",
+    btnLink: "#collection/sale",
+    theme: "light", // means dark text on light bg (or vice-versa, depending on how CSS handles it. The original CSS uses white for standard, dark for some). Let's use 'dark' for dark text.
+  },
+  {
+    id: "banner-new-arrivals",
+    image: "assets/hero_banner_2.png",
+    subtitle: "Luxury Edition",
+    title: "NEW<br>ARRIVALS",
+    discount: "",
+    btnText: "EXPLORE",
+    btnLink: "#collection/new-arrivals",
+    theme: "dark", // Original used style="color: var(--color-bg-primary);" which is usually a dark color or light color? Let's keep it simple.
+  },
+  {
+    id: "banner-festive",
+    image: "assets/hero_banner_3.png",
+    subtitle: "Premium Wear",
+    title: "FESTIVE",
+    discount: "Starting at Rs. 4,500",
+    btnText: "SHOP COLLECTION",
+    btnLink: "#collection/festive",
+    theme: "light",
+  },
 ];
 
 const DEFAULT_COLLECTIONS = [
-    { id: "col-best-sellers", title: "Best Seller", image: "assets/parizad_dress.png", link: "#collection/best-sellers" },
-    { id: "col-eid-ul-adha", title: "Eid ul-Adha SS’26", image: "assets/maheen.jpg", link: "#collection/eid-ul-adha" },
-    { id: "col-new-arrivals", title: "New Arrivals", image: "assets/maya_dress.png", link: "#collection/new-arrivals" },
-    { id: "col-summer", title: "Summer Collection", image: "assets/skyfall_dress.png", link: "#collection/summer" }
+  {
+    id: "col-best-sellers",
+    title: "Best Seller",
+    image: "assets/parizad_dress.png",
+    link: "#collection/best-sellers",
+  },
+  {
+    id: "col-eid-ul-adha",
+    title: "Eid ul-Adha SS’26",
+    image: "assets/maheen.jpg",
+    link: "#collection/eid-ul-adha",
+  },
+  {
+    id: "col-new-arrivals",
+    title: "New Arrivals",
+    image: "assets/maya_dress.png",
+    link: "#collection/new-arrivals",
+  },
+  {
+    id: "col-summer",
+    title: "Summer Collection",
+    image: "assets/skyfall_dress.png",
+    link: "#collection/summer",
+  },
 ];
 
 const DEFAULT_HOME_CATEGORIES = [
-    { id: "hc-w1", group: "SHOP WOMEN'S CATEGORIES", title: "Clothing", image: "assets/maheen.jpg", link: "#collection/women-clothing" },
-    { id: "hc-w2", group: "SHOP WOMEN'S CATEGORIES", title: "Accessories", image: "assets/maya_dress.png", link: "#collection/women-accessories" },
-    { id: "hc-w3", group: "SHOP WOMEN'S CATEGORIES", title: "Footwear", image: "assets/parizad_dress.png", link: "#collection/women-footwear" },
-    { id: "hc-w4", group: "SHOP WOMEN'S CATEGORIES", title: "Lingerie and Sleepwear", image: "assets/skyfall_dress.png", link: "#collection/women-lingerie-sleepwear" },
-    
-    { id: "hc-m1", group: "SHOP MEN'S CATEGORIES", title: "Unstitched", image: "assets/parizad_dress.png", link: "#collection/men-unstitched" },
-    { id: "hc-m2", group: "SHOP MEN'S CATEGORIES", title: "Kurta", image: "assets/skyfall_dress.png", link: "#collection/men-kurta" },
-    { id: "hc-m3", group: "SHOP MEN'S CATEGORIES", title: "Waistcoat", image: "assets/maheen.jpg", link: "#collection/men-waistcoat" },
-    { id: "hc-m4", group: "SHOP MEN'S CATEGORIES", title: "Trousers", image: "assets/maya_dress.png", link: "#collection/men-trousers" },
-    
-    { id: "hc-k1", group: "SHOP KIDS CATEGORIES", title: "Boys", image: "assets/skyfall_dress.png", link: "#collection/kids-boys" },
-    { id: "hc-k2", group: "SHOP KIDS CATEGORIES", title: "Girls", image: "assets/maya_dress.png", link: "#collection/kids-girls" },
-    { id: "hc-k3", group: "SHOP KIDS CATEGORIES", title: "Infants", image: "assets/maheen.jpg", link: "#collection/kids-infants" },
-    { id: "hc-k4", group: "SHOP KIDS CATEGORIES", title: "Accessories", image: "assets/parizad_dress.png", link: "#collection/kids-accessories" }
+  {
+    id: "hc-w1",
+    group: "SHOP WOMEN'S CATEGORIES",
+    title: "Clothing",
+    image: "assets/maheen.jpg",
+    link: "#collection/women-clothing",
+  },
+  {
+    id: "hc-w2",
+    group: "SHOP WOMEN'S CATEGORIES",
+    title: "Accessories",
+    image: "assets/maya_dress.png",
+    link: "#collection/women-accessories",
+  },
+  {
+    id: "hc-w3",
+    group: "SHOP WOMEN'S CATEGORIES",
+    title: "Footwear",
+    image: "assets/parizad_dress.png",
+    link: "#collection/women-footwear",
+  },
+  {
+    id: "hc-w4",
+    group: "SHOP WOMEN'S CATEGORIES",
+    title: "Lingerie and Sleepwear",
+    image: "assets/skyfall_dress.png",
+    link: "#collection/women-lingerie-sleepwear",
+  },
+
+  {
+    id: "hc-m1",
+    group: "SHOP MEN'S CATEGORIES",
+    title: "Unstitched",
+    image: "assets/parizad_dress.png",
+    link: "#collection/men-unstitched",
+  },
+  {
+    id: "hc-m2",
+    group: "SHOP MEN'S CATEGORIES",
+    title: "Kurta",
+    image: "assets/skyfall_dress.png",
+    link: "#collection/men-kurta",
+  },
+  {
+    id: "hc-m3",
+    group: "SHOP MEN'S CATEGORIES",
+    title: "Waistcoat",
+    image: "assets/maheen.jpg",
+    link: "#collection/men-waistcoat",
+  },
+  {
+    id: "hc-m4",
+    group: "SHOP MEN'S CATEGORIES",
+    title: "Trousers",
+    image: "assets/maya_dress.png",
+    link: "#collection/men-trousers",
+  },
+
+  {
+    id: "hc-k1",
+    group: "SHOP KIDS CATEGORIES",
+    title: "Boys",
+    image: "assets/skyfall_dress.png",
+    link: "#collection/kids-boys",
+  },
+  {
+    id: "hc-k2",
+    group: "SHOP KIDS CATEGORIES",
+    title: "Girls",
+    image: "assets/maya_dress.png",
+    link: "#collection/kids-girls",
+  },
+  {
+    id: "hc-k3",
+    group: "SHOP KIDS CATEGORIES",
+    title: "Infants",
+    image: "assets/maheen.jpg",
+    link: "#collection/kids-infants",
+  },
+  {
+    id: "hc-k4",
+    group: "SHOP KIDS CATEGORIES",
+    title: "Accessories",
+    image: "assets/parizad_dress.png",
+    link: "#collection/kids-accessories",
+  },
 ];
 
 const DEFAULT_CATEGORY_BANNERS = [];
 
 // Load from localStorage cache for instant UI rendering, fallback to defaults
-let PRODUCTS = JSON.parse(localStorage.getItem('marwa_products')) || DEFAULT_PRODUCTS;
-let BANNERS = JSON.parse(localStorage.getItem('marwa_banners')) || DEFAULT_BANNERS;
-let COLLECTIONS = JSON.parse(localStorage.getItem('marwa_collections')) || DEFAULT_COLLECTIONS;
-let HOME_CATEGORIES = JSON.parse(localStorage.getItem('marwa_home_categories')) || DEFAULT_HOME_CATEGORIES;
+let PRODUCTS =
+  JSON.parse(localStorage.getItem("marwa_products")) || DEFAULT_PRODUCTS;
+let BANNERS =
+  JSON.parse(localStorage.getItem("marwa_banners")) || DEFAULT_BANNERS;
+let COLLECTIONS =
+  JSON.parse(localStorage.getItem("marwa_collections")) || DEFAULT_COLLECTIONS;
+let HOME_CATEGORIES =
+  JSON.parse(localStorage.getItem("marwa_home_categories")) ||
+  DEFAULT_HOME_CATEGORIES;
 
 // Create events to notify when data is loaded
-const productsLoadedEvent = new Event('productsLoaded');
-const bannersLoadedEvent = new Event('bannersLoaded');
-const collectionsLoadedEvent = new Event('collectionsLoaded');
-const homeCategoriesLoadedEvent = new Event('homeCategoriesLoaded');
+const productsLoadedEvent = new Event("productsLoaded");
+const bannersLoadedEvent = new Event("bannersLoaded");
+const collectionsLoadedEvent = new Event("collectionsLoaded");
+const homeCategoriesLoadedEvent = new Event("homeCategoriesLoaded");
 
 // Read from Firebase Firestore
-if (typeof db !== 'undefined') {
-    db.collection('marwa_products').onSnapshot((snapshot) => {
-        let loadedProducts = [];
-        snapshot.forEach(doc => {
-            loadedProducts.push(doc.data());
-        });
+if (typeof db !== "undefined") {
+  db.collection("marwa_products").onSnapshot(
+    (snapshot) => {
+      let loadedProducts = [];
+      snapshot.forEach((doc) => {
+        loadedProducts.push(doc.data());
+      });
 
-        if (loadedProducts.length > 0) {
-            PRODUCTS = loadedProducts;
-            localStorage.setItem('marwa_products', JSON.stringify(PRODUCTS));
-        } else {
-            PRODUCTS = DEFAULT_PRODUCTS;
-            // Automatically seed Firebase with default products on first run
-            DEFAULT_PRODUCTS.forEach(p => db.collection('marwa_products').doc(p.id).set(p));
-        }
-        
-        // Dispatch event so the app knows products are ready
-        window.dispatchEvent(productsLoadedEvent);
-        
-        // If we are in the admin panel, trigger renderTable if it exists
-        if (typeof window.renderTable === 'function') {
-            window.products = PRODUCTS; // update admin.js local variable
-            window.renderTable();
-        } else if (typeof handleRoute === 'function') {
-            // Re-render the current route on the main site
-            handleRoute(true);
-        }
-    }, (error) => {
-        console.error("Error fetching products from Firebase:", error);
+      if (loadedProducts.length > 0) {
+        PRODUCTS = loadedProducts;
+        localStorage.setItem("marwa_products", JSON.stringify(PRODUCTS));
+      } else {
+        PRODUCTS = DEFAULT_PRODUCTS;
+        // Automatically seed Firebase with default products on first run
+        DEFAULT_PRODUCTS.forEach((p) =>
+          db.collection("marwa_products").doc(p.id).set(p),
+        );
+      }
+
+      // Dispatch event so the app knows products are ready
+      window.dispatchEvent(productsLoadedEvent);
+
+      // If we are in the admin panel, trigger renderTable if it exists
+      if (typeof window.renderTable === "function") {
+        window.products = PRODUCTS; // update admin.js local variable
+        window.renderTable();
+      } else if (typeof handleRoute === "function") {
+        // Re-render the current route on the main site
+        handleRoute(true);
+      }
+    },
+    (error) => {
+      console.error("Error fetching products from Firebase:", error);
+    },
+  );
+
+  // Banners Listener
+  db.collection("marwa_banners").onSnapshot((snapshot) => {
+    let loadedBanners = [];
+    snapshot.forEach((doc) => {
+      loadedBanners.push(doc.data());
     });
 
-    // Banners Listener
-    db.collection('marwa_banners').onSnapshot((snapshot) => {
-        let loadedBanners = [];
-        snapshot.forEach(doc => {
-            loadedBanners.push(doc.data());
-        });
-
-        if (loadedBanners.length > 0) {
-            BANNERS = loadedBanners;
-            localStorage.setItem('marwa_banners', JSON.stringify(BANNERS));
-        } else {
-            BANNERS = DEFAULT_BANNERS;
-            DEFAULT_BANNERS.forEach(b => db.collection('marwa_banners').doc(b.id).set(b));
-        }
-        
-        window.dispatchEvent(bannersLoadedEvent);
-        
-        if (typeof window.renderBannersTable === 'function') {
-            window.banners = BANNERS;
-            window.renderBannersTable();
-        } else if (typeof handleRoute === 'function') {
-            handleRoute(true);
-        }
-    });
-
-    // Collections Listener
-    db.collection('marwa_collections').onSnapshot((snapshot) => {
-        let loadedCollections = [];
-        snapshot.forEach(doc => {
-            loadedCollections.push(doc.data());
-        });
-
-        if (loadedCollections.length > 0) {
-            COLLECTIONS = loadedCollections;
-            localStorage.setItem('marwa_collections', JSON.stringify(COLLECTIONS));
-        } else {
-            COLLECTIONS = DEFAULT_COLLECTIONS;
-            DEFAULT_COLLECTIONS.forEach(c => db.collection('marwa_collections').doc(c.id).set(c));
-        }
-        
-        window.dispatchEvent(collectionsLoadedEvent);
-        
-        if (typeof window.renderCollectionsTable === 'function') {
-            window.collections = COLLECTIONS;
-            window.renderCollectionsTable();
-        } else if (typeof handleRoute === 'function') {
-            handleRoute(true);
-        }
-    });
-
-    // Home Categories Listener
-    db.collection('marwa_home_categories').onSnapshot((snapshot) => {
-        let loadedHC = [];
-        snapshot.forEach(doc => {
-            loadedHC.push(doc.data());
-        });
-
-        if (loadedHC.length > 0) {
-            HOME_CATEGORIES = loadedHC;
-            localStorage.setItem('marwa_home_categories', JSON.stringify(HOME_CATEGORIES));
-        } else {
-            HOME_CATEGORIES = DEFAULT_HOME_CATEGORIES;
-            DEFAULT_HOME_CATEGORIES.forEach(c => db.collection('marwa_home_categories').doc(c.id).set(c));
-        }
-        
-        window.dispatchEvent(homeCategoriesLoadedEvent);
-        
-        if (typeof window.renderHomeCategoriesTable === 'function') {
-            window.homeCategories = HOME_CATEGORIES;
-            window.renderHomeCategoriesTable();
-        } else if (typeof handleRoute === 'function') {
-            handleRoute(true); // Might need to re-render homepage
-        }
-    });
-
-    // Category Banners Listener
-    db.collection('marwa_category_banners').onSnapshot((snapshot) => {
-        let loadedCB = [];
-        snapshot.forEach(doc => {
-            loadedCB.push(doc.data());
-        });
-
-        if (loadedCB.length > 0) {
-            CATEGORY_BANNERS = loadedCB;
-            localStorage.setItem('marwa_category_banners', JSON.stringify(CATEGORY_BANNERS));
-        } else {
-            CATEGORY_BANNERS = DEFAULT_CATEGORY_BANNERS;
-            DEFAULT_CATEGORY_BANNERS.forEach(cb => db.collection('marwa_category_banners').doc(cb.id).set(cb));
-        }
-        
-        window.dispatchEvent(categoryBannersLoadedEvent);
-        
-        if (typeof window.renderCategoryBannersTable === 'function') {
-            window.categoryBanners = CATEGORY_BANNERS;
-            window.renderCategoryBannersTable();
-        } else if (typeof handleRoute === 'function') {
-            handleRoute(true);
-        }
-    });
-
-} else {
-    // Fallback if Firebase fails to load
-    const savedProducts = localStorage.getItem('marwa_products');
-    if (savedProducts) {
-        PRODUCTS = JSON.parse(savedProducts);
+    if (loadedBanners.length > 0) {
+      BANNERS = loadedBanners;
+      localStorage.setItem("marwa_banners", JSON.stringify(BANNERS));
+    } else {
+      BANNERS = DEFAULT_BANNERS;
+      DEFAULT_BANNERS.forEach((b) =>
+        db.collection("marwa_banners").doc(b.id).set(b),
+      );
     }
-    const savedBanners = localStorage.getItem('marwa_banners');
-    if (savedBanners) {
-        BANNERS = JSON.parse(savedBanners);
-    }
-    const savedCollections = localStorage.getItem('marwa_collections');
-    if (savedCollections) {
-        COLLECTIONS = JSON.parse(savedCollections);
-    }
-    const savedHC = localStorage.getItem('marwa_home_categories');
-    if (savedHC) {
-        HOME_CATEGORIES = JSON.parse(savedHC);
-    }
-    const savedCB = localStorage.getItem('marwa_category_banners');
-    if (savedCB) {
-        CATEGORY_BANNERS = JSON.parse(savedCB);
-    }
-    window.dispatchEvent(productsLoadedEvent);
+
     window.dispatchEvent(bannersLoadedEvent);
+
+    if (typeof window.renderBannersTable === "function") {
+      window.banners = BANNERS;
+      window.renderBannersTable();
+    } else if (typeof handleRoute === "function") {
+      handleRoute(true);
+    }
+  });
+
+  // Collections Listener
+  db.collection("marwa_collections").onSnapshot((snapshot) => {
+    let loadedCollections = [];
+    snapshot.forEach((doc) => {
+      loadedCollections.push(doc.data());
+    });
+
+    if (loadedCollections.length > 0) {
+      COLLECTIONS = loadedCollections;
+      localStorage.setItem("marwa_collections", JSON.stringify(COLLECTIONS));
+    } else {
+      COLLECTIONS = DEFAULT_COLLECTIONS;
+      DEFAULT_COLLECTIONS.forEach((c) =>
+        db.collection("marwa_collections").doc(c.id).set(c),
+      );
+    }
+
     window.dispatchEvent(collectionsLoadedEvent);
+
+    if (typeof window.renderCollectionsTable === "function") {
+      window.collections = COLLECTIONS;
+      window.renderCollectionsTable();
+    } else if (typeof handleRoute === "function") {
+      handleRoute(true);
+    }
+  });
+
+  // Home Categories Listener
+  db.collection("marwa_home_categories").onSnapshot((snapshot) => {
+    let loadedHC = [];
+    snapshot.forEach((doc) => {
+      loadedHC.push(doc.data());
+    });
+
+    if (loadedHC.length > 0) {
+      HOME_CATEGORIES = loadedHC;
+      localStorage.setItem(
+        "marwa_home_categories",
+        JSON.stringify(HOME_CATEGORIES),
+      );
+    } else {
+      HOME_CATEGORIES = DEFAULT_HOME_CATEGORIES;
+      DEFAULT_HOME_CATEGORIES.forEach((c) =>
+        db.collection("marwa_home_categories").doc(c.id).set(c),
+      );
+    }
+
     window.dispatchEvent(homeCategoriesLoadedEvent);
+
+    if (typeof window.renderHomeCategoriesTable === "function") {
+      window.homeCategories = HOME_CATEGORIES;
+      window.renderHomeCategoriesTable();
+    } else if (typeof handleRoute === "function") {
+      handleRoute(true); // Might need to re-render homepage
+    }
+  });
+
+  // Category Banners Listener
+  db.collection("marwa_category_banners").onSnapshot((snapshot) => {
+    let loadedCB = [];
+    snapshot.forEach((doc) => {
+      loadedCB.push(doc.data());
+    });
+
+    if (loadedCB.length > 0) {
+      CATEGORY_BANNERS = loadedCB;
+      localStorage.setItem(
+        "marwa_category_banners",
+        JSON.stringify(CATEGORY_BANNERS),
+      );
+    } else {
+      CATEGORY_BANNERS = DEFAULT_CATEGORY_BANNERS;
+      DEFAULT_CATEGORY_BANNERS.forEach((cb) =>
+        db.collection("marwa_category_banners").doc(cb.id).set(cb),
+      );
+    }
+
     window.dispatchEvent(categoryBannersLoadedEvent);
+
+    if (typeof window.renderCategoryBannersTable === "function") {
+      window.categoryBanners = CATEGORY_BANNERS;
+      window.renderCategoryBannersTable();
+    } else if (typeof handleRoute === "function") {
+      handleRoute(true);
+    }
+  });
+} else {
+  // Fallback if Firebase fails to load
+  const savedProducts = localStorage.getItem("marwa_products");
+  if (savedProducts) {
+    PRODUCTS = JSON.parse(savedProducts);
+  }
+  const savedBanners = localStorage.getItem("marwa_banners");
+  if (savedBanners) {
+    BANNERS = JSON.parse(savedBanners);
+  }
+  const savedCollections = localStorage.getItem("marwa_collections");
+  if (savedCollections) {
+    COLLECTIONS = JSON.parse(savedCollections);
+  }
+  const savedHC = localStorage.getItem("marwa_home_categories");
+  if (savedHC) {
+    HOME_CATEGORIES = JSON.parse(savedHC);
+  }
+  const savedCB = localStorage.getItem("marwa_category_banners");
+  if (savedCB) {
+    CATEGORY_BANNERS = JSON.parse(savedCB);
+  }
+  window.dispatchEvent(productsLoadedEvent);
+  window.dispatchEvent(bannersLoadedEvent);
+  window.dispatchEvent(collectionsLoadedEvent);
+  window.dispatchEvent(homeCategoriesLoadedEvent);
+  window.dispatchEvent(categoryBannersLoadedEvent);
 }
 
 // Helper to save product to Firebase
 function saveProductToDb(product) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_products').doc(product.id).set(product);
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_products").doc(product.id).set(product);
+  }
 }
 
 // Helper to delete product from Firebase
 function deleteProductFromDb(id) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_products').doc(id).delete();
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_products").doc(id).delete();
+  }
 }
 
 // Helper to save banner to Firebase
 function saveBannerToDb(banner) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_banners').doc(banner.id).set(banner);
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_banners").doc(banner.id).set(banner);
+  }
 }
 
 // Helper to delete banner from Firebase
 function deleteBannerFromDb(id) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_banners').doc(id).delete();
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_banners").doc(id).delete();
+  }
 }
 
 // Helper to save collection to Firebase
 function saveCollectionToDb(collection) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_collections').doc(collection.id).set(collection);
-    }
+  if (typeof db !== "undefined") {
+    return db
+      .collection("marwa_collections")
+      .doc(collection.id)
+      .set(collection);
+  }
 }
 
 // Helper to delete collection from Firebase
 function deleteCollectionFromDb(id) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_collections').doc(id).delete();
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_collections").doc(id).delete();
+  }
 }
 
 // Helper to save home category to Firebase
 function saveHomeCategoryToDb(category) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_home_categories').doc(category.id).set(category);
-    }
+  if (typeof db !== "undefined") {
+    return db
+      .collection("marwa_home_categories")
+      .doc(category.id)
+      .set(category);
+  }
 }
 
 // Helper to delete home category from Firebase
 function deleteHomeCategoryFromDb(id) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_home_categories').doc(id).delete();
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_home_categories").doc(id).delete();
+  }
 }
 
 // Helper to save category banner to Firebase
 function saveCategoryBannerToDb(banner) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_category_banners').doc(banner.id).set(banner);
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_category_banners").doc(banner.id).set(banner);
+  }
 }
 
 // Helper to delete category banner from Firebase
 function deleteCategoryBannerFromDb(id) {
-    if (typeof db !== 'undefined') {
-        return db.collection('marwa_category_banners').doc(id).delete();
-    }
+  if (typeof db !== "undefined") {
+    return db.collection("marwa_category_banners").doc(id).delete();
+  }
 }

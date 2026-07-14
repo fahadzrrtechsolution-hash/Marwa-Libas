@@ -1,523 +1,991 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marwa Libas | Admin Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/admin.css">
-</head>
-<body class="admin-body">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body class="admin-body">
     <!-- Login Screen -->
-    <div id="admin-login-screen" style="position: fixed; inset: 0; background: var(--background); z-index: 9999; display: flex; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%;">
-            <h2 style="margin-bottom: 20px;">Admin Login</h2>
-            <p style="margin-bottom: 20px; color: #666; font-size: 14px;">Please enter the password to access the admin panel.</p>
-            <input type="password" id="admin-password-input" class="form-control" placeholder="Password" style="margin-bottom: 15px;">
-            <button id="admin-login-btn" class="btn btn-primary" style="width: 100%;">Login</button>
-            <p id="admin-login-error" style="color: red; font-size: 13px; margin-top: 10px; display: none;">Incorrect password!</p>
-        </div>
+    <div
+      id="admin-login-screen"
+      style="
+        position: fixed;
+        inset: 0;
+        background: var(--background);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: white;
+          padding: 40px;
+          border-radius: 12px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          max-width: 400px;
+          width: 90%;
+        "
+      >
+        <h2 style="margin-bottom: 20px">Admin Login</h2>
+        <p style="margin-bottom: 20px; color: #666; font-size: 14px">
+          Please enter the password to access the admin panel.
+        </p>
+        <input
+          type="password"
+          id="admin-password-input"
+          class="form-control"
+          placeholder="Password"
+          style="margin-bottom: 15px"
+        />
+        <button
+          id="admin-login-btn"
+          class="btn btn-primary"
+          style="width: 100%"
+        >
+          Login
+        </button>
+        <p
+          id="admin-login-error"
+          style="color: red; font-size: 13px; margin-top: 10px; display: none"
+        >
+          Incorrect password!
+        </p>
+      </div>
     </div>
 
-    <div class="admin-layout" id="admin-main-layout" style="display: none;">
-        <!-- Sidebar -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-brand">
-                <h2>MARWA LIBAS</h2>
-                <span class="badge">ADMIN</span>
+    <div class="admin-layout" id="admin-main-layout" style="display: none">
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+          <h2>MARWA LIBAS</h2>
+          <span class="badge">ADMIN</span>
+        </div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#" class="active" data-view="products">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                ></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+              Products
+            </a>
+          </li>
+          <li>
+            <a href="#" data-view="banners">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Banners
+            </a>
+          </li>
+          <li>
+            <a href="#" data-view="category-banners">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Cat. Banners
+            </a>
+          </li>
+          <li>
+            <a href="#" data-view="collections">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Collections
+            </a>
+          </li>
+          <li>
+            <a href="#" data-view="orders">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                ></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Orders
+            </a>
+          </li>
+          <li>
+            <a href="#" data-view="dashboard">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="index.html">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                ></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              View Website
+            </a>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Products View -->
+        <div id="view-products" class="admin-view active">
+          <header class="admin-header">
+            <h1>Product Management</h1>
+            <button class="btn btn-primary" id="add-product-btn">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Product
+            </button>
+          </header>
+
+          <div class="admin-content">
+            <div
+              class="card table-card"
+              style="
+                margin-bottom: 20px;
+                padding: 15px;
+                background: white;
+                display: flex;
+                gap: 15px;
+                align-items: flex-end;
+                flex-wrap: wrap;
+              "
+            >
+              <div style="flex: 1; min-width: 120px">
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 500;
+                    margin-bottom: 5px;
+                    display: block;
+                  "
+                  >Availability</label
+                >
+                <select
+                  id="admin-filter-stock"
+                  class="form-control"
+                  style="padding: 8px"
+                >
+                  <option value="all">All</option>
+                  <option value="in-stock">In Stock</option>
+                  <option value="out-of-stock">Out of Stock</option>
+                </select>
+              </div>
+              <div style="flex: 1; min-width: 120px">
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 500;
+                    margin-bottom: 5px;
+                    display: block;
+                  "
+                  >Min Price (Rs)</label
+                >
+                <input
+                  type="number"
+                  id="admin-filter-min-price"
+                  class="form-control"
+                  style="padding: 8px"
+                  placeholder="0"
+                />
+              </div>
+              <div style="flex: 1; min-width: 120px">
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 500;
+                    margin-bottom: 5px;
+                    display: block;
+                  "
+                  >Max Price (Rs)</label
+                >
+                <input
+                  type="number"
+                  id="admin-filter-max-price"
+                  class="form-control"
+                  style="padding: 8px"
+                  placeholder="Any"
+                />
+              </div>
+              <div style="flex: 1; min-width: 120px">
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 500;
+                    margin-bottom: 5px;
+                    display: block;
+                  "
+                  >Collection</label
+                >
+                <select
+                  id="admin-filter-collection"
+                  class="form-control"
+                  style="padding: 8px"
+                >
+                  <option value="all">All Collections</option>
+                  <optgroup label="Women">
+                    <option value="women-clothing">Women's Clothing</option>
+                    <option value="women-accessories">
+                      Women's Accessories
+                    </option>
+                    <option value="women-footwear">Women's Footwear</option>
+                    <option value="women-lingerie">
+                      Women's Lingerie & Sleepwear
+                    </option>
+                  </optgroup>
+                  <optgroup label="Men">
+                    <option value="men-clothing">Men's Clothing</option>
+                    <option value="men-footwear">Men's Footwear</option>
+                    <option value="men-accessories">Men's Accessories</option>
+                    <option value="men-inner-sleepwear">
+                      Men's Inner & Sleepwear
+                    </option>
+                  </optgroup>
+                  <optgroup label="Kids">
+                    <option value="kids-girl">Kids Girl</option>
+                    <option value="kids-boy">Kids Boy</option>
+                    <option value="kids-boy-newborn">Boy Newborn</option>
+                    <option value="kids-girl-newborn">Girl Newborn</option>
+                  </optgroup>
+                  <optgroup label="Beauty">
+                    <option value="beauty-fragrance">Fragrance</option>
+                    <option value="beauty-hair-care">Hair Care</option>
+                    <option value="beauty-makeup">Makeup</option>
+                    <option value="beauty-skincare">Skincare</option>
+                    <option value="beauty-bath-body">Bath & Body</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div>
+                <button
+                  class="btn btn-primary"
+                  id="admin-apply-filter-btn"
+                  style="padding: 8px 20px; height: 38px"
+                >
+                  Apply Filter
+                </button>
+              </div>
             </div>
-            <ul class="sidebar-nav">
-                <li><a href="#" class="active" data-view="products">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    Products
-                </a></li>
-                <li><a href="#" data-view="banners">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                    Banners
-                </a></li>
-                <li><a href="#" data-view="category-banners">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                    Cat. Banners
-                </a></li>
-                <li><a href="#" data-view="collections">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                    Collections
-                </a></li>
-                <li><a href="#" data-view="orders">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    Orders
-                </a></li>
-                <li><a href="#" data-view="dashboard">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                    Dashboard
-                </a></li>
-                <li><a href="index.html">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    View Website
-                </a></li>
-            </ul>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="admin-main">
-            <!-- Products View -->
-            <div id="view-products" class="admin-view active">
-                <header class="admin-header">
-                    <h1>Product Management</h1>
-                    <button class="btn btn-primary" id="add-product-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Add Product
-                    </button>
-                </header>
-
-                <div class="admin-content">
-                    <div class="card table-card" style="margin-bottom: 20px; padding: 15px; background: white; display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 120px;">
-                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Availability</label>
-                            <select id="admin-filter-stock" class="form-control" style="padding: 8px;">
-                                <option value="all">All</option>
-                                <option value="in-stock">In Stock</option>
-                                <option value="out-of-stock">Out of Stock</option>
-                            </select>
-                        </div>
-                        <div style="flex: 1; min-width: 120px;">
-                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Min Price (Rs)</label>
-                            <input type="number" id="admin-filter-min-price" class="form-control" style="padding: 8px;" placeholder="0">
-                        </div>
-                        <div style="flex: 1; min-width: 120px;">
-                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Max Price (Rs)</label>
-                            <input type="number" id="admin-filter-max-price" class="form-control" style="padding: 8px;" placeholder="Any">
-                        </div>
-                        <div style="flex: 1; min-width: 120px;">
-                            <label style="font-size: 13px; font-weight: 500; margin-bottom: 5px; display: block;">Collection</label>
-                            <select id="admin-filter-collection" class="form-control" style="padding: 8px;">
-                                <option value="all">All Collections</option>
-                                <optgroup label="Women">
-                                    <option value="women-clothing">Women's Clothing</option>
-                                    <option value="women-accessories">Women's Accessories</option>
-                                    <option value="women-footwear">Women's Footwear</option>
-                                    <option value="women-lingerie">Women's Lingerie & Sleepwear</option>
-                                </optgroup>
-                                <optgroup label="Men">
-                                    <option value="men-clothing">Men's Clothing</option>
-                                    <option value="men-footwear">Men's Footwear</option>
-                                    <option value="men-accessories">Men's Accessories</option>
-                                    <option value="men-inner-sleepwear">Men's Inner & Sleepwear</option>
-                                </optgroup>
-                                <optgroup label="Kids">
-                                    <option value="kids-girl">Kids Girl</option>
-                                    <option value="kids-boy">Kids Boy</option>
-                                    <option value="kids-boy-newborn">Boy Newborn</option>
-                                    <option value="kids-girl-newborn">Girl Newborn</option>
-                                </optgroup>
-                                <optgroup label="Beauty">
-                                    <option value="beauty-fragrance">Fragrance</option>
-                                    <option value="beauty-hair-care">Hair Care</option>
-                                    <option value="beauty-makeup">Makeup</option>
-                                    <option value="beauty-skincare">Skincare</option>
-                                    <option value="beauty-bath-body">Bath & Body</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div>
-                            <button class="btn btn-primary" id="admin-apply-filter-btn" style="padding: 8px 20px; height: 38px;">Apply Filter</button>
-                        </div>
-                    </div>
-
-                    <div class="card table-card">
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    <th>Collection</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="products-tbody">
-                                <!-- Products injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="card table-card">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Collection</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="products-tbody">
+                  <!-- Products injected here -->
+                </tbody>
+              </table>
             </div>
+          </div>
+        </div>
 
-            <!-- Banners View -->
-            <div id="view-banners" class="admin-view" style="display: none;">
-                <div class="admin-header">
-                    <h1 class="admin-title">Manage Banners</h1>
-                    <button class="btn btn-primary" id="add-banner-btn">Add Banner</button>
-                </div>
-                
-                <div class="admin-card table-responsive">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th width="100">Image</th>
-                                <th>Link</th>
-                                <th width="100">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="banners-tbody">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <!-- Banners View -->
+        <div id="view-banners" class="admin-view" style="display: none">
+          <div class="admin-header">
+            <h1 class="admin-title">Manage Banners</h1>
+            <button class="btn btn-primary" id="add-banner-btn">
+              Add Banner
+            </button>
+          </div>
 
-            <!-- Category Banners View -->
-            <div id="view-category-banners" class="admin-view" style="display: none;">
-                <div class="admin-header">
-                    <h1 class="admin-title">Manage Category Banners</h1>
-                    <button class="btn btn-primary" id="add-category-banner-btn">Add Category Banner</button>
-                </div>
-                
-                <div class="admin-card table-responsive">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th width="100">Image</th>
-                                <th>Collection ID</th>
-                                <th>Title</th>
-                                <th>Subtitle</th>
-                                <th width="100">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="category-banners-tbody">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          <div class="admin-card table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th width="100">Image</th>
+                  <th>Link</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="banners-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <!-- Collections View -->
-            <div id="view-collections" class="admin-view" style="display: none;">
-                <div class="admin-header">
-                    <h1 class="admin-title">Manage Collections</h1>
-                    <button class="btn btn-primary" id="add-collection-btn">Add Collection</button>
-                </div>
-                
-                <div class="admin-card table-responsive">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th width="100">Image</th>
-                                <th>Title</th>
-                                <th>Link</th>
-                                <th width="100">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="collections-tbody">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
+        <!-- Category Banners View -->
+        <div
+          id="view-category-banners"
+          class="admin-view"
+          style="display: none"
+        >
+          <div class="admin-header">
+            <h1 class="admin-title">Manage Category Banners</h1>
+            <button class="btn btn-primary" id="add-category-banner-btn">
+              Add Category Banner
+            </button>
+          </div>
 
-            
+          <div class="admin-card table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th width="100">Image</th>
+                  <th>Collection ID</th>
+                  <th>Title</th>
+                  <th>Subtitle</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="category-banners-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <!-- Orders View -->
-            <div id="view-orders" class="admin-view" style="display: none;">
-                <div class="admin-header">
-                    <h1 class="admin-title">Manage Orders</h1>
-                </div>
-                
-                <div class="admin-card table-responsive">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Date</th>
-                                <th>Customer</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="orders-tbody">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <!-- Collections View -->
+        <div id="view-collections" class="admin-view" style="display: none">
+          <div class="admin-header">
+            <h1 class="admin-title">Manage Collections</h1>
+            <button class="btn btn-primary" id="add-collection-btn">
+              Add Collection
+            </button>
+          </div>
 
-            <!-- Dashboard View Placeholder -->
-            <div id="view-dashboard" class="admin-view" style="display: none;">
-                <header class="admin-header">
-                    <h1>Dashboard Overview</h1>
-                </header>
-                <div class="admin-content">
-                    <p style="padding: 20px;">Coming Soon.</p>
-                </div>
-            </div>
-        </main>
+          <div class="admin-card table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th width="100">Image</th>
+                  <th>Title</th>
+                  <th>Link</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="collections-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Orders View -->
+        <div id="view-orders" class="admin-view" style="display: none">
+          <div class="admin-header">
+            <h1 class="admin-title">Manage Orders</h1>
+          </div>
+
+          <div class="admin-card table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dashboard View Placeholder -->
+        <div id="view-dashboard" class="admin-view" style="display: none">
+          <header class="admin-header">
+            <h1>Dashboard Overview</h1>
+          </header>
+          <div class="admin-content">
+            <p style="padding: 20px">Coming Soon.</p>
+          </div>
+        </div>
+      </main>
     </div>
 
     <!-- Product Form Modal -->
     <div class="modal-overlay" id="product-modal-overlay"></div>
     <div class="modal" id="product-modal">
-        <div class="modal-header">
-            <h2 id="modal-title">Add Product</h2>
-            <button class="close-btn" id="close-modal-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <div class="modal-header">
+        <h2 id="modal-title">Add Product</h2>
+        <button class="close-btn" id="close-modal-btn">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form">
+          <input type="hidden" id="product-id" />
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: var(--spacing-md);
+            "
+          >
+            <div class="form-group">
+              <label for="product-title">Title</label>
+              <input
+                type="text"
+                id="product-title"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="product-brand-name">Brand Name</label>
+              <input
+                type="text"
+                id="product-brand-name"
+                class="form-control"
+                placeholder="e.g. Zellbury"
+              />
+            </div>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: var(--spacing-md);
+            "
+          >
+            <div class="form-group">
+              <label for="product-price">Sale Price (Rs.)</label>
+              <input
+                type="number"
+                id="product-price"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="product-original-price">Original Price (Rs.)</label>
+              <input
+                type="number"
+                id="product-original-price"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="product-collection">Collection</label>
+            <select id="product-collection" class="form-control" required>
+              <optgroup label="Women">
+                <option value="women-clothing">Women's Clothing</option>
+                <option value="women-accessories">Women's Accessories</option>
+                <option value="women-footwear">Women's Footwear</option>
+                <option value="women-lingerie">
+                  Women's Lingerie & Sleepwear
+                </option>
+              </optgroup>
+              <optgroup label="Men">
+                <option value="men-clothing">Men's Clothing</option>
+                <option value="men-footwear">Men's Footwear</option>
+                <option value="men-accessories">Men's Accessories</option>
+                <option value="men-inner-sleepwear">
+                  Men's Inner & Sleepwear
+                </option>
+              </optgroup>
+              <optgroup label="Kids">
+                <option value="kids-girl">Kids Girl</option>
+                <option value="kids-boy">Kids Boy</option>
+                <option value="kids-boy-newborn">Boy Newborn</option>
+                <option value="kids-girl-newborn">Girl Newborn</option>
+              </optgroup>
+              <optgroup label="Beauty">
+                <option value="beauty-fragrance">Fragrance</option>
+                <option value="beauty-hair-care">Hair Care</option>
+                <option value="beauty-makeup">Makeup</option>
+                <option value="beauty-skincare">Skincare</option>
+                <option value="beauty-bath-body">Bath & Body</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: var(--spacing-md);
+            "
+          >
+            <div class="form-group">
+              <label for="product-badge">Badge (Optional)</label>
+              <input
+                type="text"
+                id="product-badge"
+                class="form-control"
+                placeholder="e.g. Sale, New"
+              />
+            </div>
+            <div class="form-group">
+              <label for="product-stock">Stock Quantity</label>
+              <input
+                type="number"
+                id="product-stock"
+                class="form-control"
+                value="10"
+                required
+              />
+            </div>
+          </div>
+
+          <div
+            class="form-group"
+            style="
+              margin-top: 15px;
+              padding: 15px;
+              background: #f8f9fa;
+              border-radius: 8px;
+              border: 1px solid var(--color-border);
+            "
+          >
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-bottom: 0;
+              "
+            >
+              <input
+                type="checkbox"
+                id="product-is-external"
+                style="width: 18px; height: 18px"
+              />
+              This is an External / Affiliate Product
+            </label>
+
+            <div
+              id="external-fields-container"
+              style="
+                display: none;
+                margin-top: 15px;
+                border-top: 1px solid #ddd;
+                padding-top: 15px;
+              "
+            >
+              <div class="form-group">
+                <label for="product-external-brand">Original Brand Name</label>
+                <input
+                  type="text"
+                  id="product-external-brand"
+                  class="form-control"
+                  placeholder="e.g. Khaadi, Sana Safinaz"
+                />
+              </div>
+              <div class="form-group" style="margin-top: 10px">
+                <label for="product-external-url"
+                  >External Purchase Link (URL)</label
+                >
+                <input
+                  type="url"
+                  id="product-external-url"
+                  class="form-control"
+                  placeholder="https://..."
+                />
+              </div>
+              <small style="color: #666; display: block; margin-top: 8px"
+                >If checked, the "Add to Cart" button will be replaced by a link
+                to this external URL.</small
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Product Images (First image is the main image)</label>
+            <div id="image-upload-container">
+              <!-- Dynamic rows will be added here via JS -->
+            </div>
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="add-image-row-btn"
+              style="margin-top: 10px; font-size: 13px; padding: 6px 12px"
+            >
+              + Add another picture
             </button>
-        </div>
-        <div class="modal-body">
-            <form id="product-form">
-                <input type="hidden" id="product-id">
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="product-title">Title</label>
-                        <input type="text" id="product-title" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="product-brand-name">Brand Name</label>
-                        <input type="text" id="product-brand-name" class="form-control" placeholder="e.g. Zellbury">
-                    </div>
-                </div>
+          </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="product-price">Sale Price (Rs.)</label>
-                        <input type="number" id="product-price" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="product-original-price">Original Price (Rs.)</label>
-                        <input type="number" id="product-original-price" class="form-control" required>
-                    </div>
-                </div>
+          <div class="form-group">
+            <label for="product-desc">Additional Description</label>
+            <textarea
+              id="product-desc"
+              class="form-control"
+              rows="3"
+              placeholder="Detailed product description..."
+              required
+            ></textarea>
+          </div>
 
-                <div class="form-group">
-                    <label for="product-collection">Collection</label>
-                    <select id="product-collection" class="form-control" required>
-                        <optgroup label="Women">
-                            <option value="women-clothing">Women's Clothing</option>
-                            <option value="women-accessories">Women's Accessories</option>
-                            <option value="women-footwear">Women's Footwear</option>
-                            <option value="women-lingerie">Women's Lingerie & Sleepwear</option>
-                        </optgroup>
-                        <optgroup label="Men">
-                            <option value="men-clothing">Men's Clothing</option>
-                            <option value="men-footwear">Men's Footwear</option>
-                            <option value="men-accessories">Men's Accessories</option>
-                            <option value="men-inner-sleepwear">Men's Inner & Sleepwear</option>
-                        </optgroup>
-                        <optgroup label="Kids">
-                            <option value="kids-girl">Kids Girl</option>
-                            <option value="kids-boy">Kids Boy</option>
-                            <option value="kids-boy-newborn">Boy Newborn</option>
-                            <option value="kids-girl-newborn">Girl Newborn</option>
-                        </optgroup>
-                        <optgroup label="Beauty">
-                            <option value="beauty-fragrance">Fragrance</option>
-                            <option value="beauty-hair-care">Hair Care</option>
-                            <option value="beauty-makeup">Makeup</option>
-                            <option value="beauty-skincare">Skincare</option>
-                            <option value="beauty-bath-body">Bath & Body</option>
-                        </optgroup>
-                    </select>
-                </div>
+          <div class="form-group">
+            <label for="product-disclaimer">Disclaimer (Optional)</label>
+            <textarea
+              id="product-disclaimer"
+              class="form-control"
+              rows="2"
+              placeholder="e.g. Actual product color may vary slightly from the image."
+            ></textarea>
+          </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="product-badge">Badge (Optional)</label>
-                        <input type="text" id="product-badge" class="form-control" placeholder="e.g. Sale, New">
-                    </div>
-                    <div class="form-group">
-                        <label for="product-stock">Stock Quantity</label>
-                        <input type="number" id="product-stock" class="form-control" value="10" required>
-                    </div>
-                </div>
+          <div class="form-group">
+            <label>Specifications (Format: Key:Value, one per line)</label>
+            <textarea
+              id="product-specs"
+              class="form-control"
+              rows="6"
+              placeholder="Color Type: Black&#10;Product ID: RTX2417&#10;Number Of Pieces: 3 piece&#10;Product Type: Daily wear&#10;Season: Summer wear&#10;Shirt Fabric: Lawn"
+              required
+            ></textarea>
+          </div>
 
-                <div class="form-group" style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid var(--color-border);">
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; margin-bottom: 0;">
-                        <input type="checkbox" id="product-is-external" style="width: 18px; height: 18px;">
-                        This is an External / Affiliate Product
-                    </label>
-                    
-                    <div id="external-fields-container" style="display: none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px;">
-                        <div class="form-group">
-                            <label for="product-external-brand">Original Brand Name</label>
-                            <input type="text" id="product-external-brand" class="form-control" placeholder="e.g. Khaadi, Sana Safinaz">
-                        </div>
-                        <div class="form-group" style="margin-top: 10px;">
-                            <label for="product-external-url">External Purchase Link (URL)</label>
-                            <input type="url" id="product-external-url" class="form-control" placeholder="https://...">
-                        </div>
-                        <small style="color: #666; display: block; margin-top: 8px;">If checked, the "Add to Cart" button will be replaced by a link to this external URL.</small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Product Images (First image is the main image)</label>
-                    <div id="image-upload-container">
-                        <!-- Dynamic rows will be added here via JS -->
-                    </div>
-                    <button type="button" class="btn btn-outline" id="add-image-row-btn" style="margin-top: 10px; font-size: 13px; padding: 6px 12px;">+ Add another picture</button>
-                </div>
-
-                <div class="form-group">
-                    <label for="product-desc">Additional Description</label>
-                    <textarea id="product-desc" class="form-control" rows="3" placeholder="Detailed product description..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="product-disclaimer">Disclaimer (Optional)</label>
-                    <textarea id="product-disclaimer" class="form-control" rows="2" placeholder="e.g. Actual product color may vary slightly from the image."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Specifications (Format: Key:Value, one per line)</label>
-                    <textarea id="product-specs" class="form-control" rows="6" placeholder="Color Type: Black&#10;Product ID: RTX2417&#10;Number Of Pieces: 3 piece&#10;Product Type: Daily wear&#10;Season: Summer wear&#10;Shirt Fabric: Lawn" required></textarea>
-                </div>
-
-                <div class="modal-footer" style="margin-top: 20px; text-align: right;">
-                    <button type="button" class="btn btn-outline" id="cancel-modal-btn">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="save-product-btn">Save Product</button>
-                </div>
-            </form>
-        </div>
+          <div class="modal-footer" style="margin-top: 20px; text-align: right">
+            <button type="button" class="btn btn-outline" id="cancel-modal-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" id="save-product-btn">
+              Save Product
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <!-- Banner Form Modal -->
     <div class="modal-overlay" id="banner-modal-overlay"></div>
     <div class="modal" id="banner-modal">
-        <div class="modal-header">
-            <h2 id="banner-modal-title">Add Banner</h2>
-            <button class="close-btn" id="close-banner-modal-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <div class="modal-header">
+        <h2 id="banner-modal-title">Add Banner</h2>
+        <button class="close-btn" id="close-banner-modal-btn">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="banner-form">
+          <input type="hidden" id="banner-id" />
+
+          <div class="form-group">
+            <label>Banner Image</label>
+            <div id="banner-image-upload-container">
+              <!-- Same image upload row logic as products -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="banner-btn-link"
+              >Banner Link (e.g. #collection/sale)</label
+            >
+            <input
+              type="text"
+              id="banner-btn-link"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="modal-footer" style="margin-top: 20px; text-align: right">
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="cancel-banner-modal-btn"
+            >
+              Cancel
             </button>
-        </div>
-        <div class="modal-body">
-            <form id="banner-form">
-                <input type="hidden" id="banner-id">
-                
-                <div class="form-group">
-                    <label>Banner Image</label>
-                    <div id="banner-image-upload-container">
-                        <!-- Same image upload row logic as products -->
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="banner-btn-link">Banner Link (e.g. #collection/sale)</label>
-                    <input type="text" id="banner-btn-link" class="form-control" required>
-                </div>
-
-                <div class="modal-footer" style="margin-top: 20px; text-align: right;">
-                    <button type="button" class="btn btn-outline" id="cancel-banner-modal-btn">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="save-banner-btn">Save Banner</button>
-                </div>
-            </form>
-        </div>
+            <button type="submit" class="btn btn-primary" id="save-banner-btn">
+              Save Banner
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <!-- Category Banner Form Modal -->
     <div class="modal-overlay" id="category-banner-modal-overlay"></div>
     <div class="modal" id="category-banner-modal">
-        <div class="modal-header">
-            <h2 id="category-banner-modal-title">Add Category Banner</h2>
-            <button class="close-btn" id="close-category-banner-modal-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <div class="modal-header">
+        <h2 id="category-banner-modal-title">Add Category Banner</h2>
+        <button class="close-btn" id="close-category-banner-modal-btn">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="category-banner-form">
+          <input type="hidden" id="category-banner-id" />
+
+          <div class="form-group">
+            <label>Banner Image</label>
+            <div id="category-banner-image-upload-container">
+              <!-- Upload input injected here -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="category-banner-collection"
+              >Select Category / Collection</label
+            >
+            <select
+              id="category-banner-collection"
+              class="form-control"
+              required
+            >
+              <optgroup label="Women">
+                <option value="women-clothing">Women's Clothing</option>
+                <option value="women-accessories">Women's Accessories</option>
+                <option value="women-footwear">Women's Footwear</option>
+                <option value="women-lingerie">
+                  Women's Lingerie & Sleepwear
+                </option>
+              </optgroup>
+              <optgroup label="Men">
+                <option value="men-clothing">Men's Clothing</option>
+                <option value="men-footwear">Men's Footwear</option>
+                <option value="men-accessories">Men's Accessories</option>
+                <option value="men-inner-sleepwear">
+                  Men's Inner & Sleepwear
+                </option>
+              </optgroup>
+              <optgroup label="Kids">
+                <option value="kids-girl">Kids Girl</option>
+                <option value="kids-boy">Kids Boy</option>
+                <option value="kids-boy-newborn">Boy Newborn</option>
+                <option value="kids-girl-newborn">Girl Newborn</option>
+              </optgroup>
+              <optgroup label="Beauty">
+                <option value="beauty-fragrance">Fragrance</option>
+                <option value="beauty-hair-care">Hair Care</option>
+                <option value="beauty-makeup">Makeup</option>
+                <option value="beauty-skincare">Skincare</option>
+                <option value="beauty-bath-body">Bath & Body</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: var(--spacing-md);
+            "
+          >
+            <div class="form-group">
+              <label for="category-banner-title">Title (Optional)</label>
+              <input
+                type="text"
+                id="category-banner-title"
+                class="form-control"
+                placeholder="e.g. SALE"
+              />
+            </div>
+            <div class="form-group">
+              <label for="category-banner-subtitle">Subtitle (Optional)</label>
+              <input
+                type="text"
+                id="category-banner-subtitle"
+                class="form-control"
+                placeholder="e.g. Mid-Summer"
+              />
+            </div>
+          </div>
+
+          <div class="modal-footer" style="margin-top: 20px; text-align: right">
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="cancel-category-banner-modal-btn"
+            >
+              Cancel
             </button>
-        </div>
-        <div class="modal-body">
-            <form id="category-banner-form">
-                <input type="hidden" id="category-banner-id">
-                
-                <div class="form-group">
-                    <label>Banner Image</label>
-                    <div id="category-banner-image-upload-container">
-                        <!-- Upload input injected here -->
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="category-banner-collection">Select Category / Collection</label>
-                    <select id="category-banner-collection" class="form-control" required>
-                        <optgroup label="Women">
-                            <option value="women-clothing">Women's Clothing</option>
-                            <option value="women-accessories">Women's Accessories</option>
-                            <option value="women-footwear">Women's Footwear</option>
-                            <option value="women-lingerie">Women's Lingerie & Sleepwear</option>
-                        </optgroup>
-                        <optgroup label="Men">
-                            <option value="men-clothing">Men's Clothing</option>
-                            <option value="men-footwear">Men's Footwear</option>
-                            <option value="men-accessories">Men's Accessories</option>
-                            <option value="men-inner-sleepwear">Men's Inner & Sleepwear</option>
-                        </optgroup>
-                        <optgroup label="Kids">
-                            <option value="kids-girl">Kids Girl</option>
-                            <option value="kids-boy">Kids Boy</option>
-                            <option value="kids-boy-newborn">Boy Newborn</option>
-                            <option value="kids-girl-newborn">Girl Newborn</option>
-                        </optgroup>
-                        <optgroup label="Beauty">
-                            <option value="beauty-fragrance">Fragrance</option>
-                            <option value="beauty-hair-care">Hair Care</option>
-                            <option value="beauty-makeup">Makeup</option>
-                            <option value="beauty-skincare">Skincare</option>
-                            <option value="beauty-bath-body">Bath & Body</option>
-                        </optgroup>
-                    </select>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="category-banner-title">Title (Optional)</label>
-                        <input type="text" id="category-banner-title" class="form-control" placeholder="e.g. SALE">
-                    </div>
-                    <div class="form-group">
-                        <label for="category-banner-subtitle">Subtitle (Optional)</label>
-                        <input type="text" id="category-banner-subtitle" class="form-control" placeholder="e.g. Mid-Summer">
-                    </div>
-                </div>
-
-                <div class="modal-footer" style="margin-top: 20px; text-align: right;">
-                    <button type="button" class="btn btn-outline" id="cancel-category-banner-modal-btn">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="save-category-banner-btn">Save Category Banner</button>
-                </div>
-            </form>
-        </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="save-category-banner-btn"
+            >
+              Save Category Banner
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="modal-overlay" id="order-modal-overlay"></div>
     <div class="modal" id="order-modal">
-        <div class="modal-header">
-            <h2 id="order-modal-title">Order Details</h2>
-            <button class="close-btn" id="close-order-modal-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <div class="modal-header">
+        <h2 id="order-modal-title">Order Details</h2>
+        <button class="close-btn" id="close-order-modal-btn">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 20px">
+        <div id="order-details-content">
+          <!-- Injected via JS -->
+        </div>
+
+        <hr
+          style="
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid var(--color-border);
+          "
+        />
+
+        <div class="form-group">
+          <label>Update Order Status</label>
+          <div style="display: flex; gap: 10px">
+            <select id="order-status-select" class="form-control">
+              <option value="Pending">Pending</option>
+              <option value="Dispatched">Dispatched</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <button class="btn btn-primary" id="update-order-status-btn">
+              Update
             </button>
+          </div>
         </div>
-        <div class="modal-body" style="padding: 20px;">
-            <div id="order-details-content">
-                <!-- Injected via JS -->
-            </div>
-            
-            <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--color-border);">
-            
-            <div class="form-group">
-                <label>Update Order Status</label>
-                <div style="display: flex; gap: 10px;">
-                    <select id="order-status-select" class="form-control">
-                        <option value="Pending">Pending</option>
-                        <option value="Dispatched">Dispatched</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
-                    </select>
-                    <button class="btn btn-primary" id="update-order-status-btn">Update</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
     <!-- Script imports -->
@@ -528,86 +996,120 @@
     <!-- Collections Modal -->
     <div class="modal-overlay" id="collection-modal-overlay"></div>
     <div class="modal" id="collection-modal">
-        <div class="modal-header">
-            <h2 id="collection-modal-title">Add Collection</h2>
-            <button class="close-btn" id="close-collection-modal-btn">✕</button>
+      <div class="modal-header">
+        <h2 id="collection-modal-title">Add Collection</h2>
+        <button class="close-btn" id="close-collection-modal-btn">✕</button>
+      </div>
+      <form id="collection-form">
+        <div class="modal-body">
+          <input type="hidden" id="collection-id" />
+
+          <div class="form-group">
+            <label>Collection Image</label>
+            <div id="collection-image-upload-container">
+              <!-- Dynamic single image row injected here -->
+            </div>
+            <small style="color: #666; display: block; margin-top: 5px"
+              >Recommended aspect ratio: 2:3 or 3:4</small
+            >
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1">
+              <label>Collection Title</label>
+              <input
+                type="text"
+                id="collection-title"
+                class="form-control"
+                placeholder="e.g. Best Sellers"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1">
+              <label>Collection Link / Path</label>
+              <input
+                type="text"
+                id="collection-link"
+                class="form-control"
+                placeholder="e.g. #collection/best-sellers"
+                required
+              />
+            </div>
+          </div>
         </div>
-        <form id="collection-form">
-            <div class="modal-body">
-                <input type="hidden" id="collection-id">
-                
-                <div class="form-group">
-                    <label>Collection Image</label>
-                    <div id="collection-image-upload-container">
-                        <!-- Dynamic single image row injected here -->
-                    </div>
-                    <small style="color: #666; display: block; margin-top: 5px;">Recommended aspect ratio: 2:3 or 3:4</small>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Collection Title</label>
-                        <input type="text" id="collection-title" class="form-control" placeholder="e.g. Best Sellers" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Collection Link / Path</label>
-                        <input type="text" id="collection-link" class="form-control" placeholder="e.g. #collection/best-sellers" required>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline" id="cancel-collection-modal-btn">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Collection</button>
-            </div>
-        </form>
-    </div>
-
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline"
+            id="cancel-collection-modal-btn"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Save Collection</button>
+        </div>
+      </form>
     </div>
 
     <div class="modal" id="home-category-modal">
-        <div class="modal-header">
-            <h2 id="home-category-modal-title">Add Home Category</h2>
-            <button class="close-btn" id="close-home-category-modal-btn">✕</button>
+      <div class="modal-header">
+        <h2 id="home-category-modal-title">Add Home Category</h2>
+        <button class="close-btn" id="close-home-category-modal-btn">✕</button>
+      </div>
+      <form id="home-category-form">
+        <div class="modal-body">
+          <input type="hidden" id="home-category-id" />
+
+          <div class="form-group">
+            <label>Category Image</label>
+            <div id="home-category-image-upload-container">
+              <!-- Dynamic single image row injected here -->
+            </div>
+          </div>
+
+          <input type="hidden" id="home-category-group" required />
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1">
+              <label>Title (e.g. Clothing)</label>
+              <input
+                type="text"
+                id="home-category-title"
+                class="form-control"
+                placeholder="Category Title"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex: 1">
+              <label>Link / Path</label>
+              <input
+                type="text"
+                id="home-category-link"
+                class="form-control"
+                placeholder="e.g. #collection/women-clothing"
+                required
+              />
+            </div>
+          </div>
         </div>
-        <form id="home-category-form">
-            <div class="modal-body">
-                <input type="hidden" id="home-category-id">
-                
-                <div class="form-group">
-                    <label>Category Image</label>
-                    <div id="home-category-image-upload-container">
-                        <!-- Dynamic single image row injected here -->
-                    </div>
-                </div>
-
-                <input type="hidden" id="home-category-group" required>
-
-                <div class="form-row">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Title (e.g. Clothing)</label>
-                        <input type="text" id="home-category-title" class="form-control" placeholder="Category Title" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Link / Path</label>
-                        <input type="text" id="home-category-link" class="form-control" placeholder="e.g. #collection/women-clothing" required>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline" id="cancel-home-category-modal-btn">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Category</button>
-            </div>
-        </form>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline"
+            id="cancel-home-category-modal-btn"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Save Category</button>
+        </div>
+      </form>
     </div>
 
     <script src="js/admin.js"></script>
-</body>
+  </body>
 </html>

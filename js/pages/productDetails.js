@@ -1,75 +1,77 @@
-
-
-
 function renderProductPage(productId) {
-    const appContent = document.getElementById('app-content');
-    const product = PRODUCTS.find(p => p.id === productId);
+  const appContent = document.getElementById("app-content");
+  const product = PRODUCTS.find((p) => p.id === productId);
 
-    if (!product) {
-        appContent.innerHTML = `<div class="container" style="padding: 100px 0;"><h2 class="text-center">Product not found.</h2><p class="text-center"><a href="#home">Back to Homepage</a></p></div>`;
-        return;
-    }
+  if (!product) {
+    appContent.innerHTML = `<div class="container" style="padding: 100px 0;"><h2 class="text-center">Product not found.</h2><p class="text-center"><a href="#home">Back to Homepage</a></p></div>`;
+    return;
+  }
 
-    // Build specification table rows
-    let specsHtml = '';
-    for (const [key, val] of Object.entries(product.specs)) {
-        specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
-    }
+  // Build specification table rows
+  let specsHtml = "";
+  for (const [key, val] of Object.entries(product.specs)) {
+    specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
+  }
 
-    // Build Images
-    let thumbnailsHtml = '';
-    const imagesToUse = (product.images && product.images.length > 0) ? product.images : [product.localImage || product.image];
+  // Build Images
+  let thumbnailsHtml = "";
+  const imagesToUse =
+    product.images && product.images.length > 0
+      ? product.images
+      : [product.localImage || product.image];
 
-    // If only one image, we can just duplicate it with CSS filters to simulate a gallery if desired, or just show the actual images.
-    // Let's just show actual images:
-    if (imagesToUse.length === 1) {
-        thumbnailsHtml = `
+  // If only one image, we can just duplicate it with CSS filters to simulate a gallery if desired, or just show the actual images.
+  // Let's just show actual images:
+  if (imagesToUse.length === 1) {
+    thumbnailsHtml = `
             <img src="${imagesToUse[0]}" class="thumb-item active" alt="Thumb 1">
             <img src="${imagesToUse[0]}" class="thumb-item" alt="Thumb 2" style="filter: hue-rotate(30deg);">
             <img src="${imagesToUse[0]}" class="thumb-item" alt="Thumb 3" style="filter: brightness(0.9);">
         `;
+  } else {
+    imagesToUse.forEach((imgUrl, idx) => {
+      thumbnailsHtml += `<img src="${imgUrl}" class="thumb-item ${idx === 0 ? "active" : ""}" alt="Thumb ${idx + 1}">`;
+    });
+  }
+
+  const mainImageToUse = imagesToUse[0];
+
+  const productReviews = state.reviews[product.id] || [];
+  let avgRating = 0;
+  if (productReviews.length > 0) {
+    const total = productReviews.reduce((sum, rev) => sum + rev.rating, 0);
+    avgRating = (total / productReviews.length).toFixed(1);
+  }
+
+  // Generate stars for average rating
+  let avgStarsHtml = "";
+  for (let i = 1; i <= 5; i++) {
+    if (i <= Math.round(avgRating)) {
+      avgStarsHtml += `<svg width="16" height="16" fill="gold" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
     } else {
-        imagesToUse.forEach((imgUrl, idx) => {
-            thumbnailsHtml += `<img src="${imgUrl}" class="thumb-item ${idx === 0 ? 'active' : ''}" alt="Thumb ${idx + 1}">`;
-        });
+      avgStarsHtml += `<svg width="16" height="16" fill="none" stroke="gold" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
     }
+  }
 
-    const mainImageToUse = imagesToUse[0];
-
-    const productReviews = state.reviews[product.id] || [];
-    let avgRating = 0;
-    if (productReviews.length > 0) {
-        const total = productReviews.reduce((sum, rev) => sum + rev.rating, 0);
-        avgRating = (total / productReviews.length).toFixed(1);
-    }
-
-    // Generate stars for average rating
-    let avgStarsHtml = '';
-    for (let i = 1; i <= 5; i++) {
-        if (i <= Math.round(avgRating)) {
-            avgStarsHtml += `<svg width="16" height="16" fill="gold" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
-        } else {
-            avgStarsHtml += `<svg width="16" height="16" fill="none" stroke="gold" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
-        }
-    }
-
-    const ratingDisplayHtml = productReviews.length > 0
-        ? `<div class="product-detail-rating" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+  const ratingDisplayHtml =
+    productReviews.length > 0
+      ? `<div class="product-detail-rating" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
             <div class="stars" style="display: flex;">${avgStarsHtml}</div>
             <span style="font-size: 14px; color: #666;">${avgRating} (${productReviews.length} Reviews)</span>
            </div>`
-        : `<div class="product-detail-rating" style="margin-bottom: 15px; font-size: 14px; color: #666;">No reviews yet</div>`;
+      : `<div class="product-detail-rating" style="margin-bottom: 15px; font-size: 14px; color: #666;">No reviews yet</div>`;
 
-    let reviewsListHtml = '';
-    if (productReviews.length === 0) {
-        reviewsListHtml = `<p>Be the first to review this product!</p>`;
-    } else {
-        reviewsListHtml = productReviews.map(rev => {
-            let stars = '';
-            for (let i = 1; i <= 5; i++) {
-                stars += `<svg width="14" height="14" fill="${i <= rev.rating ? 'gold' : 'none'}" stroke="gold" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
-            }
-            return `
+  let reviewsListHtml = "";
+  if (productReviews.length === 0) {
+    reviewsListHtml = `<p>Be the first to review this product!</p>`;
+  } else {
+    reviewsListHtml = productReviews
+      .map((rev) => {
+        let stars = "";
+        for (let i = 1; i <= 5; i++) {
+          stars += `<svg width="14" height="14" fill="${i <= rev.rating ? "gold" : "none"}" stroke="gold" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+        }
+        return `
                 <div class="review-card">
                     <div class="review-header">
                         <div class="review-author">
@@ -82,10 +84,11 @@ function renderProductPage(productId) {
                     <p class="review-text">${rev.text}</p>
                 </div>
             `;
-        }).join('');
-    }
+      })
+      .join("");
+  }
 
-    const reviewsSectionHtml = `
+  const reviewsSectionHtml = `
         <div class="product-reviews-section">
             <h2 class="reviews-section-title">Customer Reviews</h2>
             <div class="reviews-layout">
@@ -121,18 +124,24 @@ function renderProductPage(productId) {
         </div>
     `;
 
-    // Related Products Logic
-    const relatedProducts = PRODUCTS.filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
-    let relatedProductsHtml = '';
-    
-    if (relatedProducts.length > 0) {
-        let gridHtml = '';
-        relatedProducts.forEach(p => {
-            const displayImg = p.localImage || p.image || (p.images && p.images[0]) || '';
-            const priceHtml = `Rs. ${p.price.toLocaleString()}`;
-            const oldPriceHtml = p.originalPrice > p.price ? `<span style="text-decoration: line-through; color: #999; font-size: 13px; margin-left: 5px;">Rs. ${p.originalPrice.toLocaleString()}</span>` : '';
-            
-            gridHtml += `
+  // Related Products Logic
+  const relatedProducts = PRODUCTS.filter(
+    (p) => p.collection === product.collection && p.id !== product.id,
+  ).slice(0, 4);
+  let relatedProductsHtml = "";
+
+  if (relatedProducts.length > 0) {
+    let gridHtml = "";
+    relatedProducts.forEach((p) => {
+      const displayImg =
+        p.localImage || p.image || (p.images && p.images[0]) || "";
+      const priceHtml = `Rs. ${p.price.toLocaleString()}`;
+      const oldPriceHtml =
+        p.originalPrice > p.price
+          ? `<span style="text-decoration: line-through; color: #999; font-size: 13px; margin-left: 5px;">Rs. ${p.originalPrice.toLocaleString()}</span>`
+          : "";
+
+      gridHtml += `
                 <div class="product-card">
                     <a href="#product/${p.id}" class="product-image-container">
                         <img src="${displayImg}" alt="${p.title}" class="product-image">
@@ -145,9 +154,9 @@ function renderProductPage(productId) {
                     </div>
                 </div>
             `;
-        });
-        
-        relatedProductsHtml = `
+    });
+
+    relatedProductsHtml = `
             <div class="related-products-section">
                 <h2 class="related-products-title">More Collection</h2>
                 <div class="related-products-grid">
@@ -155,13 +164,12 @@ function renderProductPage(productId) {
                 </div>
             </div>
         `;
-    }
+  }
 
-
-    appContent.innerHTML = `
+  appContent.innerHTML = `
         <div class="container product-detail-container">
             <div class="breadcrumbs">
-                <a href="#home">Home</a> &gt; <a href="#collection/${product.collection}">${product.collection.replace('-', ' ')}</a> &gt; <span>${product.title}</span>
+                <a href="#home">Home</a> &gt; <a href="#collection/${product.collection}">${product.collection.replace("-", " ")}</a> &gt; <span>${product.title}</span>
             </div>
             
             <div class="product-detail-layout">
@@ -179,7 +187,7 @@ function renderProductPage(productId) {
                 <div class="product-info-col">
                     <div class="brand-header-row">
                         <div>
-                            <div class="brand-title">${product.brandName || product.externalBrand || 'Zellbury'}</div>
+                            <div class="brand-title">${product.brandName || product.externalBrand || "Zellbury"}</div>
                             <div class="brand-meta">
                                 ★ ${avgRating} | ${product.stock !== undefined ? product.stock : 100} items
                             </div>
@@ -194,14 +202,14 @@ function renderProductPage(productId) {
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                             </button>
                             <button class="icon-btn wishlist-toggle-btn" data-product-id="${product.id}" title="Wishlist">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="${state.wishlist.includes(product.id) ? '#ff3b30' : 'none'}" stroke="${state.wishlist.includes(product.id) ? '#ff3b30' : '#000000'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="${state.wishlist.includes(product.id) ? "#ff3b30" : "none"}" stroke="${state.wishlist.includes(product.id) ? "#ff3b30" : "#000000"}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                             </button>
                         </div>
                     </div>
 
                     <div class="product-card-price-row">
                         <span class="price-sale">PKR ${product.price.toLocaleString()}</span>
-                        ${product.originalPrice > product.price ? `<span class="price-original">PKR ${product.originalPrice.toLocaleString()}</span>` : ''}
+                        ${product.originalPrice > product.price ? `<span class="price-original">PKR ${product.originalPrice.toLocaleString()}</span>` : ""}
                     </div>
 
                     <div class="shipping-details-box">
@@ -213,7 +221,7 @@ function renderProductPage(productId) {
                             <div class="shipping-info">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                                 <div class="shipping-info-text">
-                                    <strong>Est. shipping by ${new Date(Date.now() + 3*24*60*60*1000).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</strong>
+                                    <strong>Est. shipping by ${new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</strong>
                                     <span>Express delivery · Pakistan</span>
                                 </div>
                             </div>
@@ -239,18 +247,23 @@ function renderProductPage(productId) {
                         </div>
                     </div>
 
-                    ${product.isExternal ? `
+                    ${
+                      product.isExternal
+                        ? `
                         <div class="checkout-actions-group" style="margin-top: 30px;">
                             <a href="${product.externalUrl}" target="_blank" class="btn btn-primary btn-block t4s-ani-shake" style="display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;">
-                                View on ${product.externalBrand || 'Store'}
+                                View on ${product.externalBrand || "Store"}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                             </a>
                         </div>
-                    ` : (product.stock === 0) ? `
+                    `
+                        : product.stock === 0
+                          ? `
                         <div class="checkout-actions-group" style="margin-top: 30px;">
                             <button class="btn-block" style="background: #e5e7eb; color: #9ca3af; cursor: not-allowed;" disabled>Out of Stock</button>
                         </div>
-                    ` : `
+                    `
+                          : `
                         <!-- Quantity Selector -->
                         <div>
                             <span class="selector-label">Quantity</span>
@@ -268,7 +281,8 @@ function renderProductPage(productId) {
                             <button class="btn-block" id="detail-add-to-cart">Add To Bag (PKR ${product.price.toLocaleString()})</button>
                             <button class="btn-block" id="detail-buy-now">Buy Now</button>
                         </div>
-                    `}
+                    `
+                    }
 
                     <div class="product-details-section">
                         <h3>Product Details</h3>
@@ -278,12 +292,12 @@ function renderProductPage(productId) {
                         
                         <div class="additional-desc">
                             <h4>Additional Description:</h4>
-                            ${product.description.replace(/\n/g, '<br>')}
+                            ${product.description.replace(/\n/g, "<br>")}
                         </div>
 
                         <div class="additional-desc">
                             <h4>Disclaimer:</h4>
-                            ${product.disclaimer ? product.disclaimer.replace(/\n/g, '<br>') : 'Actual product color may vary slightly from the image.'}
+                            ${product.disclaimer ? product.disclaimer.replace(/\n/g, "<br>") : "Actual product color may vary slightly from the image."}
                         </div>
                     </div>
                 </div>
@@ -294,7 +308,9 @@ function renderProductPage(productId) {
         </div>
 
         <!-- Sticky ATC bar -->
-        ${!product.isExternal && product.stock !== 0 ? `
+        ${
+          !product.isExternal && product.stock !== 0
+            ? `
         <div class="sticky-atc-bar" id="sticky-atc-bar">
             <div class="sticky-atc-inner">
                 <div class="sticky-atc-product">
@@ -319,166 +335,212 @@ function renderProductPage(productId) {
                 </div>
             </div>
         </div>
-        ` : ''}
+        `
+            : ""
+        }
     `;
 
-            setupProductPageListeners(product);
+  setupProductPageListeners(product);
+
+  function setupProductPageListeners(product) {
+    // Thumbnails click
+    document.querySelectorAll(".thumb-item").forEach((thumb) => {
+      thumb.addEventListener("click", function () {
+        document
+          .querySelectorAll(".thumb-item")
+          .forEach((t) => t.classList.remove("active"));
+        this.classList.add("active");
+        const mainImg = document.getElementById("main-product-img");
+        mainImg.src = this.src;
+        mainImg.style.filter = this.style.filter;
+      });
+    });
+
+    // Size Selectors
+    const sizeBtns = document.querySelectorAll(
+      "#detail-size-selector .size-btn",
+    );
+    sizeBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        sizeBtns.forEach((b) => b.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+
+    // Qty Selectors
+    let qty = 1;
+    const qtyVal = document.getElementById("detail-qty-value");
+    if (qtyVal) {
+      const minusBtn = document.getElementById("detail-qty-minus");
+      const plusBtn = document.getElementById("detail-qty-plus");
+      if (minusBtn)
+        minusBtn.addEventListener("click", () => {
+          if (qty > 1) {
+            qty--;
+            qtyVal.textContent = qty;
+          }
+        });
+      if (plusBtn)
+        plusBtn.addEventListener("click", () => {
+          qty++;
+          qtyVal.textContent = qty;
+        });
+    }
+
+    // Add To Cart Action (Main)
+    const handleAddToCartAction = () => {
+      const selectedSizeBtn = document.querySelector(
+        "#detail-size-selector .size-btn.active",
+      );
+      const selectedSize = selectedSizeBtn
+        ? selectedSizeBtn.getAttribute("data-size")
+        : "M";
+      addToCart(product.id, selectedSize, qty);
+    };
+
+    const detailAtcBtn = document.getElementById("detail-add-to-cart");
+    if (detailAtcBtn)
+      detailAtcBtn.addEventListener("click", handleAddToCartAction);
+
+    // Sticky Add To Cart Action
+    const stickyAtcBtn = document.getElementById("sticky-add-to-cart-btn");
+    if (stickyAtcBtn) {
+      let stickyQty = 1;
+      const stickyQtyVal = document.getElementById("sticky-qty-value");
+      const sMinus = document.getElementById("sticky-qty-minus");
+      const sPlus = document.getElementById("sticky-qty-plus");
+      if (sMinus)
+        sMinus.addEventListener("click", () => {
+          if (stickyQty > 1) {
+            stickyQty--;
+            stickyQtyVal.textContent = stickyQty;
+          }
+        });
+      if (sPlus)
+        sPlus.addEventListener("click", () => {
+          stickyQty++;
+          stickyQtyVal.textContent = stickyQty;
+        });
+      stickyAtcBtn.addEventListener("click", () => {
+        const stickySize = document.getElementById("sticky-size").value;
+        addToCart(product.id, stickySize, stickyQty);
+      });
+    }
+
+    // Buy Now
+    const buyNowBtn = document.getElementById("detail-buy-now");
+    if (buyNowBtn) {
+      buyNowBtn.addEventListener("click", () => {
+        const selectedSizeBtn = document.querySelector(
+          "#detail-size-selector .size-btn.active",
+        );
+        const selectedSize = selectedSizeBtn
+          ? selectedSizeBtn.getAttribute("data-size")
+          : "M";
+        addToCart(product.id, selectedSize, qty);
+        window.location.hash = "#checkout";
+      });
+    }
+
+    // Share Button
+    const shareBtn = document.getElementById("detail-share-btn");
+    if (shareBtn) {
+      shareBtn.addEventListener("click", () => {
+        const overlay = document.getElementById("share-modal-overlay");
+        const modal = document.getElementById("share-modal");
+        if (overlay && modal) {
+          overlay.classList.add("active");
+          modal.classList.add("active");
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          alert("Link copied to clipboard!");
         }
+      });
+    }
 
-function setupProductPageListeners(product) {
-                // Thumbnails click
-                document.querySelectorAll('.thumb-item').forEach(thumb => {
-                    thumb.addEventListener('click', function () {
-                        document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
+    // Wishlist Button
+    const wishlistBtn = document.querySelector(
+      "#detail-page-content .wishlist-toggle-btn",
+    );
+    if (wishlistBtn) {
+      wishlistBtn.addEventListener("click", () => {
+        toggleWishlist(product.id);
+      });
+    }
 
-                        const mainImg = document.getElementById('main-product-img');
-                        mainImg.src = this.src;
-                        mainImg.style.filter = this.style.filter;
-                    });
-                });
+    // Accordions
+    document.querySelectorAll(".accordion-header").forEach((header) => {
+      header.addEventListener("click", function () {
+        const item = this.parentElement;
+        const content = this.nextElementSibling;
+        const isActive = item.classList.contains("active");
+        document.querySelectorAll(".accordion-item").forEach((i) => {
+          i.classList.remove("active");
+          i.querySelector(".accordion-content").style.maxHeight = "0px";
+        });
+        if (!isActive) {
+          item.classList.add("active");
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    });
 
-                // Size Selectors
-                const sizeBtns = document.querySelectorAll('#detail-size-selector .size-btn');
-                sizeBtns.forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        sizeBtns.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                    });
-                });
+    // Sticky ATC Bar visibility
+    const stickyAtc = document.getElementById("sticky-atc-bar");
+    const mainAtcBtn = document.getElementById("detail-add-to-cart");
 
-                // Qty Selectors
-                let qty = 1;
-                const qtyVal = document.getElementById('detail-qty-value');
-
-                if (qtyVal) {
-                    document.getElementById('detail-qty-minus').addEventListener('click', () => {
-                        if (qty > 1) {
-                            qty--;
-                            qtyVal.textContent = qty;
-                        }
-                    });
-
-                    document.getElementById('detail-qty-plus').addEventListener('click', () => {
-                        qty++;
-                        qtyVal.textContent = qty;
-                    });
-                }
-
-                // Add To Cart Action (Main)
-                const handleAddToCartAction = () => {
-                    const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
-                    const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
-                    addToCart(product.id, selectedSize, qty);
-                };
-
-                const detailAtcBtn = document.getElementById('detail-add-to-cart');
-                if (detailAtcBtn) detailAtcBtn.addEventListener('click', handleAddToCartAction);
-
-                // Sticky Add To Cart Action
-                const stickyAtcBtn = document.getElementById('sticky-add-to-cart-btn');
-                if (stickyAtcBtn) {
-                    let stickyQty = 1;
-                    const stickyQtyVal = document.getElementById('sticky-qty-value');
-                    document.getElementById('sticky-qty-minus').addEventListener('click', () => {
-                        if (stickyQty > 1) {
-                            stickyQty--;
-                            stickyQtyVal.textContent = stickyQty;
-                        }
-                    });
-                    document.getElementById('sticky-qty-plus').addEventListener('click', () => {
-                        stickyQty++;
-                        stickyQtyVal.textContent = stickyQty;
-                    });
-
-                    stickyAtcBtn.addEventListener('click', () => {
-                        const stickySize = document.getElementById('sticky-size').value;
-                        addToCart(product.id, stickySize, stickyQty);
-                    });
-                }
-
-                // Buy Now
-                const buyNowBtn = document.getElementById('detail-buy-now');
-                if (buyNowBtn) {
-                    buyNowBtn.addEventListener('click', () => {
-                        const selectedSizeBtn = document.querySelector('#detail-size-selector .size-btn.active');
-                        const selectedSize = selectedSizeBtn ? selectedSizeBtn.getAttribute('data-size') : 'M';
-                        addToCart(product.id, selectedSize, qty);
-                        window.location.hash = "#checkout";
-                    });
-                }
-
-                // Accordions
-                document.querySelectorAll('.accordion-header').forEach(header => {
-                    header.addEventListener('click', function () {
-                        const item = this.parentElement;
-                        const content = this.nextElementSibling;
-
-                        const isActive = item.classList.contains('active');
-
-                        // Close all
-                        document.querySelectorAll('.accordion-item').forEach(i => {
-                            i.classList.remove('active');
-                            i.querySelector('.accordion-content').style.maxHeight = '0px';
-                        });
-
-                        if (!isActive) {
-                            item.classList.add('active');
-                            content.style.maxHeight = content.scrollHeight + 'px';
-                        }
-                    });
-                });
-
-                // Sticky ATC Bar visibility
-                const stickyAtc = document.getElementById('sticky-atc-bar');
-                const mainAtcBtn = document.getElementById('detail-add-to-cart');
-
-                if (window.IntersectionObserver) {
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (!entry.isIntersecting) {
-                                stickyAtc.classList.add('visible');
-                            } else {
-                                stickyAtc.classList.remove('visible');
-                            }
-                        });
-                    }, { threshold: 0.1 });
-
-                    if (mainAtcBtn) {
-                        observer.observe(mainAtcBtn);
-                    }
-                }
-
-                // Reviews Form Listeners
-                const stars = document.querySelectorAll('#star-rating-input .star');
-                const ratingInput = document.getElementById('review-rating-value');
-                
-                stars.forEach(star => {
-                    star.addEventListener('click', function() {
-                        const val = parseInt(this.getAttribute('data-value'));
-                        ratingInput.value = val;
-                        stars.forEach(s => {
-                            const sVal = parseInt(s.getAttribute('data-value'));
-                            if (sVal <= val) {
-                                s.classList.add('active');
-                            } else {
-                                s.classList.remove('active');
-                            }
-                        });
-                    });
-                });
-
-                const reviewForm = document.getElementById('add-review-form');
-                if (reviewForm) {
-                    reviewForm.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        const name = document.getElementById('review-name').value;
-                        const text = document.getElementById('review-text').value;
-                        const rating = parseInt(document.getElementById('review-rating-value').value);
-                        
-                        if (name && text) {
-                            addReview(product.id, { name, text, rating });
-                        }
-                    });
-                }
+    if (window.IntersectionObserver) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              stickyAtc.classList.add("visible");
+            } else {
+              stickyAtc.classList.remove("visible");
             }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      if (mainAtcBtn) {
+        observer.observe(mainAtcBtn);
+      }
+    }
+
+    // Reviews Form Listeners
+    const stars = document.querySelectorAll("#star-rating-input .star");
+    const ratingInput = document.getElementById("review-rating-value");
+
+    stars.forEach((star) => {
+      star.addEventListener("click", function () {
+        const val = parseInt(this.getAttribute("data-value"));
+        ratingInput.value = val;
+        stars.forEach((s) => {
+          const sVal = parseInt(s.getAttribute("data-value"));
+          if (sVal <= val) {
+            s.classList.add("active");
+          } else {
+            s.classList.remove("active");
+          }
+        });
+      });
+    });
+
+    const reviewForm = document.getElementById("add-review-form");
+    if (reviewForm) {
+      reviewForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("review-name").value;
+        const text = document.getElementById("review-text").value;
+        const rating = parseInt(
+          document.getElementById("review-rating-value").value,
+        );
+
+        if (name && text) {
+          addReview(product.id, { name, text, rating });
+        }
+      });
+    }
+  }
+}

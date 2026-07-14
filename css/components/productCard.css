@@ -2,167 +2,201 @@
    PRODUCT GRID & CARD
    ========================================== */
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* default */
-    gap: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* default */
+  gap: var(--spacing-lg);
 }
 
-.grid-cols-1 { grid-template-columns: repeat(1, 1fr) !important; }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr) !important; }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr) !important; }
-.grid-cols-5 { grid-template-columns: repeat(5, 1fr) !important; }
-.grid-cols-6 { grid-template-columns: repeat(6, 1fr) !important; }
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr) !important;
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+.grid-cols-5 {
+  grid-template-columns: repeat(5, 1fr) !important;
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, 1fr) !important;
+}
 
 @media (max-width: 1200px) {
-    .product-grid { grid-template-columns: repeat(3, 1fr); }
-    .grid-cols-4, .grid-cols-5, .grid-cols-6 { grid-template-columns: repeat(3, 1fr) !important; }
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-cols-4,
+  .grid-cols-5,
+  .grid-cols-6 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
 }
 @media (max-width: 768px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); }
-    .grid-cols-3, .grid-cols-4, .grid-cols-5, .grid-cols-6 { grid-template-columns: repeat(2, 1fr) !important; }
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-cols-3,
+  .grid-cols-4,
+  .grid-cols-5,
+  .grid-cols-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 @media (max-width: 480px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .grid-cols-2, .grid-cols-3, .grid-cols-4, .grid-cols-5, .grid-cols-6 { grid-template-columns: repeat(2, 1fr) !important; }
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4,
+  .grid-cols-5,
+  .grid-cols-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 .product-card {
-    background-color: var(--color-bg-primary);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    transition: transform var(--transition-smooth);
+  background-color: var(--color-bg-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-smooth);
 }
 
 .product-card:hover {
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 }
 
 .product-card-media {
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--border-radius);
-    aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  aspect-ratio: 3/4;
 }
 
 .product-card-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-slow);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
 }
 
 .product-card:hover .product-card-media img {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .product-badges-container {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-    z-index: 2;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  z-index: 2;
 }
 
 .badge-discount {
-    background-color: #e65c00; /* Orange color from screenshot */
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 600;
+  background-color: #e65c00; /* Orange color from screenshot */
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .badge-restock {
-    background-color: #2e7d32; /* Green color from screenshot */
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 10px;
+  background-color: #2e7d32; /* Green color from screenshot */
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
 }
 
 /* Quick Buy overlay */
 .quick-buy-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: var(--spacing-sm) var(--spacing-md);
-    transform: translateY(100%);
-    transition: transform var(--transition-smooth);
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-xs);
-    z-index: 3;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: var(--spacing-sm) var(--spacing-md);
+  transform: translateY(100%);
+  transition: transform var(--transition-smooth);
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  z-index: 3;
 }
 
 .product-card:hover .quick-buy-overlay {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .quick-size-btn {
-    border: 1px solid var(--color-border);
-    padding: 6px 12px;
-    font-size: 12px;
-    font-weight: 500;
-    background-color: var(--color-bg-primary);
-    transition: all var(--transition-fast);
+  border: 1px solid var(--color-border);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--color-bg-primary);
+  transition: all var(--transition-fast);
 }
 
 .quick-size-btn:hover {
-    background-color: var(--color-text-primary);
-    color: var(--color-bg-primary);
-    border-color: var(--color-text-primary);
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border-color: var(--color-text-primary);
 }
 
 .product-card-details {
-    padding: var(--spacing-md) 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  padding: var(--spacing-md) 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    margin-bottom: 6px;
-    line-height: 1.4;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
 .product-card-title a:hover {
-    color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .product-card-price-col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .price-original {
-    color: #999;
-    text-decoration: line-through;
-    font-weight: 400;
-    font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 400;
+  font-size: 12px;
 }
 
 .price-sale {
-    color: #e65c00; /* Match orange/red from screenshot */
-    font-size: 14px;
+  color: #e65c00; /* Match orange/red from screenshot */
+  font-size: 14px;
 }

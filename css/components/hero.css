@@ -1,283 +1,141 @@
 /* ==========================================
-   HERO SECTION
+   HERO SECTION (MODERN FULL-WIDTH)
    ========================================== */
 .hero-container {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Add overflow hidden here so track doesn't overflow body */
+  width: 100%;
+  max-width: 1600px; /* Constrain max width */
+  margin: 0 auto;
+  padding: 20px; /* Add space around the banner */
+  overflow: hidden;
+  position: relative;
 }
 
 .hero-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 70vh;
-    min-height: 500px;
-    touch-action: pan-y;
-    user-select: none;
-    -webkit-user-select: none;
-    cursor: grab;
-    /* Removed margin, border-radius, box-shadow from here */
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 500px; /* Fixed reasonable height instead of aspect-ratio */
+  border-radius: 20px; /* Rounded corners */
+  overflow: hidden; /* Keep images inside rounded corners */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  background: #f5f5f5;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
 }
 
 .hero-section:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 .hero-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    /* Transition is handled via JS for smooth drags, but fallback here */
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .hero-slide {
-    flex: 0 0 calc(100% - 30px);
-    width: calc(100% - 30px);
-    margin: 15px;
-    height: calc(100% - 30px);
-    position: relative;
-    display: flex;
-    align-items: center;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    
-    /* 3D Depth & Scaling */
-    transform: scale(0.92);
-    filter: brightness(0.6);
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease, box-shadow 0.8s ease;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+  overflow: hidden;
 }
 
-.hero-slide.active {
-    transform: scale(1);
-    filter: brightness(1);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    z-index: 2;
+/* Make the anchor tag cover the slide */
+.hero-slide a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .hero-bg-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    z-index: 0;
-    pointer-events: none;
-    -webkit-user-drag: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  /* Subtle zoom effect */
+  transform: scale(1.05);
+  transition: transform 6s ease-out;
 }
 
+/* When active, trigger the Ken Burns zoom out effect */
 .hero-slide.active .hero-bg-img {
-    /* No animation to prevent blur */
+  transform: scale(1);
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 50px;
-    margin-left: 8%;
-    max-width: 700px;
-    color: #ffffff;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-    
-    /* Glassmorphism Effect */
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-.hero-slide.active .hero-content {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.hero-subtitle {
-    font-size: 14px;
-    font-family: var(--font-body);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.hero-title {
-    font-size: 72px;
-    line-height: 1.1;
-    margin-bottom: 30px;
-    font-family: var(--font-heading);
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.hero-discount {
-    background-color: transparent;
-    color: #ffffff;
-    border-left: 3px solid #ffffff;
-    padding: 5px 20px;
-    display: inline-block;
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    margin-bottom: 40px;
-    text-transform: uppercase;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 20px;
-}
-
-.hero-actions .btn {
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 18px 45px;
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border-radius: 0; /* Modern sharp edges */
-    position: relative;
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-}
-
-.hero-actions .btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: #000000;
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    z-index: -1;
-}
-
-.hero-actions .btn::after {
-    content: '→';
-    position: absolute;
-    right: 25px;
-    opacity: 0;
-    transform: translateX(-15px);
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    font-size: 16px;
-}
-
-.hero-actions .btn:hover {
-    color: #ffffff;
-    padding-right: 55px;
-    padding-left: 35px;
-    background-color: transparent;
-}
-
-.hero-actions .btn:hover::before {
-    width: 100%;
-}
-
-.hero-actions .btn:hover::after {
-    opacity: 1;
-    transform: translateX(0);
-}
-
+/* Modern Pagination Indicators */
 .hero-pagination {
-    position: absolute;
-    bottom: 40px;
-    left: 8%;
-    display: flex;
-    gap: 12px;
-    z-index: 3;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
 }
 
 .hero-pagination .dot {
-    width: 35px;
-    height: 3px;
-    background-color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.4s ease;
+  width: 40px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition:
+    background-color 0.4s ease,
+    width 0.4s ease;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.hero-pagination .dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .hero-pagination .dot.active {
-    background-color: #ffffff;
+  background-color: #ffffff;
+  /* Optional: make the active dot slightly wider */
 }
 
+/* Mobile responsive adjustments */
 @media (max-width: 991px) {
-    .hero-section {
-        height: 60vh;
-        min-height: 400px;
-    }
-    .hero-title {
-        font-size: 48px;
-    }
-    .hero-content {
-        padding: 0 5%;
-    }
-    .hero-pagination {
-        left: 5%;
-        bottom: 30px;
-    }
+  .hero-section {
+    height: 400px;
+  }
 }
 
-@media (max-width: 576px) {
-    .hero-section {
-        height: auto;
-        aspect-ratio: 16/9;
-        min-height: unset;
-        align-items: center;
-        padding-bottom: 0;
-    }
-    .hero-bg-img {
-        object-position: center;
-    }
-    .hero-content {
-        margin: 0 auto;
-        padding: 15px;
-        text-align: center;
-        width: 90%;
-        max-width: 100%;
-        border-radius: 8px;
-    }
-    .hero-title {
-        font-size: 20px;
-        margin-bottom: 8px;
-    }
-    .hero-subtitle {
-        font-size: 9px;
-        margin-bottom: 6px;
-        letter-spacing: 2px;
-    }
-    .hero-discount {
-        font-size: 10px;
-        margin-bottom: 10px;
-        padding: 2px 8px;
-    }
-    .hero-actions {
-        justify-content: center;
-    }
-    .hero-actions .btn {
-        padding: 8px 15px;
-        font-size: 10px;
-        width: auto;
-    }
-    .hero-pagination {
-        left: 0;
-        bottom: 10px;
-        width: 100%;
-        justify-content: center;
-    }
+@media (max-width: 768px) {
+  .hero-container {
+    padding: 10px;
+  }
+  .hero-section {
+    height: 300px;
+    border-radius: 12px;
+  }
+
+  .hero-pagination {
+    bottom: 15px;
+    gap: 6px;
+  }
+
+  .hero-pagination .dot {
+    width: 30px;
+    height: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 250px;
+  }
 }

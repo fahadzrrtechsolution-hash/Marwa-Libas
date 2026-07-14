@@ -1,295 +1,846 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marwa Libas | Premium Pakistani Women Designer Wear</title>
-    <meta name="description" content="Shop premium Women's Designer Suits, Eid Collections, and Summer Lawn dresses at Marwa Libas. Pre-orders deliver in 4-7 working days.">
+    <meta
+      name="description"
+      content="Shop premium Women's Designer Suits, Eid Collections, and Summer Lawn dresses at Marwa Libas. Pre-orders deliver in 4-7 working days."
+    />
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Modular Style Sheets -->
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/components/header.css">
-    <link rel="stylesheet" href="css/components/drawers.css">
-    <link rel="stylesheet" href="css/components/hero.css">
-    <link rel="stylesheet" href="css/components/productCard.css">
-    <link rel="stylesheet" href="css/components/footer.css">
-    <link rel="stylesheet" href="css/pages/home.css">
-    <link rel="stylesheet" href="css/pages/collection.css">
-    <link rel="stylesheet" href="css/pages/productDetails.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/components/header.css" />
+    <link rel="stylesheet" href="css/components/drawers.css" />
+    <link rel="stylesheet" href="css/components/hero.css" />
+    <link rel="stylesheet" href="css/components/productCard.css" />
+    <link rel="stylesheet" href="css/components/footer.css" />
+    <link rel="stylesheet" href="css/pages/home.css" />
+    <link rel="stylesheet" href="css/pages/collection.css" />
+    <link rel="stylesheet" href="css/pages/productDetails.css" />
+  </head>
+  <body>
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-        <span>Pre-Order articles will be deliver in 4-7 working days</span>
+      <span>Pre-Order articles will be deliver in 4-7 working days</span>
     </div>
 
     <!-- Main Header -->
     <header class="main-header" id="main-header">
-        <div class="header-container">
-            <!-- Left Actions -->
-            <div class="header-left">
-                <!-- Mobile Menu Toggle -->
-                <button class="mobile-menu-toggle icon-btn" id="mobile-menu-toggle" aria-label="Toggle Menu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                </button>
-                <button class="icon-btn" id="search-trigger" aria-label="Search">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-                <a href="admin.html" class="icon-btn header-desktop-only" aria-label="Admin Panel" title="Admin Panel">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                </a>
-            </div>
-
-            <!-- Logo -->
-            <div class="header-brand">
-                <a href="#home" class="logo-link">
-                    <img src="assets/Logo.png.png" alt="Marwa Libas Logo" class="logo-img" style="max-height: 40px; width: auto; object-fit: contain;">
-                </a>
-            </div>
-
-            <!-- Right Actions -->
-            <div class="header-right">
-                <a href="#wishlist" class="icon-btn" aria-label="Wishlist">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span class="badge" id="wishlist-count">0</span>
-                </a>
-                <button class="icon-btn" id="cart-trigger" aria-label="Cart">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    <span class="badge" id="cart-count">0</span>
-                </button>
-            </div>
+      <div class="header-container">
+        <!-- Left Actions -->
+        <div class="header-left">
+          <!-- Mobile Menu Toggle -->
+          <button
+            class="mobile-menu-toggle icon-btn"
+            id="mobile-menu-toggle"
+            aria-label="Toggle Menu"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <button class="icon-btn" id="search-trigger" aria-label="Search">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <a
+            href="admin.html"
+            class="icon-btn header-desktop-only"
+            aria-label="Admin Panel"
+            title="Admin Panel"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </a>
         </div>
 
+        <!-- Logo -->
+        <div class="header-brand">
+          <a href="#home" class="logo-link">
+            <img
+              src="assets/Logo.png.png"
+              alt="Marwa Libas Logo"
+              class="logo-img"
+              style="max-height: 40px; width: auto; object-fit: contain"
+            />
+          </a>
+        </div>
 
+        <!-- Right Actions -->
+        <div class="header-right">
+          <a href="#wishlist" class="icon-btn" aria-label="Wishlist">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              ></path>
+            </svg>
+            <span class="badge" id="wishlist-count">0</span>
+          </a>
+          <button class="icon-btn" id="cart-trigger" aria-label="Cart">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
+              ></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="badge" id="cart-count">0</span>
+          </button>
+        </div>
+      </div>
     </header>
 
     <!-- Slide-Out Mobile Navigation Drawer -->
     <div class="drawer-overlay" id="drawer-overlay"></div>
     <div class="mobile-drawer" id="mobile-drawer">
-        <div class="drawer-header">
-            <h3>Menu</h3>
-            <button class="close-btn" id="close-mobile-menu" aria-label="Close Menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-        <ul class="mobile-nav-links">
-            <li><a href="admin.html" class="mobile-nav-link" style="display: flex; align-items: center; gap: 10px; color: var(--primary); font-weight: bold;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Admin Panel</a></li>
-            <li><a href="#contact" class="mobile-nav-link" style="display: flex; align-items: center; gap: 10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Contact Us</a></li>
-        </ul>
+      <div class="drawer-header">
+        <h3>Menu</h3>
+        <button
+          class="close-btn"
+          id="close-mobile-menu"
+          aria-label="Close Menu"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li>
+          <a
+            href="admin.html"
+            class="mobile-nav-link"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              color: var(--primary);
+              font-weight: bold;
+            "
+            ><svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect></svg
+            >Admin Panel</a
+          >
+        </li>
+        <li>
+          <a
+            href="#contact"
+            class="mobile-nav-link"
+            style="display: flex; align-items: center; gap: 10px"
+            ><svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              ></path>
+              <polyline points="22,6 12,13 2,6"></polyline></svg
+            >Contact Us</a
+          >
+        </li>
+      </ul>
     </div>
 
     <!-- Premium Slide-Out Search Drawer -->
     <div class="drawer-overlay" id="search-drawer-overlay"></div>
     <div class="search-drawer" id="search-drawer">
-        <div class="drawer-header">
-            <h3>Discover</h3>
-            <button class="close-btn" id="close-search" aria-label="Close Search">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
+      <div class="drawer-header">
+        <h3>Discover</h3>
+        <button class="close-btn" id="close-search" aria-label="Close Search">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="search-drawer-content">
+        <div class="search-category-wrapper">
+          <select id="search-category" class="search-category-select">
+            <option value="all">All Categories</option>
+            <option value="2pc lawn suit">2pc lawn suit</option>
+            <option value="2pcs suit">2pcs suit</option>
+            <option value="3pc lawn suit">3pc lawn suit</option>
+            <option value="3pcs">3pcs</option>
+          </select>
+          <svg
+            class="select-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
         </div>
-        <div class="search-drawer-content">
-            <div class="search-category-wrapper">
-                <select id="search-category" class="search-category-select">
-                    <option value="all">All Categories</option>
-                    <option value="2pc lawn suit">2pc lawn suit</option>
-                    <option value="2pcs suit">2pcs suit</option>
-                    <option value="3pc lawn suit">3pc lawn suit</option>
-                    <option value="3pcs">3pcs</option>
-                </select>
-                <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
 
-            <div class="premium-search-input-wrapper">
-                <input type="text" id="search-input" placeholder="What are you looking for?" autocomplete="off">
-                <button class="search-btn" id="search-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-            </div>
-            
-            <div id="search-suggestions" class="search-suggestions">
-                <p class="suggestions-title">Trending Now</p>
-                <div class="trending-tags">
-                    <span class="trending-tag" onclick="document.getElementById('search-input').value='Luxury Lawn'; document.getElementById('search-input').dispatchEvent(new Event('input'))">Luxury Lawn</span>
-                    <span class="trending-tag" onclick="document.getElementById('search-input').value='Sale'; document.getElementById('search-input').dispatchEvent(new Event('input'))">Sale</span>
-                    <span class="trending-tag" onclick="document.getElementById('search-input').value='2pc'; document.getElementById('search-input').dispatchEvent(new Event('input'))">2pc Suits</span>
-                </div>
-            </div>
-
-            <div class="search-results" id="search-results">
-                <!-- Search results rendered dynamically -->
-            </div>
+        <div class="premium-search-input-wrapper">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="What are you looking for?"
+            autocomplete="off"
+          />
+          <button class="search-btn" id="search-btn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
         </div>
+
+        <div id="search-suggestions" class="search-suggestions">
+          <p class="suggestions-title">Trending Now</p>
+          <div class="trending-tags">
+            <span
+              class="trending-tag"
+              onclick="
+                document.getElementById('search-input').value = 'Luxury Lawn';
+                document
+                  .getElementById('search-input')
+                  .dispatchEvent(new Event('input'));
+              "
+              >Luxury Lawn</span
+            >
+            <span
+              class="trending-tag"
+              onclick="
+                document.getElementById('search-input').value = 'Sale';
+                document
+                  .getElementById('search-input')
+                  .dispatchEvent(new Event('input'));
+              "
+              >Sale</span
+            >
+            <span
+              class="trending-tag"
+              onclick="
+                document.getElementById('search-input').value = '2pc';
+                document
+                  .getElementById('search-input')
+                  .dispatchEvent(new Event('input'));
+              "
+              >2pc Suits</span
+            >
+          </div>
+        </div>
+
+        <div class="search-results" id="search-results">
+          <!-- Search results rendered dynamically -->
+        </div>
+      </div>
     </div>
 
     <!-- Slide-Out Cart Drawer -->
     <div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
     <div class="cart-drawer" id="cart-drawer">
-        <div class="cart-drawer-header">
-            <h3>Shopping Cart (<span id="cart-drawer-count">0</span>)</h3>
-            <button class="close-btn" id="close-cart" aria-label="Close Cart">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-        
-        <div class="cart-drawer-content" id="cart-drawer-items">
-            <!-- Cart items render dynamically -->
-            <div class="empty-cart-message">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                <p>Your shopping cart is empty</p>
-                <a href="#collection/new-arrivals" class="btn btn-primary close-cart-drawer-btn">Start Shopping</a>
-            </div>
-        </div>
+      <div class="cart-drawer-header">
+        <h3>Shopping Cart (<span id="cart-drawer-count">0</span>)</h3>
+        <button class="close-btn" id="close-cart" aria-label="Close Cart">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
 
-        <div class="cart-drawer-footer" id="cart-drawer-footer" style="display: none;">
-            <div class="cart-summary-row">
-                <span>Subtotal:</span>
-                <span id="cart-drawer-subtotal">Rs. 0.00</span>
-            </div>
-            <p class="cart-note">Shipping & taxes calculated at checkout</p>
-            <a href="#cart" class="btn btn-outline btn-block" style="margin-bottom: 10px; background-color: transparent; border: 1px solid var(--primary); color: var(--primary);" id="cart-view-btn">View Cart</a>
-            <a href="#checkout" class="btn btn-primary btn-block" id="cart-checkout-btn">Proceed to Checkout</a>
+      <div class="cart-drawer-content" id="cart-drawer-items">
+        <!-- Cart items render dynamically -->
+        <div class="empty-cart-message">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path
+              d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+            ></path>
+          </svg>
+          <p>Your shopping cart is empty</p>
+          <a
+            href="#collection/new-arrivals"
+            class="btn btn-primary close-cart-drawer-btn"
+            >Start Shopping</a
+          >
         </div>
+      </div>
+
+      <div
+        class="cart-drawer-footer"
+        id="cart-drawer-footer"
+        style="display: none"
+      >
+        <div class="cart-summary-row">
+          <span>Subtotal:</span>
+          <span id="cart-drawer-subtotal">Rs. 0.00</span>
+        </div>
+        <p class="cart-note">Shipping & taxes calculated at checkout</p>
+        <a
+          href="#cart"
+          class="btn btn-outline btn-block"
+          style="
+            margin-bottom: 10px;
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+          "
+          id="cart-view-btn"
+          >View Cart</a
+        >
+        <a
+          href="#checkout"
+          class="btn btn-primary btn-block"
+          id="cart-checkout-btn"
+          >Proceed to Checkout</a
+        >
+      </div>
     </div>
 
     <!-- Slide-Out Filter Drawer -->
     <div class="drawer-overlay" id="filter-drawer-overlay"></div>
-    <div class="mobile-drawer" id="filter-drawer" style="background-color: var(--color-bg-primary);">
-        <div class="drawer-header" style="border-bottom: 1px solid var(--color-border); padding: 20px;">
-            <h3 style="font-size: 14px; font-weight: 600; letter-spacing: 1px; color: var(--color-text-primary);">FILTER</h3>
-            <button class="close-btn" id="close-filter" aria-label="Close Filter">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    <div
+      class="mobile-drawer"
+      id="filter-drawer"
+      style="background-color: var(--color-bg-primary)"
+    >
+      <div
+        class="drawer-header"
+        style="border-bottom: 1px solid var(--color-border); padding: 20px"
+      >
+        <h3
+          style="
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--color-text-primary);
+          "
+        >
+          FILTER
+        </h3>
+        <button class="close-btn" id="close-filter" aria-label="Close Filter">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div
+        class="filter-drawer-content"
+        style="padding: 25px; flex: 1; overflow-y: auto"
+      >
+        <!-- Availability Section -->
+        <div
+          class="filter-section"
+          style="
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 25px;
+          "
+        >
+          <h4
+            style="
+              font-size: 15px;
+              font-weight: 500;
+              margin-bottom: 20px;
+              color: var(--color-text-primary);
+              display: inline-block;
+              border-bottom: 2px solid var(--color-brand);
+              padding-bottom: 4px;
+            "
+          >
+            Availability
+          </h4>
+
+          <label
+            class="filter-checkbox"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 15px;
+              cursor: pointer;
+            "
+          >
+            <input
+              type="checkbox"
+              checked
+              style="
+                accent-color: var(--color-brand);
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+              "
+            />
+            <span style="font-size: 14px; color: var(--color-text-primary)"
+              >In Stock (44)</span
+            >
+          </label>
+
+          <label
+            class="filter-checkbox"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              cursor: pointer;
+            "
+          >
+            <input
+              type="checkbox"
+              style="
+                accent-color: var(--color-brand);
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+              "
+            />
+            <span style="font-size: 14px; color: var(--color-text-primary)"
+              >Out Of Stock (2)</span
+            >
+          </label>
+        </div>
+
+        <!-- Price Section -->
+        <div class="filter-section">
+          <h4
+            style="
+              font-size: 15px;
+              font-weight: 500;
+              margin-bottom: 25px;
+              color: var(--color-text-primary);
+              display: inline-block;
+              border-bottom: 2px solid var(--color-brand);
+              padding-bottom: 4px;
+            "
+          >
+            Price
+          </h4>
+
+          <div class="price-slider-container">
+            <div
+              class="slider-track"
+              style="
+                height: 2px;
+                background: var(--color-brand);
+                position: relative;
+                margin-bottom: 25px;
+                margin-top: 10px;
+              "
+            >
+              <div
+                class="slider-thumb"
+                style="
+                  width: 4px;
+                  height: 14px;
+                  background: var(--color-brand);
+                  position: absolute;
+                  left: 0;
+                  top: -6px;
+                "
+              ></div>
+              <div
+                class="slider-thumb"
+                style="
+                  width: 4px;
+                  height: 14px;
+                  background: var(--color-brand);
+                  position: absolute;
+                  right: 0;
+                  top: -6px;
+                "
+              ></div>
+            </div>
+
+            <div
+              style="
+                font-size: 13px;
+                color: var(--color-text-secondary);
+                margin-bottom: 25px;
+              "
+            >
+              Price:
+              <strong style="color: var(--color-text-primary)"
+                >Rs.0.00 PKR</strong
+              >
+              &mdash;
+              <strong style="color: var(--color-text-primary)"
+                >Rs.7,490.00 PKR</strong
+              >
+            </div>
+
+            <button
+              class="btn btn-outline"
+              style="
+                border-radius: 30px;
+                font-size: 11px;
+                padding: 10px 30px;
+                border: 1.5px solid var(--color-brand);
+                color: var(--color-brand);
+                font-weight: 700;
+                letter-spacing: 1px;
+              "
+            >
+              FILTER
             </button>
+          </div>
         </div>
-        
-        <div class="filter-drawer-content" style="padding: 25px; flex: 1; overflow-y: auto;">
-            <!-- Availability Section -->
-            <div class="filter-section" style="margin-bottom: 30px; border-bottom: 1px solid var(--color-border); padding-bottom: 25px;">
-                <h4 style="font-size: 15px; font-weight: 500; margin-bottom: 20px; color: var(--color-text-primary); display: inline-block; border-bottom: 2px solid var(--color-brand); padding-bottom: 4px;">Availability</h4>
-                
-                <label class="filter-checkbox" style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px; cursor: pointer;">
-                    <input type="checkbox" checked style="accent-color: var(--color-brand); width: 16px; height: 16px; cursor: pointer;">
-                    <span style="font-size: 14px; color: var(--color-text-primary);">In Stock (44)</span>
-                </label>
-                
-                <label class="filter-checkbox" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
-                    <input type="checkbox" style="accent-color: var(--color-brand); width: 16px; height: 16px; cursor: pointer;">
-                    <span style="font-size: 14px; color: var(--color-text-primary);">Out Of Stock (2)</span>
-                </label>
-            </div>
-            
-            <!-- Price Section -->
-            <div class="filter-section">
-                <h4 style="font-size: 15px; font-weight: 500; margin-bottom: 25px; color: var(--color-text-primary); display: inline-block; border-bottom: 2px solid var(--color-brand); padding-bottom: 4px;">Price</h4>
-                
-                <div class="price-slider-container">
-                    <div class="slider-track" style="height: 2px; background: var(--color-brand); position: relative; margin-bottom: 25px; margin-top: 10px;">
-                        <div class="slider-thumb" style="width: 4px; height: 14px; background: var(--color-brand); position: absolute; left: 0; top: -6px;"></div>
-                        <div class="slider-thumb" style="width: 4px; height: 14px; background: var(--color-brand); position: absolute; right: 0; top: -6px;"></div>
-                    </div>
-                    
-                    <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 25px;">
-                        Price: <strong style="color: var(--color-text-primary);">Rs.0.00 PKR</strong> &mdash; <strong style="color: var(--color-text-primary);">Rs.7,490.00 PKR</strong>
-                    </div>
-                    
-                    <button class="btn btn-outline" style="border-radius: 30px; font-size: 11px; padding: 10px 30px; border: 1.5px solid var(--color-brand); color: var(--color-brand); font-weight: 700; letter-spacing: 1px;">FILTER</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
     <!-- Main Viewport for Dynamic Content -->
     <main id="app-content" class="fade-in">
-        <!-- Renders dynamic page content from app.js -->
+      <!-- Renders dynamic page content from app.js -->
     </main>
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-col footer-contact">
-                <h3>Contact Us</h3>
-                <ul class="footer-info-list">
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>F942+RJP, Gulshan Colony Gul Colony, Lahore, Pakistan</span>
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <a href="mailto:marwalibas1@gmail.com">marwalibas1@gmail.com</a>
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        <a href="tel:03229043703">03229043703</a>
-                    </li>
-                </ul>
-                <div class="social-links">
-                    <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
-                    <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="footer-col">
-                <h3>Customer Care</h3>
-                <ul>
-                    <li><a href="#account">My Account</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                    <li><a href="#faqs">FAQs</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h3>Categories</h3>
-                <ul>
-                    <li><a href="#collection/sale">Sale</a></li>
-                    <li><a href="#collection/new-arrivals">New Arrivals</a></li>
-                    <li><a href="#collection/under-2290">Dresses under Rs: 2290</a></li>
-                    <li><a href="#collection/luxury-lawn">Luxury Lawn SS'26</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col footer-newsletter">
-                <h3>Newsletter</h3>
-                <p>Subscribe to receive 10% off your first order and stay updated on new arrivals.</p>
-                <form id="newsletter-form" class="newsletter-form">
-                    <input type="email" placeholder="Your Email Address" required>
-                    <button type="submit" class="btn btn-dark">Subscribe</button>
-                </form>
-            </div>
+      <div class="footer-container">
+        <div class="footer-col footer-contact">
+          <h3>Contact Us</h3>
+          <ul class="footer-info-list">
+            <li>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>F942+RJP, Gulshan Colony Gul Colony, Lahore, Pakistan</span>
+            </li>
+            <li>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <a href="mailto:marwalibas1@gmail.com">marwalibas1@gmail.com</a>
+            </li>
+            <li>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                ></path>
+              </svg>
+              <a href="tel:03229043703">03229043703</a>
+            </li>
+          </ul>
+          <div class="social-links">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              aria-label="Facebook"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              aria-label="Instagram"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Marwa Libas. All rights reserved. Powered by Antigravity AI.</p>
+
+        <div class="footer-col">
+          <h3>Customer Care</h3>
+          <ul>
+            <li><a href="#account">My Account</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#faqs">FAQs</a></li>
+          </ul>
         </div>
+
+        <div class="footer-col">
+          <h3>Categories</h3>
+          <ul>
+            <li><a href="#collection/sale">Sale</a></li>
+            <li><a href="#collection/new-arrivals">New Arrivals</a></li>
+            <li><a href="#collection/under-2290">Dresses under Rs: 2290</a></li>
+            <li><a href="#collection/luxury-lawn">Luxury Lawn SS'26</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-newsletter">
+          <h3>Newsletter</h3>
+          <p>
+            Subscribe to receive 10% off your first order and stay updated on
+            new arrivals.
+          </p>
+          <form id="newsletter-form" class="newsletter-form">
+            <input type="email" placeholder="Your Email Address" required />
+            <button type="submit" class="btn btn-dark">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 Marwa Libas. All rights reserved. Powered by Antigravity
+          AI.
+        </p>
+      </div>
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/923229043703" target="_blank" class="floating-whatsapp" title="Contact us on WhatsApp">
-        <svg viewBox="0 0 32 32" width="32" height="32" fill="white"><path d="M16 2.003c-7.72 0-14 6.279-14 14.002 0 2.454.636 4.846 1.841 6.953L2 29.997l7.218-1.894a13.927 13.927 0 0 0 6.782 1.76h.005c7.717 0 13.995-6.281 13.995-14.003 0-3.742-1.458-7.257-4.103-9.902C23.25 3.313 19.742 1.856 16 2.003zm7.559 20.25c-.316.891-1.536 1.637-2.193 1.765-.609.117-1.385.197-3.957-.868-3.284-1.359-5.385-4.717-5.551-4.939-.166-.222-1.326-1.767-1.326-3.371s.836-2.391 1.135-2.707c.299-.316.649-.395.864-.395.216 0 .432.002.614.011.199.011.465-.08.731.562.266.642.914 2.228.997 2.394.083.166.133.361.017.593-.116.232-.166.377-.332.576-.166.199-.349.431-.498.564-.166.149-.344.314-.15.647.194.333.864 1.427 1.855 2.31 1.282 1.144 2.35 1.498 2.682 1.664.332.166.526.15.725-.034.199-.184.863-1.012 1.096-1.36.233-.349.465-.291.764-.175.299.116 1.894.892 2.226 1.058.332.166.554.249.637.382.083.133.083.774-.233 1.665z"></path></svg>
+    <a
+      href="https://wa.me/923229043703"
+      target="_blank"
+      class="floating-whatsapp"
+      title="Contact us on WhatsApp"
+    >
+      <svg viewBox="0 0 32 32" width="32" height="32" fill="white">
+        <path
+          d="M16 2.003c-7.72 0-14 6.279-14 14.002 0 2.454.636 4.846 1.841 6.953L2 29.997l7.218-1.894a13.927 13.927 0 0 0 6.782 1.76h.005c7.717 0 13.995-6.281 13.995-14.003 0-3.742-1.458-7.257-4.103-9.902C23.25 3.313 19.742 1.856 16 2.003zm7.559 20.25c-.316.891-1.536 1.637-2.193 1.765-.609.117-1.385.197-3.957-.868-3.284-1.359-5.385-4.717-5.551-4.939-.166-.222-1.326-1.767-1.326-3.371s.836-2.391 1.135-2.707c.299-.316.649-.395.864-.395.216 0 .432.002.614.011.199.011.465-.08.731.562.266.642.914 2.228.997 2.394.083.166.133.361.017.593-.116.232-.166.377-.332.576-.166.199-.349.431-.498.564-.166.149-.344.314-.15.647.194.333.864 1.427 1.855 2.31 1.282 1.144 2.35 1.498 2.682 1.664.332.166.526.15.725-.034.199-.184.863-1.012 1.096-1.36.233-.349.465-.291.764-.175.299.116 1.894.892 2.226 1.058.332.166.554.249.637.382.083.133.083.774-.233 1.665z"
+        ></path>
+      </svg>
     </a>
+
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="share-modal-overlay"></div>
+    <div class="modal" id="share-modal">
+      <button id="close-share-modal-btn">
+        &times;
+      </button>
+      <h3>Share it on</h3>
+
+      <div>
+<button class="share-option-btn" id="share-facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            />
+          </svg>
+          Facebook
+        </button>
+        <button class="share-option-btn" id="share-whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366">
+            <path
+              d="M12.031 0C5.395 0 0 5.394 0 12.03c0 2.115.55 4.179 1.597 5.992L0 24l6.126-1.564c1.765 1.004 3.766 1.534 5.897 1.534 6.634 0 12.028-5.394 12.028-12.031C24.05 5.393 18.663 0 12.031 0zm.014 22.043c-1.802 0-3.565-.484-5.111-1.401l-.367-.216-3.805.972.99-3.71-.237-.378a10.057 10.057 0 0 1-1.538-5.378c0-5.553 4.52-10.073 10.081-10.073 5.564 0 10.084 4.52 10.084 10.073 0 5.551-4.52 10.073-10.081 10.073zm5.534-7.551c-.303-.152-1.794-.886-2.074-.988-.279-.101-.482-.152-.684.152-.203.303-.783.988-.96 1.19-.177.203-.355.228-.658.076-.304-.152-1.282-.472-2.441-1.506-.902-.805-1.51-1.799-1.687-2.103-.177-.304-.019-.468.133-.62.136-.135.304-.354.455-.531.152-.177.203-.304.304-.506.101-.203.051-.38-.025-.531-.076-.152-.684-1.646-.937-2.253-.247-.591-.497-.512-.684-.521-.177-.009-.38-.009-.582-.009s-.532.076-.81.38c-.279.303-1.064 1.037-1.064 2.53 0 1.493 1.089 2.936 1.24 3.138.152.203 2.144 3.272 5.19 4.582 2.062.887 2.76.758 3.276.632.748-.18 1.794-.733 2.047-1.442.253-.709.253-1.316.177-1.442-.076-.127-.279-.203-.582-.354z"
+            />
+          </svg>
+          Whatsapp
+        </button>
+        <button class="share-option-btn" id="share-pinterest">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#E60023">
+            <path
+              d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.168 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.624 0 12.017 0z"
+            />
+          </svg>
+          Pinterest
+        </button>
+      </div>
+
+      <div class="share-divider">
+        <span
+          style="
+            background: white;
+            padding: 0 10px;
+            position: relative;
+            z-index: 1;
+          "
+          >OR</span
+        >
+        <div
+          style="
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+            z-index: 0;
+          "
+        ></div>
+      </div>
+
+      <button id="share-copy-link">
+        Copy Link
+      </button>
+
+      <div style="height: 1px; background: #f0f0f0; margin-top: 20px"></div>
+    </div>
 
     <!-- App Logic -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="js/data/firebase.js"></script>
-    <script src="js/data/products.js"></script>
-    <script src="js/data/store.js"></script>
-    <script src="js/components/header.js"></script>
-    <script src="js/components/cartDrawer.js"></script>
-    <script src="js/components/productCard.js"></script>
-    <script src="js/pages/home.js"></script>
-    <script src="js/pages/collection.js"></script>
-    <script src="js/pages/productDetails.js"></script>
-    <script src="js/pages/contact.js"></script>
-    <script src="js/pages/cart.js"></script>
-    <script src="js/pages/checkout.js"></script>
-    <script src="js/pages/wishlist.js"></script>
-    <script src="js/main.js"></script>
-</body>
+    <script src="js/data/firebase.js?v=2"></script>
+    <script src="js/data/products.js?v=2"></script>
+    <script src="js/data/store.js?v=2"></script>
+    <script src="js/components/header.js?v=2"></script>
+    <script src="js/components/cartDrawer.js?v=2"></script>
+    <script src="js/components/productCard.js?v=2"></script>
+    <script src="js/pages/home.js?v=2"></script>
+    <script src="js/pages/collection.js?v=2"></script>
+    <script src="js/pages/productDetails.js?v=2"></script>
+    <script src="js/pages/contact.js?v=2"></script>
+    <script src="js/pages/cart.js?v=2"></script>
+    <script src="js/pages/checkout.js?v=2"></script>
+    <script src="js/pages/wishlist.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
+  </body>
 </html>
