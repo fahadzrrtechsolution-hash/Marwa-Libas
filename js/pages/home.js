@@ -212,22 +212,13 @@ function renderHomepage() {
             <section class="hero-section" id="hero-slider">
                 <div class="hero-track" id="hero-track">
                 ${BANNERS.map((banner, index) => {
-                    const themeStyle = banner.theme === 'dark' ? 'color: var(--color-bg-primary);' : '';
-                    const themeStyleBorder = banner.theme === 'dark' ? 'border-color: var(--color-bg-primary); color: var(--color-bg-primary);' : '';
-                    const btnClass = banner.theme === 'dark' ? 'btn btn-outline' : 'btn';
-                    
                     return `
-                    <div class="hero-slide ${index === 0 ? 'active' : ''}">
-                        <img src="${banner.image}" alt="${banner.title}" class="hero-bg-img">
-                        <div class="hero-content">
-                            <div class="hero-subtitle" style="${themeStyle}">${banner.subtitle}</div>
-                            <h1 class="hero-title" style="${themeStyle}">${banner.title}</h1>
-                            ${banner.discount ? `<div class="hero-discount" style="${themeStyle}">${banner.discount}</div>` : ''}
-                            <div class="hero-actions">
-                                <a href="${banner.btnLink}" class="btn">${banner.btnText}</a>
-                            </div>
-                        </div>
-                    </div>`;
+                    <div class="hero-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
+                        <a href="${banner.btnLink}">
+                            <img src="${banner.image}" alt="Banner" class="hero-bg-img">
+                        </a>
+                    </div>
+                    `;
                 }).join('')}
                 </div>
                 

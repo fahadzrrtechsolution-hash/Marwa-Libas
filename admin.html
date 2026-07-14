@@ -161,8 +161,6 @@
                         <thead>
                             <tr>
                                 <th width="100">Image</th>
-                                <th>Title</th>
-                                <th>Subtitle</th>
                                 <th>Link</th>
                                 <th width="100">Actions</th>
                             </tr>
@@ -410,40 +408,9 @@
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="banner-title">Title (e.g. SALE)</label>
-                        <input type="text" id="banner-title" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="banner-subtitle">Subtitle (e.g. Mid-Summer)</label>
-                        <input type="text" id="banner-subtitle" class="form-control" required>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="banner-discount">Highlight Text (e.g. UP TO 50% OFF)</label>
-                        <input type="text" id="banner-discount" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="banner-theme">Text Color Theme</label>
-                        <select id="banner-theme" class="form-control">
-                            <option value="light">Light (White text for dark images)</option>
-                            <option value="dark">Dark (Dark text for light images)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
-                    <div class="form-group">
-                        <label for="banner-btn-text">Button Text (e.g. SHOP NOW)</label>
-                        <input type="text" id="banner-btn-text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="banner-btn-link">Button Link (e.g. #collection/sale)</label>
-                        <input type="text" id="banner-btn-link" class="form-control" required>
-                    </div>
+                <div class="form-group">
+                    <label for="banner-btn-link">Banner Link (e.g. #collection/sale)</label>
+                    <input type="text" id="banner-btn-link" class="form-control" required>
                 </div>
 
                 <div class="modal-footer" style="margin-top: 20px; text-align: right;">

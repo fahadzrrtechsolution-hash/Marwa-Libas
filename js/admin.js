@@ -290,10 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.banners.forEach(banner => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><img src="${banner.image}" alt="${banner.title}"></td>
-                <td><strong>${banner.title}</strong></td>
-                <td>${banner.subtitle}</td>
-                <td>${banner.btnLink}</td>
+                <td><img src="${banner.image}" alt="Banner Image"></td>
+                <td>${banner.btnLink || ''}</td>
                 <td>
                     <button class="action-btn edit-banner-btn" data-id="${banner.id}" title="Edit">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
@@ -480,11 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const banner = window.banners.find(b => b.id === id);
             
             document.getElementById('banner-id').value = banner.id;
-            document.getElementById('banner-title').value = banner.title;
-            document.getElementById('banner-subtitle').value = banner.subtitle;
-            document.getElementById('banner-discount').value = banner.discount || '';
-            document.getElementById('banner-theme').value = banner.theme || 'light';
-            document.getElementById('banner-btn-text').value = banner.btnText;
             document.getElementById('banner-btn-link').value = banner.btnLink;
             
             bannerImageContainer.innerHTML = '';
@@ -654,20 +647,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let bannerId = document.getElementById('banner-id').value;
-        if (!bannerId) {
-            bannerId = 'banner-' + Date.now();
-        }
-
         const newBanner = {
-            id: bannerId,
-            image: mainImage,
-            title: document.getElementById('banner-title').value,
-            subtitle: document.getElementById('banner-subtitle').value,
-            discount: document.getElementById('banner-discount').value,
-            theme: document.getElementById('banner-theme').value,
-            btnText: document.getElementById('banner-btn-text').value,
-            btnLink: document.getElementById('banner-btn-link').value
+            id: document.getElementById('banner-id').value || 'banner-' + Date.now(),
+            btnLink: document.getElementById('banner-btn-link').value,
+            image: mainImage
         };
 
         const existingIndex = window.banners.findIndex(b => b.id === newBanner.id);
