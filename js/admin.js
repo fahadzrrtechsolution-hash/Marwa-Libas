@@ -629,10 +629,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (typeof saveProductToDb === 'function') {
             saveProductToDb(newProduct);
-        } else {
-            // Fallback for local storage
-            localStorage.setItem('marwa_products', JSON.stringify(window.products));
         }
+        // Fallback for local storage
+        localStorage.setItem('marwa_products', JSON.stringify(window.products));
         
         // window.renderTable() is triggered automatically by Firebase onSnapshot in products.js
         if (typeof window.renderTable === 'function') window.renderTable();
@@ -678,9 +677,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (typeof saveBannerToDb === 'function') {
             saveBannerToDb(newBanner);
-        } else {
-            localStorage.setItem('marwa_banners', JSON.stringify(window.banners));
         }
+        localStorage.setItem('marwa_banners', JSON.stringify(window.banners));
         
         if (typeof window.renderBannersTable === 'function') window.renderBannersTable();
         closeBannerModal();
@@ -722,9 +720,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (typeof saveCollectionToDb === 'function') {
                 saveCollectionToDb(newCollection);
-            } else {
-                localStorage.setItem('marwa_collections', JSON.stringify(window.collections));
             }
+            localStorage.setItem('marwa_collections', JSON.stringify(window.collections));
             
             if (typeof window.renderCollectionsTable === 'function') window.renderCollectionsTable();
             closeCollectionModal();
@@ -734,34 +731,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Delete Logic ---
     const deleteProduct = (id) => {
         if(confirm("Are you sure you want to delete this product? This will immediately remove it from your website.")) {
-            if (typeof deleteProductFromDb === 'function') {
-                deleteProductFromDb(id);
-            } else {
-                window.products = window.products.filter(p => p.id !== id);
+            window.products = window.products.filter(p => p.id !== id);
                 localStorage.setItem('marwa_products', JSON.stringify(window.products));
-            }
+                if (typeof deleteProductFromDb === 'function') {
+                    deleteProductFromDb(id);
+                }
         }
     };
 
     const deleteBanner = (id) => {
         if(confirm("Are you sure you want to delete this banner?")) {
-            if (typeof deleteBannerFromDb === 'function') {
-                deleteBannerFromDb(id);
-            } else {
-                window.banners = window.banners.filter(b => b.id !== id);
+            window.banners = window.banners.filter(b => b.id !== id);
                 localStorage.setItem('marwa_banners', JSON.stringify(window.banners));
-            }
+                if (typeof deleteBannerFromDb === 'function') {
+                    deleteBannerFromDb(id);
+                }
         }
     };
 
     const deleteCollection = (id) => {
         if(confirm("Are you sure you want to delete this collection?")) {
-            if (typeof deleteCollectionFromDb === 'function') {
-                deleteCollectionFromDb(id);
-            } else {
-                window.collections = window.collections.filter(c => c.id !== id);
+            window.collections = window.collections.filter(c => c.id !== id);
                 localStorage.setItem('marwa_collections', JSON.stringify(window.collections));
-            }
+                if (typeof deleteCollectionFromDb === 'function') {
+                    deleteCollectionFromDb(id);
+                }
         }
     };
 
@@ -1084,9 +1078,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (typeof saveHomeCategoryToDb === 'function') {
                 saveHomeCategoryToDb(newCategory);
-            } else {
-                localStorage.setItem('marwa_home_categories', JSON.stringify(window.homeCategories));
             }
+            localStorage.setItem('marwa_home_categories', JSON.stringify(window.homeCategories));
             
             if (typeof window.renderHomeCategoriesTable === 'function') window.renderHomeCategoriesTable();
             closeHcModal();
