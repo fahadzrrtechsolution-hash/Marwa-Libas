@@ -25,28 +25,7 @@ const bannersLoadedEvent = new Event("bannersLoaded");
 const collectionsLoadedEvent = new Event("collectionsLoaded");
 const homeCategoriesLoadedEvent = new Event("homeCategoriesLoaded");
 
-// --- TEMPORARY SCRIPT TO WIPE ALL OLD DUMMY DATA FROM FIREBASE & LOCAL STORAGE ---
-if (typeof db !== "undefined" && !localStorage.getItem("db_wiped_once_2")) {
-  const collectionsToWipe = [
-    "marwa_products", 
-    "marwa_banners", 
-    "marwa_collections", 
-    "marwa_home_categories", 
-    "marwa_category_banners"
-  ];
-  
-  collectionsToWipe.forEach(coll => {
-    db.collection(coll).get().then(snap => {
-      snap.forEach(doc => doc.ref.delete());
-    });
-  });
-  
-  localStorage.clear();
-  localStorage.setItem("db_wiped_once_2", "true");
-  
-  console.log("Database and Local Storage wiped clean!");
-}
-// ---------------------------------------------------------------------------------
+
 
 // Read from Firebase Firestore
 if (typeof db !== "undefined") {
