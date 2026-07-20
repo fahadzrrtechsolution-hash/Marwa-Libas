@@ -15,8 +15,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: auto; /* Allow image to dictate height */
-  aspect-ratio: unset;
+  height: 500px; /* Fixed reasonable height instead of aspect-ratio */
   border-radius: 20px; /* Rounded corners */
   overflow: hidden; /* Keep images inside rounded corners */
   touch-action: pan-y;
@@ -56,12 +55,12 @@
 }
 
 .hero-bg-img {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   object-position: center center;
   z-index: 0;
   pointer-events: none;
@@ -111,7 +110,7 @@
 /* Mobile responsive adjustments */
 @media (max-width: 991px) {
   .hero-section {
-    height: auto;
+    height: 400px;
   }
 }
 
@@ -120,7 +119,7 @@
     padding: 10px;
   }
   .hero-section {
-    height: auto;
+    height: 300px;
     border-radius: 12px;
   }
 
@@ -137,6 +136,6 @@
 
 @media (max-width: 480px) {
   .hero-section {
-    height: auto;
+    height: 250px;
   }
 }
